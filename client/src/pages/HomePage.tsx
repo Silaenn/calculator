@@ -91,58 +91,6 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-
-        <div className="tipe justify-content-center d-flex">
-          <div className="jenis">
-            <div>
-              <h4>Matematika</h4>
-            </div>
-
-            <div className="ket ">
-              <div className=" but-cal">
-                <button className="buttoncal">
-                  Kalkulator Persen
-                  <img src={arrow} alt="" className="ms-2" width={34} />
-                </button>
-              </div>
-
-              <div className=" but-cal">
-                <button className="buttoncal">
-                  Kalkulator Persen
-                  <img src={arrow} alt="" className="ms-2" width={34} />
-                </button>
-              </div>
-
-              <div className=" but-cal">
-                <button className="buttoncal">
-                  Kalkulator Persen
-                  <img src={arrow} alt="" className="ms-2" width={34} />
-                </button>
-              </div>
-
-              <div className=" but-cal">
-                <button className="buttoncal">
-                  Kalkulator Persen
-                  <img src={arrow} alt="" className="ms-2" width={34} />
-                </button>
-              </div>
-
-              {/* <div className=" but-cal">
-                <button className="buttoncal">
-                  Kallkulator Persen
-                  <img src={arrow} alt="" className="ms-3" width={30} />
-                </button>
-              </div> */}
-
-              {/* <div className=" but-cal">
-                <button className="buttoncal">
-                  Kallkulator Persen
-                  <img src={arrow} alt="" className="ms-3" width={30} />
-                </button>
-              </div> */}
-            </div>
-          </div>
-        </div>
       </header>
     </div>
   );

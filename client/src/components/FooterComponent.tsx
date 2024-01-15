@@ -18,7 +18,7 @@ const FooterComponent = () => {
       <Container>
         <Row className="d-flex justify-content-between">
           <Col lg="5">
-            <h3 className="fw-bold">Ngoding.</h3>
+            <h3 className="fw-bold">CalGenius</h3>
             <p className="desc">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum at,
               voluptatem eaque sed perspiciatis officiis nemo consequatur modi
