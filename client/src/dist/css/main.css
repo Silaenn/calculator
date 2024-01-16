@@ -1,0 +1,286 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+.navbar {
+  position: fixed;
+  padding: 15px 0 15px 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar .nav-link {
+  padding: 5px 25px 5px 25px;
+  font-weight: 500;
+  margin-right: 20px;
+  color: rgb(137, 122, 122);
+}
+
+.navbar .nav-link:hover {
+  background-color: red;
+  color: white;
+}
+
+#basic-nav-dropdown {
+  background-color: transparent;
+  color: rgb(137, 122, 122);
+}
+
+.navbar .nav-link:active {
+  background-color: red;
+  color: white;
+}
+
+.containerL {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#container {
+  width: 300px;
+  padding: 8px 8px 20px 8px;
+  margin: 20px auto;
+  background-color: #30302e;
+  border-radius: 4px;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  border-left: 2px solid #fff;
+  box-shadow: -3px 3px 7px rgba(0, 0, 0, 0.6),
+    inset -100px 0px 100px rgba(255, 255, 255, 0.5);
+}
+
+#display {
+  display: block;
+  margin: 15px auto;
+  height: 60px;
+  width: 270px;
+  padding: 0 10px;
+  border-radius: 4px;
+  border-top: 2px solid #c1c1c1;
+  border-right: 2px solid #c1c1c1;
+  border-bottom: 2px solid #fff;
+  border-left: 2px solid #fff;
+  background-color: #fff;
+  box-shadow: inset 0px 0px 10px #030303,
+    inset 0px -20px 1px rgba(150, 150, 150, 0.2);
+  font-size: 28px;
+  color: #666;
+  text-align: right;
+  font-weight: 400;
+}
+
+.calculator {
+}
+
+.button {
+  /* display: inline-block; */
+  margin: 2px;
+  width: 60px;
+  height: 60px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.mathButtons {
+  margin: 2px 2px 6px 2px;
+  color: #fff;
+  text-shadow: -1px -1px 0px #44006f;
+  background-color: #434343;
+  border-top: 2px solid #c1c1c1;
+  border-right: 2px solid #c1c1c1;
+  border-bottom: 2px solid #181818;
+  border-left: 2px solid #181818;
+  box-shadow: 0px 0px 2px #030303, inset 0px -20px 1px #2e2e2e;
+}
+
+.digits {
+  color: #181818;
+  text-shadow: 1px 1px 0px #fff;
+  background-color: #fff;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-radius: 4px;
+  box-shadow: 0px 0px 2px #030303, inset 0px -20px 1px #dcdcdc;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  justify-content: center;
+}
+
+.but {
+  transform: rotate(270deg);
+  margin-top: -120px;
+  margin-left: -20px;
+}
+
+.but button {
+  font-family: -apple-system;
+  color: white;
+  background-color: rgb(46, 46, 93);
+  border: none;
+  border-radius: 2px;
+  padding: 5px 15px 5px 15px;
+}
+
+.footer {
+  margin-top: 200px;
+  width: 100%;
+  min-height: 60vh;
+}
+
+.footer .row:nth-child(1) .col:nth-child(1) h3 {
+  color: var(--color-text);
+}
+
+.footer .row:nth-child(1) .col:nth-child(1) desc {
+  color: var(--color-text);
+  font-size: 14px;
+  line-height: 2;
+}
+
+.footer .no a,
+.footer .mail a {
+  display: flex;
+  align-items: center;
+  color: black;
+  column-gap: 5px;
+}
+
+.footer .no a:hover,
+.footer .mail a:hover {
+  color: var(--secondary-color);
+}
+
+.footer .row:nth-child(1) .col:nth-child(2) {
+  gap: 10px;
+}
+
+.footer .row:nth-child(1) .col:nth-child(2) a {
+  color: black;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer .row:nth-child(1) .col:nth-child(2) a:hover {
+  color: var(--secondary-color);
+}
+
+.footer .subscribes {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.footer .subscribes input {
+  width: 200px;
+  height: 38px;
+  padding: 5px;
+}
+
+.footer .sosial {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer .sosial i {
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.footer .sosial i:hover {
+  color: var(--secondary-color);
+}
+
+.footer .row:nth-child(2) {
+  margin-top: 100px;
+}
