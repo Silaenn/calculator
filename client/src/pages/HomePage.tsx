@@ -1,121 +1,99 @@
-import React from "react";
+import React, { useState } from "react";
 import arrow from "../assets/images/arrow.gif";
 import { Input } from "@/components/ui/input";
 
+const btnValues = [
+  ["C", "DEL", "%", "/"],
+  [7, 8, 9, "X"],
+  [4, 5, 6, "-"],
+  [1, 2, 3, "+"],
+  [0, ".", "+/-", "="],
+];
+
+const getButtonClassName = (btn) => {
+  // Add conditions based on button values to determine the class name
+  switch (btn) {
+    case "C":
+    case "DEL":
+    case "%":
+    case "/":
+    case "X":
+    case "-":
+    case "+":
+    case ".":
+    case "+/-":
+    case "=":
+      return "button mathButtons";
+    default:
+      return "button digits";
+  }
+};
+
 const HomePage = () => {
+  const [displayValue, setDisplayValue] = useState("");
+
+  const handleButtonClick = (btn) => {
+    // Handle different button clicks here
+    if (btn === "C") {
+      setDisplayValue("");
+    } else if (btn === "DEL") {
+      setDisplayValue(displayValue.slice(0, -1));
+    } else if (btn === "=") {
+      try {
+        setDisplayValue(eval(displayValue).toString());
+      } catch (error) {
+        setDisplayValue("Error");
+      }
+    } else if (btn === "%") {
+      try {
+        setDisplayValue((eval(displayValue) / 100).toString());
+      } catch (error) {
+        setDisplayValue("Error");
+      }
+    } else if (btn === "+/-") {
+      // Toggle antara bilangan positif dan negatif
+      setDisplayValue((prevValue) => {
+        if (prevValue.startsWith("-")) {
+          return prevValue.slice(1); // Hilangkan tanda negatif jika sudah ada
+        } else {
+          return "-" + prevValue; // Tambahkan tanda negatif jika belum ada
+        }
+      });
+    } else {
+      const clickedButton = btn === "X" ? "*" : btn;
+      setDisplayValue((prevValue) => prevValue + clickedButton);
+    }
+  };
+
   return (
     <div className="w-100 min-vh-100">
       <header
         className="inti"
         style={{
-          marginTop: "120px",
+          marginTop: "100px",
         }}
       >
         <div className="containerL">
           <fieldset id="container">
             <form name="calculator">
-              <input id="display" type="text" name="display" readOnly />
+              <input
+                id="display"
+                type="text"
+                name="display"
+                value={displayValue}
+              />
               <div className="justify-center flex flex-wrap">
-                <input
-                  className="button digits"
-                  type="button"
-                  value="7"
-                  onClick="calculator.display.value += '7'"
-                />
-                <input
-                  className="button digits"
-                  type="button"
-                  value="8"
-                  onClick="calculator.display.value += '8'"
-                />
-                <input
-                  className="button digits"
-                  type="button"
-                  value="9"
-                  onClick="calculator.display.value += '9'"
-                />
-                <input
-                  className="button mathButtons"
-                  type="button"
-                  value="+"
-                  onClick="calculator.display.value += ' + '"
-                />
-                <br />
-                <input
-                  className="button digits"
-                  type="button"
-                  value="4"
-                  onClick="calculator.display.value += '4'"
-                />
-                <input
-                  className="button digits"
-                  type="button"
-                  value="5"
-                  onClick="calculator.display.value += '5'"
-                />
-                <input
-                  className="button digits"
-                  type="button"
-                  value="6"
-                  onClick="calculator.display.value += '6'"
-                />
-                <input
-                  className="button mathButtons"
-                  type="button"
-                  value="-"
-                  onClick="calculator.display.value += ' - '"
-                />
-                <br />
-                <input
-                  className="button digits"
-                  type="button"
-                  value="1"
-                  onClick="calculator.display.value += '1'"
-                />
-                <input
-                  className="button digits"
-                  type="button"
-                  value="2"
-                  onClick="calculator.display.value += '2'"
-                />
-                <input
-                  className="button digits"
-                  type="button"
-                  value="3"
-                  onClick="calculator.display.value += '3'"
-                />
-                <input
-                  className="button mathButtons"
-                  type="button"
-                  value="x"
-                  onClick="calculator.display.value += ' * '"
-                />
-                <br />
-                <input
-                  id="clearButton"
-                  className="button"
-                  type="button"
-                  value="C"
-                  onClick="calculator.display.value = ''"
-                />
-                <input
-                  className="button digits"
-                  type="button"
-                  value="0"
-                  onClick="calculator.display.value += '0'"
-                />
-                <input
-                  className="button mathButtons"
-                  type="button"
-                  value="="
-                  onClick="calculator.display.value = eval(calculator.display.value)"
-                />
-                <input
-                  className="button mathButtons"
-                  type="button"
-                  value="/"
-                  onClick="calculator.display.value += ' / '"
-                />
+                {btnValues.flat().map((btn, i) => (
+                  <button
+                    className={getButtonClassName(btn)}
+                    type="button"
+                    onClick={() => handleButtonClick(btn)}
+                    value={btn}
+                    key={i}
+                  >
+                    {btn}
+                  </button>
+                ))}
               </div>
             </form>
           </fieldset>

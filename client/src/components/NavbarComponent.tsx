@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import calculator from "../assets/images/calculator.png";
@@ -6,6 +6,8 @@ import feedback from "../assets/images/like.gif";
 // import { Popover, Transition } from "@headlessui/react";
 import Pop from "@/components/PopoverS";
 import profile from "../assets/images/profile.gif";
+// import Optionwarna from "./Optionwarna";
+
 const navigation = [
   { name: "Home", href: "#", current: true },
   { name: "Calculator", href: "#", current: false },
@@ -16,7 +18,22 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+const Optionwarna = () => {
+  return <div className="bg-black">This is the content for Warna</div>;
+};
+
 const NavbarComponent = () => {
+  const [contentToShow, setContentToShow] = useState(false);
+
+  const handleNavigationClick = (itemName) => {
+    // Handle the click event for the "Warna" item
+    if (itemName === "Warna") {
+      console.log("masuk");
+      setContentToShow(() => <Optionwarna />);
+      console.log("keluar");
+    }
+  };
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -56,11 +73,13 @@ const NavbarComponent = () => {
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={item.current ? "page" : undefined}
+                        onClick={() => handleNavigationClick(item.name)}
                       >
                         {item.name}
                       </a>
                     ))}
                     <Pop />
+                    {contentToShow}
                   </div>
                 </div>
               </div>
@@ -74,7 +93,7 @@ const NavbarComponent = () => {
                   {/* <BellIcon className="h-6 w-6" aria-hidden="true" /> */}
                   <img
                     src={feedback}
-                    className="h-9 w-10 bg-transparent"
+                    className="h-10 w-10 bg-transparent feedback"
                     alt=""
                   />
                 </button>
@@ -86,7 +105,7 @@ const NavbarComponent = () => {
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       <img
-                        className="h-8 w-8 rounded-full"
+                        className="h-10 w-10 rounded-full"
                         src={profile}
                         alt=""
                       />

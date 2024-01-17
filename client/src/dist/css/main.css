@@ -161,6 +161,12 @@
   border-radius: 4px;
 }
 
+@media (max-width: 639px) {
+  .feedback {
+    display: none;
+  }
+}
+
 .mathButtons {
   margin: 2px 2px 6px 2px;
   color: #fff;
