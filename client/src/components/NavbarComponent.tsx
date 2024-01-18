@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const navigation = [
-  { name: "Home", href: "#", current: true },
+  { name: "Home", href: "/", current: true },
   { name: "Calculator", href: "#", current: false },
   { name: "Warna", href: "#", current: false },
 ];

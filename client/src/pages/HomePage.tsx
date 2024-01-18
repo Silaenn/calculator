@@ -70,12 +70,20 @@ const HomePage = () => {
       <header
         className="inti"
         style={{
-          marginTop: "100px",
+          marginTop: "90px",
         }}
       >
+        <div className="flex justify-center">
+          <h3
+            className=""
+            style={{
+              fontFamily: "Relaway",
+            }}
+          >
+            Kalkulator Genius
+          </h3>
+        </div>
         <div className="containerL">
-          <h1 className="">Kalkulator Genius </h1>
-
           <fieldset id="container">
             <form name="calculator">
               <input
