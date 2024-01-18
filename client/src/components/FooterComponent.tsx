@@ -66,7 +66,7 @@ const FooterComponent = () => {
             <p className="text-center px-md-0  px-3">
               &copy; Copyright {new Date().getFullYear()} by
               <span className="fw-bold">Ngoding Mastery</span>, All Right
-              Reserved
+              {/* Reserved */}
             </p>
           </Col>
         </Row>
