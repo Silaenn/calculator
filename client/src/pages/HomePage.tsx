@@ -74,6 +74,8 @@ const HomePage = () => {
         }}
       >
         <div className="containerL">
+          <h1 className="">Kalkulator Genius </h1>
+
           <fieldset id="container">
             <form name="calculator">
               <input
