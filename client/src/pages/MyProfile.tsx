@@ -27,7 +27,7 @@ const MyProfile = () => {
           pariatur.
         </p>
 
-        <p className="mt-1 by">Image by Freepik</p>
+        <p className="mt-1 mb-5 mby">Image by Freepik</p>
       </div>
 
       <div className="layout-row">

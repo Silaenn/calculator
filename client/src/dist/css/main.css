@@ -335,8 +335,9 @@
 .layout-row {
   flex-direction: row;
   display: flex;
-  /* min-height: fit-content; */
+  min-height: fit-content;
   max-width: 100%;
+  background-color: #111111;
 }
 
 .g1 {

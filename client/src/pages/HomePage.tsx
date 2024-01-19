@@ -66,11 +66,12 @@ const HomePage = () => {
   };
 
   return (
-    <div className="w-100 min-vh-100">
+    <div className="w-100">
       <header
         className="inti"
         style={{
           marginTop: "90px",
+          backgroundColor: "",
         }}
       >
         <div className="flex justify-center">

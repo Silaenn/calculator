@@ -21,6 +21,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Input } from "./ui/input";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -47,6 +48,8 @@ const NavbarComponent = () => {
       console.log("keluar");
     }
   };
+
+  const [open, setOpen] = useState(false);
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -146,18 +149,23 @@ const NavbarComponent = () => {
                             <AlertDialogContent>
                               <AlertDialogHeader>
                                 <AlertDialogTitle>
-                                  Are you absolutely sure?
+                                  Kirimkan Masukan / Saran Anda kepada Kami
                                 </AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  This action cannot be undone. This will
-                                  permanently delete your account and remove
-                                  your data from our servers.
+                                  <Input
+                                    className="h-32 mt-4"
+                                    placeholder="Umpan Balik / Saran tentang Kalkulator kami"
+                                  />
+                                  <Input
+                                    className="h-12 mt-3"
+                                    placeholder="Masukan Email untuk mendapatkan Respon"
+                                  />
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogCancel>Batal</AlertDialogCancel>
                                 <AlertDialogAction className="mt-2">
-                                  Continue
+                                  Kirim Masukan
                                 </AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
