@@ -219,7 +219,7 @@
 }
 
 .footer {
-  margin-top: 200px;
+  margin-top: 100px;
   width: 100%;
   min-height: 60vh;
 }
@@ -337,7 +337,6 @@
   display: flex;
   min-height: fit-content;
   max-width: 100%;
-  background-color: #111111;
 }
 
 .g1 {
@@ -346,6 +345,7 @@
   background-color: #003ecb;
   flex: 0 0 45%;
   margin-left: 20px;
+  margin-right: 20px;
   max-width: 45%;
   min-width: 45%;
 }
@@ -414,6 +414,7 @@
   position: relative;
   display: flex;
   background-clip: padding-box;
+  justify-content: center;
   background-origin: padding-box;
   max-height: 100%;
   color: #111111;
@@ -422,60 +423,46 @@
 }
 
 .g2-one {
-  padding: 0 0 0 20px;
-  position: relative;
-  flex: 1;
-  max-width: 100%;
-  transition-duration: inherit;
-}
-
-.g2-two {
-  width: 477px;
-  margin: 0 0 0 auto;
+  justify-content: space-around;
   display: flex;
-  flex-direction: column;
-}
-
-.repet {
-  min-height: 200px;
+  width: 90%;
   display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.html {
-  will-change: transform, opacity;
-  animation-duration: 1500ms;
-  box-shadow: 5px 5px 29px 0 rgba(0, 0, 0, 0.15);
-  border-left-width: 0;
-  border-left-style: none;
-  border-right-width: 0;
-  border-right-style: none;
-  border-top-width: 0;
-  border-top-style: none;
-  border-color: #fba61b;
-  background-color: #ffffff;
-  color: #111111;
-}
-
-.logo {
-  padding: 50px 30px 30px;
+.bidangH {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 40%;
+  height: 50%;
+}
+
+.bidangC {
   display: flex;
-  flex-direction: column;
-  position: relative;
-  flex: 1;
-  max-width: 100%;
-  transition-duration: inherit;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 40%;
+  height: 50%;
 }
 
-.l {
-  height: 75px;
-  width: 75px;
-  background-image: none;
+.bidangJ {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 40%;
+  height: 50%;
 }
 
-.tulis {
-  font-size: 1.5rem;
-  font-weight: 400;
-  line-height: 1.2px;
-  margin: 28px 0 0;
+.bidangR {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 40%;
+  height: 50%;
 }
