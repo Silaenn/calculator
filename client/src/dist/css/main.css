@@ -333,10 +333,11 @@
 }
 
 .layout-row {
-  flex-direction: row;
+  /* flex-direction: row; */
   display: flex;
-  min-height: fit-content;
-  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
 }
 
 .g1 {
@@ -346,6 +347,7 @@
   flex: 0 0 45%;
   margin-left: 20px;
   margin-right: 20px;
+  margin-bottom: 10px;
   max-width: 45%;
   min-width: 45%;
 }
@@ -403,9 +405,11 @@
   font-weight: bold;
   cursor: pointer;
   background-color: transparent;
+  box-shadow: "0 4px 8px rgba(0, 0, 0, 0.1)";
 }
 
 .g2 {
+  box-sizing: content-box;
   min-height: 598px;
   flex: 0 0 55%;
   max-width: 50%;
@@ -418,7 +422,7 @@
   background-origin: padding-box;
   max-height: 100%;
   color: #111111;
-  /* background-color: #181818; */
+  margin-bottom: 20px;
   font-family: "Open Sans", sans-serif;
 }
 
@@ -427,7 +431,7 @@
   display: flex;
   width: 90%;
   display: flex;
-  gap: 10px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 

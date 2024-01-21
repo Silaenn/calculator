@@ -17,7 +17,7 @@ import react from "@/assets/images/react.png";
 
 const MyProfile = () => {
   return (
-    <section className="h-auto w-auto" style={{ backgroundColor: "#f4f5f7" }}>
+    <section className=" h-auto w-auto" style={{ backgroundColor: "" }}>
       <div className=" flex justify-center flex-col items-center">
         <h5 className="mt-4 title">A BIT ABOUT ME</h5>
 
@@ -47,41 +47,65 @@ const MyProfile = () => {
 
         <div className="g2">
           <div className="g2-one">
-            <div className="bidangH">
+            <div
+              className="bidangH"
+              style={{
+                borderBottom: "20px solid #E34F26",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
+            >
               <div
                 className="flex flex-col
               "
               >
-                <img src={html} alt="" className="w-48" />
+                <img src={html} alt="" className="w-36" />
                 <p className="justify-center flex mt-3">HTML</p>
               </div>
             </div>
-            <div className="bidangC">
+            <div
+              className="bidangC"
+              style={{
+                borderBottom: "20px solid #214CE5",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
+            >
               <div
                 className="flex flex-col
               "
               >
-                <img src={css} alt="" className="w-52" />
+                <img src={css} alt="" className="w-36" />
                 <p className="justify-center flex mt-3">CSS</p>
               </div>
             </div>
-            <div className="bidangJ">
+            <div
+              className="bidangJ"
+              style={{
+                borderBottom: "20px solid #D6BA32",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
+            >
               <div
                 className="flex flex-col
               "
               >
-                <img src={js} alt="" className="w-48" />
+                <img src={js} alt="" className="w-36" />
                 <p className="justify-center flex mt-3">JAVASCRIPT</p>
               </div>
             </div>
-            <div className="bidangR">
+            <div
+              className="bidangR"
+              style={{
+                borderBottom: "20px solid #C3F1FD",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
+            >
               {" "}
               <div
                 className="flex flex-col
               "
               >
-                <img src={react} alt="" className="w-52" />
-                <p className="justify-center flex">HTML</p>
+                <img src={react} alt="" className="w-36 mb-2" />
+                <p className="justify-center flex mt-3">REACT</p>
               </div>
             </div>
           </div>
