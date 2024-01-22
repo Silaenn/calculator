@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import arrow from "../assets/images/arrow.gif";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const btnValues = [
   ["C", "DEL", "%", "/"],
@@ -76,7 +77,7 @@ const HomePage = () => {
       >
         <div className="flex justify-center">
           <h3
-            className=""
+            className="ml-6"
             style={{
               fontFamily: "Relaway",
             }}
@@ -85,6 +86,22 @@ const HomePage = () => {
           </h3>
         </div>
         <div className="containerL">
+          <div className="warna mt-4">
+            <h6 className="justify-center flex">Tentukan Warna Favoritmu</h6>
+            <Input placeholder="Cari Jenis Warna" className="mb-3" />
+            <div className="max-h-80 overflow-y-auto text-slate-300 ">
+              <div className="mt-0 rounded-md ">
+                <div className="badan">Badan</div>
+                <div className="angka">Angka</div>
+                <div className="operator">Operator</div>
+              </div>
+
+              <Button variant="destructive" className="mt-3">
+                Ganti Warna
+              </Button>
+            </div>
+          </div>
+
           <fieldset id="container">
             <form name="calculator">
               <input

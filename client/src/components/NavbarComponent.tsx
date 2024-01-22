@@ -25,17 +25,12 @@ import { Input } from "./ui/input";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
-  { name: "Calculator", href: "#", current: false },
-  { name: "Warna", href: "#", current: false },
+  { name: "About Projek", href: "#", current: false },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
-const Optionwarna = () => {
-  return <div className="bg-black">This is the content for Warna</div>;
-};
 
 const NavbarComponent = () => {
   const [contentToShow, setContentToShow] = useState(false);
@@ -95,8 +90,6 @@ const NavbarComponent = () => {
                         {item.name}
                       </a>
                     ))}
-                    <Pop />
-                    {contentToShow}
                   </div>
                 </div>
               </div>

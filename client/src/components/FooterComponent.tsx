@@ -1,7 +1,14 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faWhatsapp,
+  faFacebook,
+  faTwitter,
+  faLinkedin,
+  faYoutube,
+} from "@fortawesome/free-brands-svg-icons";
 const FooterComponent = () => {
   const WAClick = () => {
     window.open("https://api.whatsapp.com/send?phone=628989311672", "_blank");
@@ -20,19 +27,21 @@ const FooterComponent = () => {
           <Col lg="5">
             <h3 className="fw-bold">CalGenius</h3>
             <p className="desc">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum at,
-              voluptatem eaque sed perspiciatis officiis nemo consequatur modi
-              aut dolorem.
+              Selamat datang di kalkulator web sederhana namun penuh gaya!
+              Nikmati kemudahan menghitung dengan desain yang ramah pengguna,
+              dan pilih warna favoritmu untuk membuat pengalaman perhitunganmu
+              semakin personal!
             </p>
             <div className="no mb-1 mt-4">
               <Link className="text-decoration-none" onClick={WAClick}>
                 <i className="fa-brands fa-whatsapp"></i>
+                <FontAwesomeIcon icon={faWhatsapp} />
                 <p className="m-0">+62 898-9311-672</p>
               </Link>
             </div>
             <div className="mail">
               <Link className="text-decoration-none" onClick={Email}>
-                <i className="fa-regular fa-envelope"></i>
+                {/* <FontAwesomeIcon icon={faEvernote} /> */}
                 <p className="m-0">deokeldisilaen.@gmail.com</p>
               </Link>
             </div>
@@ -54,10 +63,10 @@ const FooterComponent = () => {
               </button>
             </div>
             <div className="sosial mt-3">
-              <i className="fa-brands fa-facebook"></i>
-              <i className="fa-brands fa-twitter"></i>
-              <i className="fa-brands fa-linkedin"></i>
-              <i className="fa-brands fa-youtube"></i>
+              <FontAwesomeIcon icon={faFacebook} />
+              <FontAwesomeIcon icon={faTwitter} />
+              <FontAwesomeIcon icon={faLinkedin} />
+              <FontAwesomeIcon icon={faYoutube} />
             </div>
           </Col>
         </Row>
