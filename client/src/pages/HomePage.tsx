@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import arrow from "../assets/images/arrow.gif";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
+import { warna } from "@/data/index";
 const btnValues = [
   ["C", "DEL", "%", "/"],
   [7, 8, 9, "X"],
@@ -11,24 +11,28 @@ const btnValues = [
   [0, ".", "+/-", "="],
 ];
 
-const warna = [{ badan: "green", angka: "red", operator: "yellow" }];
+// const warna = [{ badan: "green", angka: "red", operator: "yellow" }];
 
 const HomePage = () => {
   const [displayValue, setDisplayValue] = useState("");
   const [calculatorColor, setCalculatorColor] = useState(null);
-  const [nextColor, setNextColor] = useState(warna[0]);
+  const [nextColor, setNextColor] = useState("c");
   const [isColorApplied, setIsColorApplied] = useState(false);
-
-  const gantiWarna = () => {
-    const randomIndex = Math.floor(Math.random() * warna.length);
-    setNextColor(warna[randomIndex]);
-    console.log(warna[randomIndex]);
-  };
 
   const applyNewColor = () => {
     setCalculatorColor(nextColor);
     setIsColorApplied(true); // Setel menjadi true setelah warna baru diterapkan
   };
+
+  const initializeNextColor = (category, id) => {
+    setNextColor(warna[category][id]);
+  };
+
+  useEffect(() => {
+    if (nextColor) {
+      applyNewColor();
+    }
+  }, [nextColor]);
 
   const getButtonClassName = (btn) => {
     // Add conditions based on button values to determine the class name
@@ -105,45 +109,52 @@ const HomePage = () => {
           <div className="warna mt-4">
             <h6 className="justify-center flex">Tentukan Warna Favoritmu</h6>
             <Input placeholder="Cari Jenis Warna" className="mb-3" />
-            <div className="max-h-80 overflow-y-auto text-slate-300 ">
+            <div className="max-h-80 overflow-y-auto text-white">
               <div className="mt-0 rounded-md ">
-                {warna.map((calculatorColor) => (
-                  <>
-                    <div
-                      className={`badan ${calculatorColor}`}
-                      style={{
-                        backgroundColor: `${calculatorColor.badan}`,
-                      }}
-                    >
-                      <p className="flex mt-auto items-end">#503C3C</p>
-                    </div>
-                    <div
-                      className={`angka ${calculatorColor}`}
-                      style={{
-                        backgroundColor: `${calculatorColor.angka}`,
-                      }}
-                    >
-                      #7E6363
-                    </div>
-                    <div
-                      className={`operator ${calculatorColor}`}
-                      style={{
-                        backgroundColor: `${calculatorColor.operator}`,
-                      }}
-                    >
-                      #A87C7C
-                    </div>
-                  </>
+                {Object.keys(warna).map((category) => (
+                  <div key={category}>
+                    {Object.keys(warna[category]).map((id) => (
+                      <div key={id}>
+                        <div
+                          className="badan"
+                          style={{
+                            backgroundColor: `${warna[category][id].badan}`,
+                          }}
+                        >
+                          {warna[category][id].badan}
+                        </div>
+                        <div
+                          className="angka"
+                          style={{
+                            backgroundColor: `${warna[category][id].angka}`,
+                          }}
+                        >
+                          {warna[category][id].angka}
+                        </div>
+                        <div
+                          className="operator"
+                          style={{
+                            backgroundColor: `${warna[category][id].operator}`,
+                          }}
+                        >
+                          {warna[category][id].operator}
+                        </div>
+
+                        <Button
+                          variant="destructive"
+                          className="mt-3 mb-5"
+                          onClick={() => {
+                            applyNewColor();
+                            initializeNextColor(category, id);
+                          }}
+                        >
+                          Ganti Warna
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
                 ))}
               </div>
-
-              <Button
-                variant="destructive"
-                className="mt-3"
-                onClick={applyNewColor}
-              >
-                Ganti Warna
-              </Button>
             </div>
           </div>
 
@@ -164,6 +175,10 @@ const HomePage = () => {
                 {btnValues.flat().map((btn, i) => (
                   <button
                     className={getButtonClassName(btn)}
+                    type="button"
+                    onClick={() => handleButtonClick(btn)}
+                    value={btn}
+                    key={i}
                     style={{
                       backgroundColor:
                         isColorApplied &&
@@ -182,10 +197,6 @@ const HomePage = () => {
                           ? calculatorColor && calculatorColor.operator
                           : ""),
                     }}
-                    type="button"
-                    onClick={() => handleButtonClick(btn)}
-                    value={btn}
-                    key={i}
                   >
                     {btn}
                   </button>
@@ -193,6 +204,22 @@ const HomePage = () => {
               </div>
             </form>
           </fieldset>
+
+          <div className="petunjuk">
+            <h5 className="flex justify-center">Petunjuk Mengubah Warna</h5>
+            <ul>
+              <li>
+                Dalam mencari warna hanya terdapat beberapa opsi, anda bisa
+                ketikan ini : <br />
+                <ul>
+                  <li>Pastel</li>
+                  <li>Cold</li>
+                  <li>Cold</li>
+                  <li>Cold</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>{" "}
       </header>
     </div>

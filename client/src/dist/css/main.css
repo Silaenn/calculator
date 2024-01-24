@@ -113,7 +113,7 @@
 .containerL {
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: center; */
+  justify-content: space-between;
 }
 
 .warna {
@@ -121,7 +121,7 @@
   justify-content: flex-start;
   flex-direction: column;
   margin-left: 12%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
   padding: 10px;
   width: 255px;
 }
@@ -504,4 +504,10 @@
   background-color: white;
   width: 40%;
   height: 50%;
+}
+
+.petunjuk {
+  width: 340px;
+  /* background-color: #030303; */
+  margin-right: 12%;
 }
