@@ -112,7 +112,7 @@ const HomePage = () => {
             <h5 className="justify-center flex">Tentukan Warna Favoritmu</h5>
             <Input placeholder="Cari Jenis Warna" className="mb-3" />
             <div className="max-h-80 overflow-y-auto text-slate-200 text-sm">
-              <div className="mt-0 rounded-md ">
+              <div className="mt-1 rounded-md ">
                 {Object.keys(warna).map((category) => (
                   <div key={category}>
                     {Object.keys(warna[category]).map((id) => (

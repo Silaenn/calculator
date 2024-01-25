@@ -181,4 +181,158 @@ export const warna = {
       operator: "#F5E8C7",
     },
   },
+  sky: {
+    1: {
+      badan: "#AAD7D9",
+      angka: "#FBF9F1",
+      operator: "#E5E1DA",
+    },
+    2: {
+      badan: "#B4D4FF",
+      angka: "#86B6F6",
+      operator: "#176B87",
+    },
+    3: {
+      badan: "#AC87C5",
+      angka: "#E0AED0",
+      operator: "#FFE5E5",
+    },
+    4: {
+      badan: "#96EFFF",
+      angka: "#5FBDFF",
+      operator: "#7B66FF",
+    },
+    5: {
+      badan: "#89CFF3",
+      angka: "#A0E9FF",
+      operator: "#CDF5FD",
+    },
+    6: {
+      badan: "#98E4FF",
+      angka: "#80B3FF",
+      operator: "#687EFF",
+    },
+    7: {
+      badan: "#9EDDFF",
+      angka: "#A6F6FF",
+      operator: "#BEFFF7",
+    },
+    8: {
+      badan: "#088395",
+      angka: "#35A29F",
+      operator: "#F2F7A1",
+    },
+    9: {
+      badan: "#91C8E4",
+      angka: "#749BC2",
+      operator: "#4682A9",
+    },
+    10: {
+      badan: "#75C2F6",
+      angka: "#F4D160",
+      operator: "#FBEEAC",
+    },
+    11: {
+      badan: "#9BE8D8",
+      angka: "#E2F6CA",
+      operator: "#F8FDCF",
+    },
+    12: {
+      badan: "#99DBF5",
+      angka: "#A7ECEE",
+      operator: "#FFEEBB",
+    },
+    13: {
+      badan: "#ACBCFF",
+      angka: "#AEE2FF",
+      operator: "#E6FFFD",
+    },
+    14: {
+      badan: "#B0DAFF",
+      angka: "#19A7CE",
+      operator: "#146C94",
+    },
+    15: {
+      badan: "#ACB1D6",
+      angka: "#DBDFEA",
+      operator: "#FFEAD2",
+    },
+  },
+  rainbow: {
+    1: {
+      badan: "#FFA447",
+      angka: "#FFFC9B",
+      operator: "#B7E5B4",
+    },
+    2: {
+      badan: "#F3B95F",
+      angka: "#FDE767",
+      operator: "#6895D2",
+    },
+    3: {
+      badan: "#A1EEBD",
+      angka: "#F6F7C4",
+      operator: "#F6D6D6",
+    },
+    4: {
+      badan: "#F0DBAF",
+      angka: "#DC8686",
+      operator: "#B06161",
+    },
+    5: {
+      badan: "#F8BDEB",
+      angka: "#5272F2",
+      operator: "#072541",
+    },
+    6: {
+      badan: "#FF4B91",
+      angka: "#FF7676",
+      operator: "#FFCD4B",
+    },
+    7: {
+      badan: "#FFCF96",
+      angka: "#F6FDC3",
+      operator: "#CDFAD5",
+    },
+    8: {
+      badan: "#8DDFCB",
+      angka: "#82A0D8",
+      operator: "#EDB7ED",
+    },
+    9: {
+      badan: "#FFC7EA",
+      angka: "#D8B4F8",
+      operator: "#CAEDFF",
+    },
+    10: {
+      badan: "#F0B86E",
+      angka: "#ED7B7B",
+      operator: "#836096",
+    },
+    11: {
+      badan: "#EEEDED",
+      angka: "#F0DE36",
+      operator: "#D71313",
+    },
+    12: {
+      badan: "#00DFA2",
+      angka: "#F6FA70",
+      operator: "#FF0060",
+    },
+    13: {
+      badan: "#E893CF",
+      angka: "#F3BCC8",
+      operator: "#F6FFA6",
+    },
+    14: {
+      badan: "#FFD3A3",
+      angka: "#FCFFB2",
+      operator: "#B6EAFA",
+    },
+    15: {
+      badan: "#FF6969",
+      angka: "#FFD3B0",
+      operator: "#FFF9DE",
+    },
+  },
 };
