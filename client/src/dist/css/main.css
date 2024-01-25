@@ -118,19 +118,19 @@
 
 .warna {
   display: flex;
+  /* background-color: #003ecb; */
   justify-content: flex-start;
   flex-direction: column;
-  margin-left: 12%;
+  margin-left: 9%;
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
   padding: 10px;
-  width: 255px;
+  width: 310px;
 }
 
 .badan {
   height: 60px;
   display: flex;
   align-items: flex-end;
-  background-color: #44006f;
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
 }
@@ -508,6 +508,36 @@
 
 .petunjuk {
   width: 340px;
-  /* background-color: #030303; */
-  margin-right: 12%;
+  /* background-color: #003ecb; */
+  margin-right: 6%;
+}
+
+.color {
+  background-image: url("../../assets/images/color.png");
+  background-size: 16px 16px; /* Sesuaikan dengan lebar dan tinggi yang diinginkan */
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  line-height: 16px;
+  margin-bottom: 10px;
+}
+
+.hover-text {
+  opacity: 0;
+  transform: scale(0.8); /* Set initial scale, make it smaller */
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-out; /* Add transitions for both opacity and transform */
+}
+
+.badan:hover .hover-text {
+  opacity: 1;
+  transform: scale(1); /* Scale it back to its original size on hover */
+}
+
+.angka:hover .hover-text {
+  opacity: 1;
+  transform: scale(1); /* Scale it back to its original size on hover */
+}
+
+.operator:hover .hover-text {
+  opacity: 1;
+  transform: scale(1); /* Scale it back to its original size on hover */
 }

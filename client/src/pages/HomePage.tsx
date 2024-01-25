@@ -3,6 +3,8 @@ import arrow from "../assets/images/arrow.gif";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { warna } from "@/data/index";
+import body from "@/assets/images/body.png";
+
 const btnValues = [
   ["C", "DEL", "%", "/"],
   [7, 8, 9, "X"],
@@ -107,9 +109,9 @@ const HomePage = () => {
         </div>
         <div className="containerL">
           <div className="warna mt-4">
-            <h6 className="justify-center flex">Tentukan Warna Favoritmu</h6>
+            <h5 className="justify-center flex">Tentukan Warna Favoritmu</h5>
             <Input placeholder="Cari Jenis Warna" className="mb-3" />
-            <div className="max-h-80 overflow-y-auto text-white">
+            <div className="max-h-80 overflow-y-auto text-slate-200 text-sm">
               <div className="mt-0 rounded-md ">
                 {Object.keys(warna).map((category) => (
                   <div key={category}>
@@ -121,7 +123,9 @@ const HomePage = () => {
                             backgroundColor: `${warna[category][id].badan}`,
                           }}
                         >
-                          {warna[category][id].badan}
+                          <p className="bg-slate-700 -tracking-tight hover-text">
+                            {warna[category][id].badan}
+                          </p>
                         </div>
                         <div
                           className="angka"
@@ -129,7 +133,9 @@ const HomePage = () => {
                             backgroundColor: `${warna[category][id].angka}`,
                           }}
                         >
-                          {warna[category][id].angka}
+                          <p className="bg-slate-700 -tracking-tight hover-text">
+                            {warna[category][id].angka}
+                          </p>
                         </div>
                         <div
                           className="operator"
@@ -137,12 +143,13 @@ const HomePage = () => {
                             backgroundColor: `${warna[category][id].operator}`,
                           }}
                         >
-                          {warna[category][id].operator}
+                          <p className="bg-slate-700 -tracking-tight hover-text">
+                            {warna[category][id].operator}
+                          </p>
                         </div>
 
                         <Button
-                          variant="destructive"
-                          className="mt-3 mb-5"
+                          className="mt-3 mb-5 bg-violet-950"
                           onClick={() => {
                             applyNewColor();
                             initializeNextColor(category, id);
@@ -205,22 +212,44 @@ const HomePage = () => {
             </form>
           </fieldset>
 
-          <div className="petunjuk">
-            <h5 className="flex justify-center">Petunjuk Mengubah Warna</h5>
-            <ul>
-              <li>
+          <div className="petunjuk mt-4">
+            <h5 className="flex justify-center ">Petunjuk Mengubah Warna</h5>
+            <div className="flex justify-center mt-3 mb-3">
+              <img src={body} width={300} alt="" />
+            </div>
+
+            <ol>
+              <li
+                style={{
+                  listStyle: "-moz-initial",
+                }}
+              >
                 Dalam mencari warna hanya terdapat beberapa opsi, anda bisa
-                ketikan ini : <br />
-                <ul>
-                  <li>Pastel</li>
-                  <li>Cold</li>
-                  <li>Cold</li>
-                  <li>Cold</li>
-                </ul>
+                ketikan ini :
+                <br />
               </li>
-            </ul>
+              <ul
+                style={{
+                  marginTop: "5px",
+                  marginLeft: "-25px",
+                }}
+              >
+                <li className="color">Pastel</li>
+                <li className="color">Cold</li>
+                <li className="color">Cold</li>
+                <li className="color">Cold</li>
+              </ul>
+              <li
+                style={{
+                  listStyle: "-moz-initial",
+                  marginTop: "5px",
+                }}
+              >
+                Sekarang Tentukan warna Favorit yang kamu sukai
+              </li>
+            </ol>
           </div>
-        </div>{" "}
+        </div>
       </header>
     </div>
   );
