@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { warna } from "@/data/index";
 import body from "@/assets/images/body.png";
+import math from "@/assets/images/math.png";
+import smk from "@/assets/images/smk.png";
 
 const btnValues = [
   ["C", "DEL", "%", "/"],
@@ -95,6 +97,45 @@ const HomePage = () => {
 
   return (
     <div className="w-100">
+      <div className="w-100 min-vh-100 bg-gray-800">
+        <div className="container relative z-10 flex items-center px-6 py-16 mx-auto md:px-12 xl:py-5 ">
+          <div className="flex items-center ">
+            <div className="relative z-10 flex flex-col items-start lg:w-3/5 xl:w-2/5">
+              <span className="font-bold text-yellow-400 uppercase flex items-center">
+                SMK PGRI PEKANBARU
+                <img
+                  src={smk}
+                  className="bg-white ml-2"
+                  style={{
+                    borderRadius: "70px",
+                  }}
+                  width={50}
+                  alt=""
+                />
+              </span>
+              <h1
+                className="mt-4 text-6xl font-bold leading-tight text-white sm:text-7xl"
+                style={{
+                  fontFamily: "NB-international",
+                }}
+              >
+                Welcome to Calgenius
+                <br />
+                by Deo Silaen
+              </h1>
+              <a
+                href="#"
+                className="block px-4 py-3 mt-10 text-lg font-bold text-gray-800 uppercase bg-white rounded-lg hover:bg-gray-100"
+              >
+                Lihat Kalkulator
+              </a>
+            </div>
+            <div className="ml-auto flex">
+              <img src={math} width={600} alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
       <header
         className="inti"
         style={{
@@ -102,21 +143,21 @@ const HomePage = () => {
           backgroundColor: "",
         }}
       >
-        <div className="flex justify-center">
+        {/* <div className="flex justify-center">
           <h3
-            className="ml-6"
+            className="ml-6 font-bold flex justify-center"
             style={{
               fontFamily: "Geneva",
-              marginLeft: "auto",
-              marginRight: "auto",
             }}
           >
             Kalkulator Genius
-          </h3>
-        </div>
+          </h3> */}
+        {/* </div> */}
         <div className="containerL">
           <div className="warna mt-4">
-            <h5 className="justify-center flex">Tentukan Warna Favoritmu</h5>
+            <h5 className="justify-center flex font-bold">
+              Tentukan Warna Favoritmu
+            </h5>
             <Input
               placeholder="Cari Jenis Warna"
               className="mb-3"
@@ -235,7 +276,7 @@ const HomePage = () => {
 
           <div className="petunjuk mt-4">
             <h5
-              className="flex justify-center "
+              className="flex justify-center font-bold"
               style={{
                 fontFamily: "Roboto Slab",
               }}
@@ -312,7 +353,8 @@ const HomePage = () => {
                   fontFamily: "Roboto Slab",
                 }}
               >
-                Sekarang Tentukan warna Favorit yang kamu sukai
+                Dan yeah kamu bisa menentukan pilihan warna yang kamu suka,
+                silahkan mencoba ya!
               </li>
             </ol>
           </div>

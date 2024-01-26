@@ -60,7 +60,12 @@ const NavbarComponent = () => {
   };
 
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure
+      as="nav"
+      style={{
+        backgroundColor: "#1F3843",
+      }}
+    >
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
