@@ -335,4 +335,81 @@ export const warna = {
       operator: "#FFF9DE",
     },
   },
+  coffee: {
+    1: {
+      badan: "#AC7D88",
+      angka: "#85586F",
+      operator: "#643843",
+    },
+    2: {
+      badan: "#6D2932",
+      angka: "#C7B7A3",
+      operator: "#E8D8C4",
+    },
+    3: {
+      badan: "#503C3C",
+      angka: "#7E6363",
+      operator: "#A87C7C",
+    },
+    4: {
+      badan: "#FAEED1",
+      angka: "#DED0B6",
+      operator: "#B2A59B",
+    },
+    5: {
+      badan: "#FAEED1",
+      angka: "#DED0B6",
+      operator: "#BBAB8C",
+    },
+    6: {
+      badan: "#F4DFC8",
+      angka: "#F4EAE0",
+      operator: "#FAF6F0",
+    },
+    7: {
+      badan: "#EBE3D5",
+      angka: "#B0A695",
+      operator: "#776B5D",
+    },
+    8: {
+      badan: "#B0926A",
+      angka: "#E1C78F",
+      operator: "#FAE7C9",
+    },
+    9: {
+      badan: "#EAD7BB",
+      angka: "#BCA37F",
+      operator: "#113946",
+    },
+    10: {
+      badan: "#C08261",
+      angka: "#E2C799",
+      operator: "#F2ECBE",
+    },
+    11: {
+      badan: "#C8AE7D",
+      angka: "#765827",
+      operator: "#65451F",
+    },
+    12: {
+      badan: "#BA704F",
+      angka: "#DFA878",
+      operator: "#CEE6F3",
+    },
+    13: {
+      badan: "#F2EAD3",
+      angka: "#DFD7BF",
+      operator: "#3F2305",
+    },
+    14: {
+      badan: "#C38154",
+      angka: "#FFC26F",
+      operator: "#F9E0BB",
+    },
+    15: {
+      badan: "#F3DEBA",
+      angka: "#ABC4AA",
+      operator: "#675D50",
+    },
+  },
 };

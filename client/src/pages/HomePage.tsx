@@ -20,6 +20,11 @@ const HomePage = () => {
   const [calculatorColor, setCalculatorColor] = useState(null);
   const [nextColor, setNextColor] = useState("c");
   const [isColorApplied, setIsColorApplied] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   const applyNewColor = () => {
     setCalculatorColor(nextColor);
@@ -102,6 +107,8 @@ const HomePage = () => {
             className="ml-6"
             style={{
               fontFamily: "Geneva",
+              marginLeft: "auto",
+              marginRight: "auto",
             }}
           >
             Kalkulator Genius
@@ -110,57 +117,71 @@ const HomePage = () => {
         <div className="containerL">
           <div className="warna mt-4">
             <h5 className="justify-center flex">Tentukan Warna Favoritmu</h5>
-            <Input placeholder="Cari Jenis Warna" className="mb-3" />
+            <Input
+              placeholder="Cari Jenis Warna"
+              className="mb-3"
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
             <div className="max-h-80 overflow-y-auto text-slate-200 text-sm">
               <div className="mt-1 rounded-md ">
-                {Object.keys(warna).map((category) => (
-                  <div key={category}>
-                    {Object.keys(warna[category]).map((id) => (
-                      <div key={id}>
-                        <div
-                          className="badan"
-                          style={{
-                            backgroundColor: `${warna[category][id].badan}`,
-                          }}
-                        >
-                          <p className="bg-slate-700 -tracking-tight hover-text">
-                            {warna[category][id].badan}
-                          </p>
-                        </div>
-                        <div
-                          className="angka"
-                          style={{
-                            backgroundColor: `${warna[category][id].angka}`,
-                          }}
-                        >
-                          <p className="bg-slate-700 -tracking-tight hover-text">
-                            {warna[category][id].angka}
-                          </p>
-                        </div>
-                        <div
-                          className="operator"
-                          style={{
-                            backgroundColor: `${warna[category][id].operator}`,
-                          }}
-                        >
-                          <p className="bg-slate-700 -tracking-tight hover-text">
-                            {warna[category][id].operator}
-                          </p>
-                        </div>
+                {Object.keys(warna).map((category) => {
+                  // Pencarian berdasarkan kategori
+                  const isCategoryMatched = category
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase());
 
-                        <Button
-                          className="mt-3 mb-5 bg-violet-950"
-                          onClick={() => {
-                            applyNewColor();
-                            initializeNextColor(category, id);
-                          }}
-                        >
-                          Ganti Warna
-                        </Button>
+                  return (
+                    isCategoryMatched && (
+                      <div key={category}>
+                        {Object.keys(warna[category]).map((id) => (
+                          <div key={id}>
+                            <div
+                              className="badan"
+                              style={{
+                                backgroundColor: `${warna[category][id].badan}`,
+                              }}
+                            >
+                              <p className="bg-slate-700 -tracking-tight hover-text">
+                                {warna[category][id].badan}
+                              </p>
+                            </div>
+                            <div
+                              className="angka"
+                              style={{
+                                backgroundColor: `${warna[category][id].angka}`,
+                              }}
+                            >
+                              <p className="bg-slate-700 -tracking-tight hover-text">
+                                {warna[category][id].angka}
+                              </p>
+                            </div>
+                            <div
+                              className="operator"
+                              style={{
+                                backgroundColor: `${warna[category][id].operator}`,
+                              }}
+                            >
+                              <p className="bg-slate-700 -tracking-tight hover-text">
+                                {warna[category][id].operator}
+                              </p>
+                            </div>
+
+                            <Button
+                              className="mt-3 mb-5 bg-violet-950"
+                              onClick={() => {
+                                applyNewColor();
+                                initializeNextColor(category, id);
+                              }}
+                            >
+                              Ganti Warna
+                            </Button>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                ))}
+                    )
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -213,7 +234,14 @@ const HomePage = () => {
           </fieldset>
 
           <div className="petunjuk mt-4">
-            <h5 className="flex justify-center ">Petunjuk Mengubah Warna</h5>
+            <h5
+              className="flex justify-center "
+              style={{
+                fontFamily: "Roboto Slab",
+              }}
+            >
+              Petunjuk Mengubah Warna
+            </h5>
             <div className="flex justify-center mt-3 mb-3">
               <img src={body} width={300} alt="" />
             </div>
@@ -222,6 +250,8 @@ const HomePage = () => {
               <li
                 style={{
                   listStyle: "-moz-initial",
+                  fontFamily: "Roboto Slab",
+                  fontSize: "15px",
                 }}
               >
                 Dalam mencari warna hanya terdapat beberapa opsi, anda bisa
@@ -234,15 +264,52 @@ const HomePage = () => {
                   marginLeft: "-25px",
                 }}
               >
-                <li className="color">Pastel</li>
-                <li className="color">Cold</li>
-                <li className="color">Cold</li>
-                <li className="color">Cold</li>
+                <li
+                  className="color"
+                  style={{
+                    fontFamily: "Roboto Slab",
+                  }}
+                >
+                  Pastel
+                </li>
+                <li
+                  className="color"
+                  style={{
+                    fontFamily: "Roboto Slab",
+                  }}
+                >
+                  Cold
+                </li>
+                <li
+                  className="color"
+                  style={{
+                    fontFamily: "Roboto Slab",
+                  }}
+                >
+                  Sky
+                </li>
+                <li
+                  className="color"
+                  style={{
+                    fontFamily: "Roboto Slab",
+                  }}
+                >
+                  Rainbow
+                </li>
+                <li
+                  className="color"
+                  style={{
+                    fontFamily: "Roboto Slab",
+                  }}
+                >
+                  Coffee
+                </li>
               </ul>
               <li
                 style={{
                   listStyle: "-moz-initial",
                   marginTop: "5px",
+                  fontFamily: "Roboto Slab",
                 }}
               >
                 Sekarang Tentukan warna Favorit yang kamu sukai
