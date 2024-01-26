@@ -9,6 +9,11 @@ import profile from "../assets/images/profile.gif";
 // import Optionwarna from "./Optionwarna";
 import like from "@/assets/images/rate.png";
 import user from "@/assets/images/user.png";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 import {
   AlertDialog,
@@ -25,7 +30,7 @@ import { Input } from "./ui/input";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
-  { name: "About Projek", href: "#", current: false },
+  { name: "About Projek", href: "/aboutProjek", current: false },
 ];
 
 function classNames(...classes) {
@@ -44,7 +49,15 @@ const NavbarComponent = () => {
     }
   };
 
-  const [open, setOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleOpenDialog = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -120,7 +133,7 @@ const NavbarComponent = () => {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
+                      {/* <Menu.Item>
                         {({ active }) => (
                           <AlertDialog>
                             <AlertDialogTrigger
@@ -164,7 +177,13 @@ const NavbarComponent = () => {
                             </AlertDialogContent>
                           </AlertDialog>
                         )}
-                      </Menu.Item>
+                      </Menu.Item> */}
+                      <Popover>
+                        <PopoverTrigger>Open</PopoverTrigger>
+                        <PopoverContent>
+                          Place content for the popover here.
+                        </PopoverContent>
+                      </Popover>
                     </Menu.Items>
                   </Transition>
                 </Menu>
