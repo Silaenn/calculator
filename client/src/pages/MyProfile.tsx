@@ -20,7 +20,7 @@ const MyProfile = () => {
     <section className=" h-auto w-auto" style={{ backgroundColor: "" }}>
       <div className=" flex justify-center flex-col items-center">
         <h5 className="mt-4 title">A BIT ABOUT ME</h5>
-    
+
         <p className="who">Who Am I?</p>
 
         <p className="text-center me">

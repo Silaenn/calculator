@@ -6,6 +6,7 @@ import { warna } from "@/data/index";
 import body from "@/assets/images/body.png";
 import math from "@/assets/images/math.png";
 import smk from "@/assets/images/smk.png";
+import noData from "@/assets/images/no data.jpg";
 
 const btnValues = [
   ["C", "DEL", "%", "/"],
@@ -101,7 +102,7 @@ const HomePage = () => {
         <div className="container relative z-10 flex items-center px-6 py-16 mx-auto md:px-12 xl:py-5 ">
           <div className="flex items-center ">
             <div className="relative z-10 flex flex-col items-start lg:w-3/5 xl:w-2/5">
-              <span className="font-bold text-yellow-400 uppercase flex items-center">
+              <span className="font-bold text-yellow-400 uppercase flex items-center animate__animated animate__fadeInDown">
                 SMK PGRI PEKANBARU
                 <img
                   src={smk}
@@ -114,7 +115,7 @@ const HomePage = () => {
                 />
               </span>
               <h1
-                className="mt-4 text-6xl font-bold leading-tight text-white sm:text-7xl"
+                className="mt-4 text-6xl font-bold leading-tight text-white sm:text-7xl animate__animated animate__fadeInLeft"
                 style={{
                   fontFamily: "NB-international",
                 }}
@@ -125,13 +126,18 @@ const HomePage = () => {
               </h1>
               <a
                 href="#"
-                className="block px-4 py-3 mt-10 text-lg font-bold text-gray-800 uppercase bg-white rounded-lg hover:bg-gray-100"
+                className="block px-4 py-3 mt-10 text-lg font-bold text-gray-800 uppercase bg-white rounded-lg hover:bg-gray-100 animate__animated animate__fadeInUp"
               >
                 Lihat Kalkulator
               </a>
             </div>
             <div className="ml-auto flex">
-              <img src={math} width={600} alt="" />
+              <img
+                src={math}
+                width={600}
+                alt=""
+                className="animate__animated animate__fadeInRight"
+              />
             </div>
           </div>
         </div>
@@ -154,7 +160,7 @@ const HomePage = () => {
           </h3> */}
         {/* </div> */}
         <div className="containerL">
-          <div className="warna mt-4">
+          <div className="warna mt-4" data-aos="fade-right">
             <h5 className="justify-center flex font-bold">
               Tentukan Warna Favoritmu
             </h5>
@@ -172,63 +178,91 @@ const HomePage = () => {
                     .toLowerCase()
                     .includes(searchTerm.toLowerCase());
 
-                  return (
-                    isCategoryMatched && (
-                      <div key={category}>
-                        {Object.keys(warna[category]).map((id) => (
-                          <div key={id}>
-                            <div
-                              className="badan"
-                              style={{
-                                backgroundColor: `${warna[category][id].badan}`,
-                              }}
-                            >
-                              <p className="bg-slate-700 -tracking-tight hover-text">
-                                {warna[category][id].badan}
-                              </p>
-                            </div>
-                            <div
-                              className="angka"
-                              style={{
-                                backgroundColor: `${warna[category][id].angka}`,
-                              }}
-                            >
-                              <p className="bg-slate-700 -tracking-tight hover-text">
-                                {warna[category][id].angka}
-                              </p>
-                            </div>
-                            <div
-                              className="operator"
-                              style={{
-                                backgroundColor: `${warna[category][id].operator}`,
-                              }}
-                            >
-                              <p className="bg-slate-700 -tracking-tight hover-text">
-                                {warna[category][id].operator}
-                              </p>
-                            </div>
+                  // Menampilkan pesan "Kategori tidak ada" jika tidak ada kategori yang cocok
+                  if (!isCategoryMatched) {
+                    return null; // Tidak menampilkan apapun jika kategori tidak cocok dengan pencarian
+                  }
 
-                            <Button
-                              className="mt-3 mb-5 bg-violet-950"
-                              onClick={() => {
-                                applyNewColor();
-                                initializeNextColor(category, id);
-                              }}
-                            >
-                              Ganti Warna
-                            </Button>
+                  return (
+                    <div key={category}>
+                      {Object.keys(warna[category]).map((id) => (
+                        <div key={id}>
+                          <div
+                            className="badan"
+                            style={{
+                              backgroundColor: `${warna[category][id].badan}`,
+                            }}
+                          >
+                            <p className="bg-slate-700 -tracking-tight hover-text">
+                              {warna[category][id].badan}
+                            </p>
                           </div>
-                        ))}
-                      </div>
-                    )
+                          <div
+                            className="angka"
+                            style={{
+                              backgroundColor: `${warna[category][id].angka}`,
+                            }}
+                          >
+                            <p className="bg-slate-700 -tracking-tight hover-text">
+                              {warna[category][id].angka}
+                            </p>
+                          </div>
+                          <div
+                            className="operator"
+                            style={{
+                              backgroundColor: `${warna[category][id].operator}`,
+                            }}
+                          >
+                            <p className="bg-slate-700 -tracking-tight hover-text">
+                              {warna[category][id].operator}
+                            </p>
+                          </div>
+
+                          <Button
+                            className="mt-3 mb-5 bg-violet-950"
+                            onClick={() => {
+                              applyNewColor();
+                              initializeNextColor(category, id);
+                            }}
+                          >
+                            Ganti Warna
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
                   );
                 })}
+                {/* Menampilkan pesan "Kategori tidak ada" jika tidak ada kategori yang cocok dengan pencarian */}
+                {Object.keys(warna).length > 0 &&
+                  Object.keys(warna).every(
+                    (category) =>
+                      !category.toLowerCase().includes(searchTerm.toLowerCase())
+                  ) && (
+                    <div className="flex justify-center items-center h-60 flex-col">
+                      <img
+                        src={noData}
+                        width={200}
+                        className="mb-6 mt-2"
+                        alt=""
+                      />
+                      <p
+                        className="text-black"
+                        style={{
+                          fontFamily: "Anonymous Pro",
+                          fontSize: "17px",
+                        }}
+                      >
+                        Kategori Warna Tidak ditemukan
+                      </p>
+                    </div>
+                  )}
               </div>
             </div>
           </div>
 
           <fieldset
             id="container"
+            data-aos="zoom-in"
             style={{
               backgroundColor: isColorApplied ? calculatorColor.badan : "",
             }}
@@ -274,7 +308,7 @@ const HomePage = () => {
             </form>
           </fieldset>
 
-          <div className="petunjuk mt-4">
+          <div className="petunjuk mt-4" data-aos="fade-left">
             <h5
               className="flex justify-center font-bold"
               style={{
