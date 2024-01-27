@@ -399,20 +399,6 @@
   flex-direction: column;
 }
 
-.g1-img {
-  width: 255px;
-  height: 255px;
-  margin: 0 auto;
-  border-radius: 50%;
-  background-position: 50% 50%;
-  background-image: url("https://images01.nicepagecdn.com/c461c07a441a5d220e8feb1a/84af234fbe7c5104813ba2d4/gffggf.jpg");
-  position: relative;
-  object-fit: cover;
-  display: block;
-  vertical-align: middle;
-  background-size: cover;
-}
-
 .g1-ket {
   font-size: 2.25rem;
   margin: 20px 0 0;
@@ -436,7 +422,7 @@
   font-size: 0.875rem;
   align-self: center;
   text-align: center;
-  margin: 35px auto 0;
+  margin: 20px auto 0;
   padding: 14px 46px 16px 44px;
   border-color: #ffffff;
   color: #ffffff;
@@ -546,4 +532,22 @@
 .operator:hover .hover-text {
   opacity: 1;
   transform: scale(1); /* Scale it back to its original size on hover */
+}
+
+.animate__animated.animate__rotateInUpLeft {
+  --animate-duration: 2s;
+}
+
+.animate__animated.animate__rotateInUpLeft {
+  --animate-duration: 2s;
+}
+
+.animate__animated.animate__fadeInLeft {
+  --animate-duration: 2s;
+}
+.animate__animated.animate__fadeInDown {
+  --animate-duration: 2s;
+}
+.animate__animated.animate__fadeInUp {
+  --animate-duration: 2s;
 }

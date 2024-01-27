@@ -96,6 +96,13 @@ const HomePage = () => {
     }
   };
 
+  const scrollDown = (position) => {
+    window.scrollTo({
+      top: position,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="w-100">
       <div className="w-100 min-vh-100 bg-gray-800">
@@ -124,12 +131,12 @@ const HomePage = () => {
                 <br />
                 by Deo Silaen
               </h1>
-              <a
-                href="#"
+              <button
                 className="block px-4 py-3 mt-10 text-lg font-bold text-gray-800 uppercase bg-white rounded-lg hover:bg-gray-100 animate__animated animate__fadeInUp"
+                onClick={() => scrollDown(800)}
               >
                 Lihat Kalkulator
-              </a>
+              </button>
             </div>
             <div className="ml-auto flex">
               <img
@@ -144,9 +151,9 @@ const HomePage = () => {
       </div>
       <header
         className="inti"
+        id="containerL"
         style={{
           marginTop: "90px",
-          backgroundColor: "",
         }}
       >
         {/* <div className="flex justify-center">
