@@ -2,13 +2,13 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faWhatsapp,
-  faFacebook,
-  faTwitter,
-  faLinkedin,
-  faYoutube,
-} from "@fortawesome/free-brands-svg-icons";
+import email from "@/assets/images/email.png";
+import wa from "@/assets/images/wa.png";
+import fb from "@/assets/images/fb.png";
+import git from "@/assets/images/git.png";
+import ig from "@/assets/images/ig.png";
+import tele from "@/assets/images/tele.png";
+
 const FooterComponent = () => {
   const WAClick = () => {
     window.open("https://api.whatsapp.com/send?phone=628989311672", "_blank");
@@ -34,14 +34,13 @@ const FooterComponent = () => {
             </p>
             <div className="no mb-1 mt-4">
               <Link className="text-decoration-none" onClick={WAClick}>
-                <i className="fa-brands fa-whatsapp"></i>
-                <FontAwesomeIcon icon={faWhatsapp} />
+                <img src={wa} width={15} alt="" />
                 <p className="m-0">+62 898-9311-672</p>
               </Link>
             </div>
             <div className="mail">
               <Link className="text-decoration-none" onClick={Email}>
-                {/* <FontAwesomeIcon icon={faEvernote} /> */}
+                <img src={email} width={15} className="mr-1" alt="" />
                 <p className="m-0">deokeldisilaen.@gmail.com</p>
               </Link>
             </div>
@@ -49,10 +48,8 @@ const FooterComponent = () => {
           <Col className="d-flex flex-column col-lg-2 col mt-lg-0 mt-5">
             <h5 className="fw-bold">Menu</h5>
             <Link to="/">Home</Link>
-            <Link to="/kelas">Kelas</Link>
-            <Link to="/testimonial">Testimonial</Link>
-            <Link to="/faq">Faq</Link>
-            <Link to="syaratketen">Syarat & Ketentuan</Link>
+            <Link to="/aboutProjek">About Projek</Link>
+            <Link to="/myProfile">My Profile</Link>
           </Col>
           <Col lg="4" className="mt-lg-0 mt-5">
             <h5 className="fw-bold mb-3">Subscribe untuk info Menarik</h5>
@@ -63,12 +60,23 @@ const FooterComponent = () => {
               </button>
             </div>
             <div className="sosial mt-3">
-              <FontAwesomeIcon icon={faFacebook} />
-              <FontAwesomeIcon icon={faTwitter} />
-              <FontAwesomeIcon icon={faLinkedin} />
-              <FontAwesomeIcon icon={faYoutube} />
+              <img src={fb} width={20} alt="" />
+              <img src={ig} width={20} alt="" />
+              <img src={git} width={20} alt="" />
+              <img src={tele} width={20} alt="" />
             </div>
           </Col>
+        </Row>
+        <Row className="mt-4 mb-4">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249.356787876166!2d101.47549098493971!3d0.4249068496446592!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a858d8579427%3A0xfd261ac7e0a67939!2sPembiayaan%20MULTIGuna%20IG%20%40irmanroberto!5e0!3m2!1sid!2sid!4v1706428718317!5m2!1sid!2sid"
+            width="600"
+            height="450"
+            style={{ border: "0" }}
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
         </Row>
         <Row>
           <Col>

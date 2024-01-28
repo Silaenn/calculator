@@ -1,14 +1,14 @@
 import { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import calculator from "../assets/images/calculator.png";
-import feedback from "../assets/images/like.gif";
+import feedback from "../assets/images/mes.jpg";
 // import { Popover, Transition } from "@headlessui/react";
-import Pop from "@/components/PopoverS";
 import profile from "../assets/images/profile.gif";
 // import Optionwarna from "./Optionwarna";
-import like from "@/assets/images/rate.png";
-import user from "@/assets/images/user.png";
+import like from "@/assets/images/feedback.gif";
+import user from "@/assets/images/user.gif";
 import {
   Popover,
   PopoverContent,
@@ -27,6 +27,9 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { Textarea } from "./ui/textarea";
+import React from "react";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -38,25 +41,15 @@ function classNames(...classes) {
 }
 
 const NavbarComponent = () => {
-  const [contentToShow, setContentToShow] = useState(false);
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(true);
 
-  const handleNavigationClick = (itemName) => {
-    // Handle the click event for the "Warna" item
-    if (itemName === "Warna") {
-      console.log("masuk");
-      setContentToShow(() => <Optionwarna />);
-      console.log("keluar");
-    }
+  const handleClick = () => {
+    navigate("/myProfile");
+    setIsOpen(false);
   };
-
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const handleOpenDialog = () => {
-    setIsDialogOpen(true);
-  };
-
-  const handleCloseDialog = () => {
-    setIsDialogOpen(false);
+  const handleClickClose = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -103,7 +96,6 @@ const NavbarComponent = () => {
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={item.current ? "page" : undefined}
-                        onClick={() => handleNavigationClick(item.name)}
                       >
                         {item.name}
                       </a>
@@ -111,134 +103,147 @@ const NavbarComponent = () => {
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <Menu as="div" className="relative mr-3">
-                  <div>
-                    <Menu.Button
-                      type="button"
-                      className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    >
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">View notifications</span>
-                      {/* <BellIcon className="h-6 w-6" aria-hidden="true" /> */}
-                      <img
-                        src={feedback}
-                        className="h-10 w-10 bg-transparent feedback"
-                        alt=""
-                      />
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      {/* <Menu.Item>
-                        {({ active }) => (
-                          <AlertDialog>
-                            <AlertDialogTrigger
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              <div className="flex items-center">
-                                <img
-                                  src={like}
-                                  alt=""
-                                  width={40}
-                                  className="mr-0"
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 mt-2">
+                <Menu as="div" className="relative mr-0 mb-1">
+                  <Popover>
+                    <PopoverTrigger>
+                      <div>
+                        <Menu.Button
+                          type="button"
+                          className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        >
+                          <span className="absolute -inset-1.5" />
+                          <span className="sr-only">View notifications</span>
+                          {/* <BellIcon className="h-6 w-6" aria-hidden="true" /> */}
+                          <img
+                            src={feedback}
+                            className="h-10 w-10 bg-transparent rounded-3xl feedback"
+                            alt=""
+                          />
+                        </Menu.Button>
+                      </div>
+                    </PopoverTrigger>
+                    {isOpen && (
+                      <PopoverContent className="w-auto h-16 flex items-center justify-center mr-32 p-3 mt-1">
+                        <AlertDialog>
+                          <AlertDialogTrigger
+                            className="flex items-center h-auto"
+                            style={{
+                              marginLeft: "-5px",
+                            }}
+                          >
+                            <div className="flex items-center ">
+                              <img
+                                src={like}
+                                width={40}
+                                className="flex mb-2"
+                                alt=""
+                              />
+                              <p
+                                className="ml-1 mt-3 leading-5"
+                                style={{
+                                  fontSize: "15px",
+                                }}
+                              >
+                                Berikan <br /> Feedback
+                              </p>
+                            </div>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                Kirimkan Masukan / Saran Anda kepada Kami
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                <Input
+                                  className="h-12 mt-3"
+                                  placeholder="Masukan Email Anda"
                                 />
-                                Berikan FeedBack
-                              </div>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>
-                                  Kirimkan Masukan / Saran Anda kepada Kami
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  <Input
-                                    className="h-32 mt-4"
-                                    placeholder="Umpan Balik / Saran tentang Kalkulator kami"
+
+                                <div className=" w-full mt-4">
+                                  <Textarea
+                                    placeholder="Masukan Saran Anda"
+                                    id="message-2"
                                   />
-                                  <Input
-                                    className="h-12 mt-3"
-                                    placeholder="Masukan Email untuk mendapatkan Respon"
-                                  />
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
+                                </div>
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            {isOpen && (
                               <AlertDialogFooter>
-                                <AlertDialogCancel>Batal</AlertDialogCancel>
-                                <AlertDialogAction className="mt-2">
+                                <AlertDialogCancel
+                                  onClick={() => handleClickClose()}
+                                >
+                                  Batal
+                                </AlertDialogCancel>
+                                <AlertDialogAction
+                                  className="mt-2"
+                                  onClick={() => handleClickClose()}
+                                >
                                   Kirim Masukan
                                 </AlertDialogAction>
                               </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        )}
-                      </Menu.Item> */}
-                      <Popover>
-                        <PopoverTrigger>Open</PopoverTrigger>
-                        <PopoverContent>
-                          Place content for the popover here.
-                        </PopoverContent>
-                      </Popover>
-                    </Menu.Items>
-                  </Transition>
+                            )}
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </PopoverContent>
+                    )}
+                  </Popover>
                 </Menu>
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    <Menu.Button className="relative flex rounded-full border-2 border-gray-500 bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-10 w-10 rounded-full"
-                        src={profile}
-                        alt=""
-                      />
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="/myProfile"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700 no-underline"
-                            )}
+                    <Popover>
+                      <PopoverTrigger>
+                        <Menu.Button
+                          type="button"
+                          className="relative flex rounded-full border-2 border-gray-500 bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        >
+                          <span className="absolute -inset-1.5" />
+                          <span className="sr-only">Open user menu</span>
+                          <img
+                            className="h-10 w-10 rounded-full"
+                            src={profile}
+                            alt=""
+                          />
+                        </Menu.Button>
+                      </PopoverTrigger>
+                      {isOpen && (
+                        <PopoverContent
+                          onClick={() => handleClick()}
+                          className="w-auto flex items-center pt-0 pb-0 h-auto mt-2"
+                        >
+                          <div
+                            className="flex items-center mt-auto mb-auto"
+                            // onClick={() => {
+                            //   navigate("/myProfile");
+                            // }}
+                            style={{
+                              marginTop: "-10px",
+                              marginLeft: "-15px",
+                              marginRight: "-10px",
+                              cursor: "pointer",
+                            }}
                           >
-                            <div className="flex items-center ">
-                              <img
-                                src={user}
-                                alt=""
-                                width={40}
-                                className="mr-2"
-                              />
+                            <img
+                              src={user}
+                              className="ml-auto mr-auto"
+                              alt=""
+                              width={40}
+                            />
+                            <p
+                              style={{
+                                fontSize: "15px",
+                                marginTop: "15px",
+                              }}
+                            >
                               My Profile
-                            </div>
-                          </a>
-                        )}
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Transition>
+                            </p>
+                          </div>
+                        </PopoverContent>
+                      )}
+                    </Popover>
+                  </div>
                 </Menu>
               </div>
             </div>
