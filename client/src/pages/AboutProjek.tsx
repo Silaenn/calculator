@@ -14,17 +14,19 @@ const AboutProjek = () => {
               width: "1000px",
             }}
           >
-            Selamat datang di Projek CalGenius - sebuah projek kalkulator yang
+            Selamat datang di website CalGenius - sebuah projek kalkulator yang
             digunakan untuk menguji kemampuan siswa dalam membuat suatu website,
-            dan juga projek ini digunkana sebagai Kami bangga mempersembahkan
-            kalkulator ini sebagai bukti komitmen kami untuk membawa
-            pembelajaran matematika menjadi lebih menyenangkan, interaktif, dan
-            bermakna. Dengan [Nama Proyek], kami tidak hanya sekadar menciptakan
-            alat hitung, tetapi juga membangun suatu pengalaman belajar yang
-            mendalam. Kalkulator ini tidak hanya membantu para siswa dalam
-            perhitungan matematika, tetapi juga dirancang dengan elemen-elemen
-            pendidikan yang merangsang keingintahuan dan eksplorasi
-            konsep-konsep matematika. Berbeda dari kalkulator konvensional,
+            dan juga projek ini digunakan sebagai uji kompetensi keahlian(UKK)
+            yang dilaksanakan di SMKS PGRI Pekanbaru, saya bangga
+            mempersembahkan kalkulator ini sebagai bukti komitmen kami untuk
+            membawa pembelajaran matematika menjadi lebih menyenangkan,
+            interaktif, dan bermakna. Dengan CalGenius ini, kami tidak hanya
+            sekadar menciptakan alat hitung, tetapi juga membangun suatu
+            pengalaman belajar yang mendalam. Kalkulator ini tidak hanya
+            membantu para siswa dalam perhitungan matematika, tetapi juga
+            dirancang dengan elemen-elemen pendidikan yang merangsang
+            keingintahuan dan eksplorasi konsep-konsep matematika. Berbeda dari
+            kalkulator konvensional,
           </p>
         </div>
         <div>

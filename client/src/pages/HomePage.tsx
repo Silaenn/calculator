@@ -9,8 +9,8 @@ import smk from "@/assets/images/smk.png";
 import noData from "@/assets/images/no data.jpg";
 
 const btnValues = [
-  ["C", "DEL", "%", "/"],
-  [7, 8, 9, "X"],
+  ["C", "DEL", "%", "÷"],
+  [7, 8, 9, "×"],
   [4, 5, 6, "-"],
   [1, 2, 3, "+"],
   [0, ".", "+/-", "="],
@@ -50,8 +50,8 @@ const HomePage = () => {
       case "C":
       case "DEL":
       case "%":
-      case "/":
-      case "X":
+      case "÷":
+      case "×":
       case "-":
       case "+":
       case ".":
@@ -68,31 +68,34 @@ const HomePage = () => {
     if (btn === "C") {
       setDisplayValue("");
     } else if (btn === "DEL") {
-      setDisplayValue(displayValue.slice(0, -1));
+      setDisplayValue((prevValue) => prevValue.slice(0, -1));
     } else if (btn === "=") {
       try {
-        setDisplayValue(eval(displayValue).toString());
+        let expression = displayValue.replace(/×/g, "*");
+        expression = expression.replace(/÷/g, "/");
+
+        expression = expression.replace(/(\d+)%/g, (_, p1) => p1 / 100);
+        setDisplayValue(eval(expression).toString());
       } catch (error) {
         setDisplayValue("Error");
       }
     } else if (btn === "%") {
-      try {
-        setDisplayValue((eval(displayValue) / 100).toString());
-      } catch (error) {
-        setDisplayValue("Error");
-      }
+      setDisplayValue((prevValue) => {
+        if (!prevValue.includes("%")) {
+          return prevValue + "%";
+        }
+        return prevValue;
+      });
     } else if (btn === "+/-") {
-      // Toggle antara bilangan positif dan negatif
       setDisplayValue((prevValue) => {
         if (prevValue.startsWith("-")) {
-          return prevValue.slice(1); // Hilangkan tanda negatif jika sudah ada
+          return prevValue.slice(1);
         } else {
-          return "-" + prevValue; // Tambahkan tanda negatif jika belum ada
+          return "-" + prevValue;
         }
       });
     } else {
-      const clickedButton = btn === "X" ? "*" : btn;
-      setDisplayValue((prevValue) => prevValue + clickedButton);
+      setDisplayValue((prevValue) => prevValue + btn);
     }
   };
 
@@ -295,8 +298,8 @@ const HomePage = () => {
                         (btn >= "0" && btn <= "9"
                           ? calculatorColor && calculatorColor.angka
                           : btn === "%" ||
-                            btn === "/" ||
-                            btn === "X" ||
+                            btn === "÷" ||
+                            btn === "×" ||
                             btn === "-" ||
                             btn === "+" ||
                             btn === "." ||

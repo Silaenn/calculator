@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,11 +8,16 @@ import fb from "@/assets/images/fb.png";
 import git from "@/assets/images/git.png";
 import ig from "@/assets/images/ig.png";
 import tele from "@/assets/images/tele.png";
+import MapsApi from "./MapsApi";
 
 const FooterComponent = () => {
   const WAClick = () => {
     window.open("https://api.whatsapp.com/send?phone=628989311672", "_blank");
   };
+
+  useEffect(() => {
+    MapsApi();
+  }, []);
 
   const Email = () => {
     // Logika atau tindakan yang ingin Anda lakukan saat tautan diklik
@@ -60,10 +65,34 @@ const FooterComponent = () => {
               </button>
             </div>
             <div className="sosial mt-3">
-              <img src={fb} width={20} alt="" />
-              <img src={ig} width={20} alt="" />
-              <img src={git} width={20} alt="" />
-              <img src={tele} width={20} alt="" />
+              <a
+                href="https://www.facebook.com/deo.silaen?mibextid=ZbWKwL"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src={fb} width={20} alt="Facebook" />
+              </a>
+              <a
+                href="https://www.instagram.com/deoosilaen?igsh=MXE0Yjdob2ozbm1hYw=="
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src={ig} width={20} alt="Facebook" />
+              </a>
+              <a
+                href="https://github.com/Silaenn"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src={git} width={20} alt="Facebook" />
+              </a>
+              <a
+                href="https://t.me/deoosilaen22"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src={tele} width={20} alt="Facebook" />
+              </a>
             </div>
           </Col>
         </Row>

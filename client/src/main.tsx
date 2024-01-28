@@ -10,10 +10,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 <script src="./node_modules/preline/dist/preline.js"></script>;
 
 import { BrowserRouter } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
+      <ScrollToTop />
       <App />
     </BrowserRouter>
   </React.StrictMode>
