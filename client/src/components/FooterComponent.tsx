@@ -8,6 +8,7 @@ import fb from "@/assets/images/fb.png";
 import git from "@/assets/images/git.png";
 import ig from "@/assets/images/ig.png";
 import tele from "@/assets/images/tele.png";
+import map from "@/assets/images/maps.png";
 import MapsApi from "./MapsApi";
 
 const FooterComponent = () => {
@@ -97,6 +98,10 @@ const FooterComponent = () => {
           </Col>
         </Row>
         <Row className="mt-4 mb-4">
+          <div className="flex items-center">
+            <img src={map} width={20} className="mr-2" alt="" />
+            <p className="mt-3">My Address : </p>
+          </div>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249.356787876166!2d101.47549098493971!3d0.4249068496446592!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a858d8579427%3A0xfd261ac7e0a67939!2sPembiayaan%20MULTIGuna%20IG%20%40irmanroberto!5e0!3m2!1sid!2sid!4v1706428718317!5m2!1sid!2sid"
             width="600"
