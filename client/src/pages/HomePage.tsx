@@ -21,7 +21,7 @@ const btnValues = [
 const HomePage = () => {
   const [displayValue, setDisplayValue] = useState("");
   const [calculatorColor, setCalculatorColor] = useState(null);
-  const [nextColor, setNextColor] = useState("c");
+  const [nextColor, setNextColor] = useState("");
   const [isColorApplied, setIsColorApplied] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -29,18 +29,22 @@ const HomePage = () => {
     setSearchTerm(e.target.value);
   };
 
-  const applyNewColor = () => {
-    setCalculatorColor(nextColor);
-    setIsColorApplied(true); // Setel menjadi true setelah warna baru diterapkan
-  };
-
   const initializeNextColor = (category, id) => {
     setNextColor(warna[category][id]);
+    console.log("warna", warna[category][id]);
+  };
+
+  const applyNewColor = () => {
+    setIsColorApplied(true);
+
+    setCalculatorColor(nextColor);
+    console.log("ini =>", setCalculatorColor(nextColor));
   };
 
   useEffect(() => {
     if (nextColor) {
       applyNewColor();
+      console.log("ini apa??", applyNewColor());
     }
   }, [nextColor]);
 
@@ -108,8 +112,13 @@ const HomePage = () => {
 
   return (
     <div className="w-100">
-      <div className="w-100 min-vh-100 bg-gray-800">
-        <div className="container relative z-10 flex items-center px-6 py-16 mx-auto md:px-12 xl:py-5 ">
+      <div className="w-100 min-vh-100 bg-gray-800 flex items-center">
+        <div
+          className="container relative z-10 flex items-center px-6 py-16 mx-auto md:px-12 xl:py-5 "
+          style={{
+            marginTop: "-150px",
+          }}
+        >
           <div className="flex items-center ">
             <div className="relative z-10 flex flex-col items-start lg:w-3/5 xl:w-2/5">
               <span className="font-bold text-yellow-400 uppercase flex items-center animate__animated animate__fadeInDown">
@@ -231,8 +240,8 @@ const HomePage = () => {
                           <Button
                             className="mt-3 mb-5 bg-violet-950"
                             onClick={() => {
-                              applyNewColor();
                               initializeNextColor(category, id);
+                              applyNewColor();
                             }}
                           >
                             Ganti Warna

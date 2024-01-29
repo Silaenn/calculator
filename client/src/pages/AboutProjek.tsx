@@ -5,7 +5,7 @@ const AboutProjek = () => {
     <div className="h-auto w-auto">
       <div className="p-10 flex justify-center flex-col items-center box-border text-justify">
         <h1 className="projek mb-10 border-b-4 border-indigo-500">
-          About Projek
+          About Project
         </h1>
         <div>
           <p
