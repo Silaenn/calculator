@@ -20,7 +20,7 @@ const btnValues = [
 
 const HomePage = () => {
   const [displayValue, setDisplayValue] = useState("");
-  const [calculatorColor, setCalculatorColor] = useState(null);
+  const [calculatorColor, setCalculatorColor] = useState("");
   const [nextColor, setNextColor] = useState("");
   const [isColorApplied, setIsColorApplied] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,15 +38,23 @@ const HomePage = () => {
     setIsColorApplied(true);
 
     setCalculatorColor(nextColor);
-    console.log("ini =>", setCalculatorColor(nextColor));
+
+    localStorage.setItem("calculatorColor", JSON.stringify(nextColor));
   };
 
   useEffect(() => {
     if (nextColor) {
       applyNewColor();
-      console.log("ini apa??", applyNewColor());
     }
   }, [nextColor]);
+
+  useEffect(() => {
+    const storedColor = localStorage.getItem("calculatorColor");
+    if (storedColor) {
+      setCalculatorColor(JSON.parse(storedColor));
+      setIsColorApplied(true);
+    }
+  }, []);
 
   const getButtonClassName = (btn) => {
     // Add conditions based on button values to determine the class name
@@ -64,6 +72,23 @@ const HomePage = () => {
         return `button mathButtons`;
       default:
         return "button digits";
+    }
+  };
+
+  const [scientificMode, setScientificMode] = useState(false);
+  const [additionalButtons, setAdditionalButtons] = useState([]);
+
+  const handleScientificModeToggle = () => {
+    setScientificMode(!scientificMode);
+    if (!scientificMode) {
+      setAdditionalButtons([
+        { label: "Phi", value: "π" },
+        { label: "kuadrat", value: "√" },
+        { label: "Pangkat 2", value: "x²" },
+        { label: "pangkat 3", value: "x³" },
+      ]);
+    } else {
+      setAdditionalButtons([]);
     }
   };
 
@@ -98,6 +123,14 @@ const HomePage = () => {
           return "-" + prevValue;
         }
       });
+    } else if (btn === "π") {
+      setDisplayValue((prevValue) => prevValue + Math.PI);
+    } else if (btn === "√") {
+      setDisplayValue((prevValue) => prevValue + "√");
+    } else if (btn === "x²") {
+      setDisplayValue((prevValue) => prevValue + "^2");
+    } else if (btn === "x³") {
+      setDisplayValue((prevValue) => prevValue + "^3");
     } else {
       setDisplayValue((prevValue) => prevValue + btn);
     }
@@ -120,7 +153,7 @@ const HomePage = () => {
           }}
         >
           <div className="flex items-center ">
-            <div className="relative z-10 flex flex-col items-start lg:w-3/5 xl:w-2/5">
+            <div className="relative z-10 flex flex-col items-start  lg:w-3/5 xl:w-2/5">
               <span className="font-bold text-yellow-400 uppercase flex items-center animate__animated animate__fadeInDown">
                 SMK PGRI PEKANBARU
                 <img
@@ -168,16 +201,6 @@ const HomePage = () => {
           marginTop: "90px",
         }}
       >
-        {/* <div className="flex justify-center">
-          <h3
-            className="ml-6 font-bold flex justify-center"
-            style={{
-              fontFamily: "Geneva",
-            }}
-          >
-            Kalkulator Genius
-          </h3> */}
-        {/* </div> */}
         <div className="containerL">
           <div className="warna mt-4" data-aos="fade-right">
             <h5 className="justify-center flex font-bold">
@@ -287,13 +310,35 @@ const HomePage = () => {
             }}
           >
             <form name="calculator">
-              <input
-                id="display"
-                type="text"
-                name="display"
-                value={displayValue}
-              />
+              <input className="display" type="text" value={displayValue} />
               <div className="justify-center flex flex-wrap">
+                <button
+                  type="button"
+                  style={{
+                    width: "250px",
+                    padding: "10px",
+                    borderRadius: "5px",
+                    backgroundColor: "#DDE6ED",
+                    border: "2px solid #181818",
+                    marginBottom: "5px",
+                    fontWeight: "bold",
+                    color: "black",
+                  }}
+                  onClick={handleScientificModeToggle}
+                >
+                  {scientificMode ? "Simple" : "Scientific Calculator"}
+                </button>
+                {scientificMode &&
+                  additionalButtons.map((button, index) => (
+                    <button
+                      type="button"
+                      key={index}
+                      className="button mathButtons"
+                      onClick={() => handleButtonClick(button.value)}
+                    >
+                      {button.value}
+                    </button>
+                  ))}
                 {btnValues.flat().map((btn, i) => (
                   <button
                     className={getButtonClassName(btn)}

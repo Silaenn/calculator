@@ -9,16 +9,11 @@ import git from "@/assets/images/git.png";
 import ig from "@/assets/images/ig.png";
 import tele from "@/assets/images/tele.png";
 import map from "@/assets/images/maps.png";
-import MapsApi from "./MapsApi";
 
 const FooterComponent = () => {
   const WAClick = () => {
     window.open("https://api.whatsapp.com/send?phone=628989311672", "_blank");
   };
-
-  useEffect(() => {
-    MapsApi();
-  }, []);
 
   const Email = () => {
     // Logika atau tindakan yang ingin Anda lakukan saat tautan diklik

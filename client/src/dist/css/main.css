@@ -169,7 +169,7 @@
     inset -100px 0px 100px rgba(255, 255, 255, 0.5);
 }
 
-#display {
+.display {
   display: block;
   margin: 15px auto;
   height: 60px;
