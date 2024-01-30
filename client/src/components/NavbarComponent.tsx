@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import calculator from "../assets/images/calculator.png";
@@ -26,10 +27,38 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import React from "react";
+
+("use client");
+
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Button } from "./ui/button";
+
+const formSchema = z.object({
+  email: z.string().email().min(2).max(50),
+  content: z
+    .string()
+    .min(10, {
+      message: "Bio must be at least 10 characters.",
+    })
+    .max(160, {
+      message: "Bio must not be longer than 30 characters.",
+    }),
+});
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -51,6 +80,30 @@ const NavbarComponent = () => {
   const handleClickClose = () => {
     setIsOpen(false);
   };
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      content: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      console.log("masuk");
+
+      const response = await axios.post(
+        "http://localhost:2000/messages",
+        values
+      );
+
+      const newMessage = response.data.data;
+      console.log(newMessage);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  }
 
   return (
     <Disclosure
@@ -155,17 +208,42 @@ const NavbarComponent = () => {
                                 Kirimkan Masukan / Saran Anda kepada Kami
                               </AlertDialogTitle>
                               <AlertDialogDescription>
-                                <Input
-                                  className="h-12 mt-3"
-                                  placeholder="Masukan Email Anda"
-                                />
-
-                                <div className=" w-full mt-4">
-                                  <Textarea
-                                    placeholder="Masukan Saran Anda"
-                                    id="message-2"
-                                  />
-                                </div>
+                                <Form {...form}>
+                                  <form
+                                    onSubmit={form.handleSubmit(onSubmit)}
+                                    className="space-y-8"
+                                  >
+                                    <FormField
+                                      control={form.control}
+                                      name="email"
+                                      render={({ field }) => (
+                                        <FormItem>
+                                          <FormControl>
+                                            <Input
+                                              placeholder="Masukan Email Anda"
+                                              {...field}
+                                            />
+                                          </FormControl>
+                                        </FormItem>
+                                      )}
+                                    />
+                                    <FormField
+                                      control={form.control}
+                                      name="content"
+                                      render={({ field }) => (
+                                        <FormItem>
+                                          <FormControl>
+                                            <Textarea
+                                              placeholder="Masukan Saran Anda"
+                                              id="message-2"
+                                            />
+                                          </FormControl>
+                                        </FormItem>
+                                      )}
+                                    />
+                                    <Button type="submit">Kirim</Button>
+                                  </form>
+                                </Form>
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             {isOpen && (
@@ -176,8 +254,9 @@ const NavbarComponent = () => {
                                   Batal
                                 </AlertDialogCancel>
                                 <AlertDialogAction
+                                  type="submit"
                                   className="mt-2"
-                                  onClick={() => handleClickClose()}
+                                  // onClick={() => handleClickClose()}
                                 >
                                   Kirim Masukan
                                 </AlertDialogAction>

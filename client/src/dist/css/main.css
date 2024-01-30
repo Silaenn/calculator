@@ -298,8 +298,6 @@
 }
 
 .footer .subscribes {
-  display: flex;
-  align-items: center;
   gap: 2px;
 }
 
@@ -311,7 +309,6 @@
 
 .footer .sosial {
   display: flex;
-  align-items: flex-start;
   gap: 10px;
 }
 

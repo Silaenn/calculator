@@ -1,14 +1,23 @@
 const express = require("express");
-const doteenv = require("dotenv");
+const dotenv = require("dotenv");
+const cors = require("cors");
+
 const app = express();
 
-doteenv.config();
+dotenv.config();
 
 const PORT = process.env.PORT;
 
+app.use(express.json());
+app.use(cors());
+
 app.get("/api", (req, res) => {
-  res.send("Welcome API");
+  res.send("Selamat datang di API akuh");
 });
+
+const messageController = require("./message/messageController");
+
+app.use("/messages", messageController);
 
 app.listen(PORT, () => {
   console.log("Express API running in port: " + PORT);
