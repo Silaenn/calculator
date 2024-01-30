@@ -24,6 +24,21 @@ const FooterComponent = () => {
   return (
     <div className="footer py-5">
       <Container>
+        <Row className="mt-4 mb-4">
+          <div className="flex items-center">
+            <img src={map} width={20} className="mr-2" alt="" />
+            <p className="mt-3 font-semibold">My Address : </p>
+          </div>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249.356787876166!2d101.47549098493971!3d0.4249068496446592!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a858d8579427%3A0xfd261ac7e0a67939!2sPembiayaan%20MULTIGuna%20IG%20%40irmanroberto!5e0!3m2!1sid!2sid!4v1706428718317!5m2!1sid!2sid"
+            width="600"
+            height="450"
+            style={{ border: "0" }}
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </Row>
         <Row className="d-flex justify-content-between">
           <Col lg="5">
             <h3 className="fw-bold">CalGenius</h3>
@@ -53,60 +68,103 @@ const FooterComponent = () => {
             <Link to="/myProfile">My Profile</Link>
           </Col>
           <Col lg="4" className="mt-lg-0 mt-5">
-            <h5 className="fw-bold mb-3">Subscribe untuk info Menarik</h5>
-            <div className="subscribes">
-              <input type="text" placeholder="Subscribe" />
-              <button className="btn btn-danger rounded-end rounded-0">
-                Subscribe
-              </button>
+            <h5 className="fw-bold mb-3">SMKS PGRI PEKANBARU</h5>
+            <div className="subscribes gap-4">
+              <div>
+                <a
+                  href="https://www.facebook.com/deo.silaen?mibextid=ZbWKwL"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src={fb} width={20} alt="Facebook" />
+                </a>
+                <a
+                  href="https://www.instagram.com/deoosilaen?igsh=MXE0Yjdob2ozbm1hYw=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src={ig} width={20} alt="Facebook" />
+                </a>
+              </div>
+
+              <div>
+                <a
+                  href="https://github.com/Silaenn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src={git} width={20} alt="Facebook" />
+                </a>
+                <a
+                  href="https://t.me/deoosilaen22"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src={tele} width={20} alt="Facebook" />
+                </a>
+              </div>
             </div>
-            <div className="sosial mt-3">
-              <a
-                href="https://www.facebook.com/deo.silaen?mibextid=ZbWKwL"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img src={fb} width={20} alt="Facebook" />
-              </a>
-              <a
-                href="https://www.instagram.com/deoosilaen?igsh=MXE0Yjdob2ozbm1hYw=="
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img src={ig} width={20} alt="Facebook" />
-              </a>
-              <a
-                href="https://github.com/Silaenn"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img src={git} width={20} alt="Facebook" />
-              </a>
-              <a
-                href="https://t.me/deoosilaen22"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img src={tele} width={20} alt="Facebook" />
-              </a>
+            <div className="sosial flex flex-col mt-3 justify-start">
+              <p className="mb-1 font-semibold">My Media Sosial</p>
+              <div className="flex flex-row gap-2 justify-start">
+                <div className="mr-2">
+                  <a
+                    href="https://www.facebook.com/deo.silaen?mibextid=ZbWKwL"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="flex gap-2">
+                      <div>
+                        <img src={fb} className="" width={30} alt="Facebook" />
+                      </div>
+                      <p className="items-center text-sm">Facebook</p>
+                    </div>
+                  </a>
+                  <a
+                    href="https://www.instagram.com/deoosilaen?igsh=MXE0Yjdob2ozbm1hYw=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="flex gap-2">
+                      <div>
+                        <img src={ig} width={30} alt="Facebook" />
+                      </div>
+                      <p className="items-center">Instagram</p>
+                    </div>
+                  </a>
+                </div>
+
+                <div>
+                  <a
+                    href="https://github.com/Silaenn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="flex gap-2">
+                      <div>
+                        <img src={git} width={30} alt="Facebook" />
+                      </div>
+                      <p className="items-center">Github</p>
+                    </div>
+                  </a>
+                  <a
+                    href="https://t.me/deoosilaen22"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="flex gap-2">
+                      <div>
+                        <img src={tele} width={30} alt="Facebook" />
+                      </div>
+                      <p className="items-center">TeleGram</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
             </div>
           </Col>
         </Row>
-        <Row className="mt-4 mb-4">
-          <div className="flex items-center">
-            <img src={map} width={20} className="mr-2" alt="" />
-            <p className="mt-3">My Address : </p>
-          </div>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249.356787876166!2d101.47549098493971!3d0.4249068496446592!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a858d8579427%3A0xfd261ac7e0a67939!2sPembiayaan%20MULTIGuna%20IG%20%40irmanroberto!5e0!3m2!1sid!2sid!4v1706428718317!5m2!1sid!2sid"
-            width="600"
-            height="450"
-            style={{ border: "0" }}
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </Row>
+
         <Row>
           <Col>
             <p className="text-center px-md-0  px-3">
