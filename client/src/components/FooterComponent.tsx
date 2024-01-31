@@ -64,7 +64,7 @@ const FooterComponent = () => {
             <h5 className="fw-bold mb-3">SMKS PGRI PEKANBARU</h5>
             <div className="subscribes flex flex-row">
               <a
-                href="https://www.instagram.com/deoosilaen?igsh=MXE0Yjdob2ozbm1hYw=="
+                href="https://www.instagram.com/smk_pgri_pekanbaru?igsh=MXFsZGN3bTVrZTdqbw=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="no-underline text-black flex "

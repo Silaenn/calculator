@@ -211,6 +211,7 @@
 .mathButtons {
   margin: 2px 2px 6px 2px;
   color: black;
+  background-color: #fafafa;
   border-top: 2px solid #181818;
   border-right: 2px solid #181818;
   border-bottom: 2px solid #181818;
@@ -220,7 +221,7 @@
 .digits {
   color: black;
   /* text-shadow: 1px 1px 0px #fff; */
-  background-color: #fff;
+  background-color: #fafafa;
   border-top: 2px solid #fff;
   border-right: 2px solid #fff;
   border-bottom: 2px solid #fff;

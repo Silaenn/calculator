@@ -27,6 +27,13 @@ export const navLinks = [
 ];
 
 export const warna = {
+  default: {
+    1: {
+      badan: "#30302e",
+      angka: "#FAFAFA",
+      operator: "#FAFAFA",
+    },
+  },
   pastel: {
     1: {
       badan: "#D4E7C5",

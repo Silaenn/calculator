@@ -47,12 +47,13 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "./ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   email: z.string().email().min(2).max(50),
   content: z
     .string()
-    .min(10, {
+    .min(1, {
       message: "Bio must be at least 10 characters.",
     })
     .max(160, {
@@ -62,7 +63,7 @@ const formSchema = z.object({
 
 const navigation = [
   { name: "Home", href: "/", current: true },
-  { name: "About Projek", href: "/aboutProjek", current: false },
+  { name: "About Project", href: "/aboutProjek", current: false },
 ];
 
 function classNames(...classes) {
@@ -71,12 +72,14 @@ function classNames(...classes) {
 
 const NavbarComponent = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(true);
 
   const handleClick = () => {
     navigate("/myProfile");
     setIsOpen(false);
   };
+
   const handleClickClose = () => {
     setIsOpen(false);
   };
@@ -100,6 +103,11 @@ const NavbarComponent = () => {
 
       const newMessage = response.data.data;
       console.log(newMessage);
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
+      setIsOpen(false);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -227,6 +235,7 @@ const NavbarComponent = () => {
                                         </FormItem>
                                       )}
                                     />
+
                                     <FormField
                                       control={form.control}
                                       name="content"
@@ -234,34 +243,35 @@ const NavbarComponent = () => {
                                         <FormItem>
                                           <FormControl>
                                             <Textarea
-                                              placeholder="Masukan Saran Anda"
-                                              id="message-2"
+                                              placeholder="Masukkan Saran Anda"
+                                              {...field}
                                             />
                                           </FormControl>
                                         </FormItem>
                                       )}
                                     />
-                                    <Button type="submit">Kirim</Button>
+
+                                    <div className="flex ml-auto">
+                                      <Button
+                                        variant="outline"
+                                        className="ml-auto"
+                                        onClick={() => handleClickClose()}
+                                      >
+                                        Batal
+                                      </Button>
+
+                                      <Button
+                                        onClick={() => onSubmit}
+                                        type="submit"
+                                        className="flex ml-2"
+                                      >
+                                        Kirim
+                                      </Button>
+                                    </div>
                                   </form>
                                 </Form>
                               </AlertDialogDescription>
                             </AlertDialogHeader>
-                            {isOpen && (
-                              <AlertDialogFooter>
-                                <AlertDialogCancel
-                                  onClick={() => handleClickClose()}
-                                >
-                                  Batal
-                                </AlertDialogCancel>
-                                <AlertDialogAction
-                                  type="submit"
-                                  className="mt-2"
-                                  // onClick={() => handleClickClose()}
-                                >
-                                  Kirim Masukan
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            )}
                           </AlertDialogContent>
                         </AlertDialog>
                       </PopoverContent>

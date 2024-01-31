@@ -148,9 +148,9 @@ const HomePage = () => {
       <div className="w-100 min-vh-100 bg-gray-800 flex items-center">
         <div
           className="container relative z-10 flex items-center px-6 py-16 mx-auto md:px-12 xl:py-5 "
-          style={{
-            marginTop: "-150px",
-          }}
+          // style={{
+          //   marginTop: "-150px",
+          // }}
         >
           <div className="flex items-center ">
             <div className="relative z-10 flex flex-col items-start  lg:w-3/5 xl:w-2/5">
@@ -170,6 +170,7 @@ const HomePage = () => {
                 className="mt-4 text-6xl font-bold leading-tight text-white sm:text-7xl animate__animated animate__fadeInLeft"
                 style={{
                   fontFamily: "NB-international",
+                  lineHeight: "1.1",
                 }}
               >
                 Welcome to Calgenius
@@ -212,7 +213,7 @@ const HomePage = () => {
               value={searchTerm}
               onChange={handleSearchChange}
             />
-            <div className="max-h-80 overflow-y-auto text-slate-200 text-sm">
+            <div className="max-h-80 pr-3 overflow-y-auto text-slate-200 text-sm">
               <div className="mt-1 rounded-md ">
                 {Object.keys(warna).map((category) => {
                   // Pencarian berdasarkan kategori
@@ -233,6 +234,10 @@ const HomePage = () => {
                             className="badan"
                             style={{
                               backgroundColor: `${warna[category][id].badan}`,
+                              borderTop: "1px solid black",
+                              borderBottom: "1px solid black",
+                              borderLeft: "1px solid black",
+                              borderRight: "1px solid black",
                             }}
                           >
                             <p className="bg-slate-700 -tracking-tight hover-text">
@@ -243,6 +248,9 @@ const HomePage = () => {
                             className="angka"
                             style={{
                               backgroundColor: `${warna[category][id].angka}`,
+                              borderBottom: "1px solid black",
+                              borderLeft: "1px solid black",
+                              borderRight: "1px solid black",
                             }}
                           >
                             <p className="bg-slate-700 -tracking-tight hover-text">
@@ -253,6 +261,9 @@ const HomePage = () => {
                             className="operator"
                             style={{
                               backgroundColor: `${warna[category][id].operator}`,
+                              borderBottom: "1px solid black",
+                              borderLeft: "1px solid black",
+                              borderRight: "1px solid black",
                             }}
                           >
                             <p className="bg-slate-700 -tracking-tight hover-text">
@@ -403,6 +414,14 @@ const HomePage = () => {
                   marginLeft: "-25px",
                 }}
               >
+                <li
+                  className="color"
+                  style={{
+                    fontFamily: "Roboto Slab",
+                  }}
+                >
+                  Default
+                </li>
                 <li
                   className="color"
                   style={{
