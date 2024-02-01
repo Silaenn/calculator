@@ -80,6 +80,10 @@ const NavbarComponent = () => {
     setIsOpen(false);
   };
 
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
   const handleClickClose = () => {
     setIsOpen(false);
   };
@@ -168,7 +172,7 @@ const NavbarComponent = () => {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 mt-2">
                 <Menu as="div" className="relative mr-0 mb-1">
                   <Popover>
-                    <PopoverTrigger>
+                    <PopoverTrigger onClick={() => handleOpen()}>
                       <div>
                         <Menu.Button
                           type="button"
@@ -284,7 +288,7 @@ const NavbarComponent = () => {
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Popover>
-                      <PopoverTrigger>
+                      <PopoverTrigger onClick={() => handleOpen()}>
                         <Menu.Button
                           type="button"
                           className="relative flex rounded-full border-2 border-gray-500 bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"

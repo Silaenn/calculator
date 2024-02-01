@@ -25,9 +25,10 @@ const HomePage = () => {
   const [nextColor, setNextColor] = useState("");
   const [isColorApplied, setIsColorApplied] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [audioRef] = useState(React.createRef());
+  const audioRef = useRef(); // Using useRef directly without useState for audio reference
 
   const playClickSound = () => {
+    audioRef.current.currentTime = 0; // Reset audio to start
     audioRef.current.play();
   };
 
@@ -329,6 +330,10 @@ const HomePage = () => {
             }}
           >
             <form name="calculator">
+              <audio ref={audioRef} hidden>
+                <source src={sound} type="audio/mp3" />
+                Maaf, browser Anda tidak mendukung elemen audio.
+              </audio>
               <input className="display" type="text" value={displayValue} />
               <div className="justify-center flex flex-wrap">
                 <button
@@ -388,20 +393,11 @@ const HomePage = () => {
                   </button>
                 ))}
               </div>
-              <audio ref={audioRef} hidden>
-                <source src={sound} type="audio/mp3" />
-                Maaf, browser Anda tidak mendukung elemen audio.
-              </audio>
             </form>
           </fieldset>
 
           <div className="petunjuk mt-4" data-aos="fade-left">
-            <h5
-              className="flex justify-center font-bold"
-              style={{
-                fontFamily: "Roboto Slab",
-              }}
-            >
+            <h5 className="flex justify-center font-bold">
               Petunjuk Mengubah Warna
             </h5>
             <div className="flex justify-center mt-3 mb-3">
@@ -412,7 +408,6 @@ const HomePage = () => {
               <li
                 style={{
                   listStyle: "-moz-initial",
-                  fontFamily: "Poppins",
                   fontSize: "15px",
                 }}
               >
@@ -424,62 +419,21 @@ const HomePage = () => {
                 style={{
                   marginTop: "5px",
                   marginLeft: "-25px",
+                  fontSize: "15px",
                 }}
               >
-                <li
-                  className="color"
-                  style={{
-                    fontFamily: "Roboto Slab",
-                  }}
-                >
-                  Default
-                </li>
-                <li
-                  className="color"
-                  style={{
-                    fontFamily: "Roboto Slab",
-                  }}
-                >
-                  Pastel
-                </li>
-                <li
-                  className="color"
-                  style={{
-                    fontFamily: "Roboto Slab",
-                  }}
-                >
-                  Cold
-                </li>
-                <li
-                  className="color"
-                  style={{
-                    fontFamily: "Roboto Slab",
-                  }}
-                >
-                  Sky
-                </li>
-                <li
-                  className="color"
-                  style={{
-                    fontFamily: "Roboto Slab",
-                  }}
-                >
-                  Rainbow
-                </li>
-                <li
-                  className="color"
-                  style={{
-                    fontFamily: "Roboto Slab",
-                  }}
-                >
-                  Coffee
-                </li>
+                <li className="color">Default</li>
+                <li className="color">Pastel</li>
+                <li className="color">Cold</li>
+                <li className="color">Sky</li>
+                <li className="color">Rainbow</li>
+                <li className="color">Coffee</li>
               </ul>
               <li
                 style={{
                   listStyle: "-moz-initial",
                   marginTop: "5px",
-                  fontFamily: "Roboto Slab",
+                  fontSize: "15px",
                 }}
               >
                 Dan kamu bisa menentukan pilihan warna yang kamu suka, silahkan
