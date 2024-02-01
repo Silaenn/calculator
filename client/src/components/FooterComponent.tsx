@@ -73,7 +73,7 @@ const FooterComponent = () => {
                   <img src={ig} width={30} className="mr-1" alt="Facebook" />
                 </div>
                 <p className="text-sm mt-1 hover:text-red-500">
-                  @smk_pgri_pekanbaru
+                  @Smk_pgri_pekanbaru
                 </p>
               </a>
             </div>

@@ -163,16 +163,16 @@ const HomePage = () => {
           <div className="flex items-center ">
             <div className="relative z-10 flex flex-col items-start  lg:w-3/5 xl:w-2/5">
               <span className="font-bold text-yellow-400 uppercase flex items-center animate__animated animate__fadeInDown">
-                SMK PGRI PEKANBARU
                 <img
                   src={smk}
-                  className="bg-white ml-2"
+                  className="bg-white mr-2"
                   style={{
                     borderRadius: "70px",
                   }}
                   width={50}
                   alt=""
                 />
+                SMK PGRI PEKANBARU
               </span>
               <h1
                 className="mt-4 text-6xl font-bold leading-tight text-white sm:text-7xl animate__animated animate__fadeInLeft"
