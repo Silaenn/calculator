@@ -412,7 +412,7 @@ const HomePage = () => {
               <li
                 style={{
                   listStyle: "-moz-initial",
-                  fontFamily: "Roboto Slab",
+                  fontFamily: "Poppins",
                   fontSize: "15px",
                 }}
               >
@@ -482,8 +482,8 @@ const HomePage = () => {
                   fontFamily: "Roboto Slab",
                 }}
               >
-                Dan yeah kamu bisa menentukan pilihan warna yang kamu suka,
-                silahkan mencoba ya!
+                Dan kamu bisa menentukan pilihan warna yang kamu suka, silahkan
+                mencoba ya!
               </li>
             </ol>
           </div>
