@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import arrow from "../assets/images/arrow.gif";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,7 @@ import body from "@/assets/images/body.png";
 import math from "@/assets/images/math.png";
 import smk from "@/assets/images/smk.png";
 import noData from "@/assets/images/no data.jpg";
+import sound from "@/assets/images/klik.mp3";
 
 const btnValues = [
   ["C", "DEL", "%", "÷"],
@@ -24,6 +25,11 @@ const HomePage = () => {
   const [nextColor, setNextColor] = useState("");
   const [isColorApplied, setIsColorApplied] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [audioRef] = useState(React.createRef());
+
+  const playClickSound = () => {
+    audioRef.current.play();
+  };
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -90,6 +96,7 @@ const HomePage = () => {
     } else {
       setAdditionalButtons([]);
     }
+    playClickSound();
   };
 
   const handleButtonClick = (btn) => {
@@ -134,6 +141,7 @@ const HomePage = () => {
     } else {
       setDisplayValue((prevValue) => prevValue + btn);
     }
+    playClickSound();
   };
 
   const scrollDown = (position) => {
@@ -380,6 +388,10 @@ const HomePage = () => {
                   </button>
                 ))}
               </div>
+              <audio ref={audioRef} hidden>
+                <source src={sound} type="audio/mp3" />
+                Maaf, browser Anda tidak mendukung elemen audio.
+              </audio>
             </form>
           </fieldset>
 
