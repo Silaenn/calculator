@@ -109,7 +109,16 @@ const HomePage = () => {
     } else if (btn === "=") {
       try {
         let expression = displayValue.replace(/×/g, "*");
+        expression = expression.replace(
+          /(\d+)π/g,
+          (_, p1) => p1 * 3.141592653589793
+        );
         expression = expression.replace(/÷/g, "/");
+        expression = expression.replace(/²/g, "**2");
+        expression = expression.replace(/³/g, "**3");
+        expression = expression.replace(/√(\d+(\.\d+)?)/g, (_, p1) =>
+          Math.sqrt(parseFloat(p1))
+        );
 
         expression = expression.replace(/(\d+)%/g, (_, p1) => p1 / 100);
         setDisplayValue(eval(expression).toString());
@@ -125,20 +134,43 @@ const HomePage = () => {
       });
     } else if (btn === "+/-") {
       setDisplayValue((prevValue) => {
-        if (prevValue.startsWith("-")) {
-          return prevValue.slice(1);
+        if (prevValue.includes("+") || prevValue.includes("-")) {
+          // Jika ekspresi sudah mengandung operasi penjumlahan atau pengurangan
+          let lastIndex =
+            prevValue.lastIndexOf("+") > prevValue.lastIndexOf("-")
+              ? prevValue.lastIndexOf("+")
+              : prevValue.lastIndexOf("-");
+          let firstPart = prevValue.substring(0, lastIndex + 1);
+          let lastPart = prevValue.substring(lastIndex + 1);
+
+          if (lastPart.startsWith("-")) {
+            // Hilangkan tanda negatif jika sudah ada
+            lastPart = lastPart.slice(1);
+          } else {
+            // Tambahkan tanda negatif jika belum ada
+            lastPart = "-" + lastPart;
+          }
+
+          return firstPart + lastPart;
         } else {
-          return "-" + prevValue;
+          // Jika ekspresi hanya berisi satu angka
+          if (prevValue.startsWith("-")) {
+            // Hilangkan tanda negatif jika sudah ada
+            return prevValue.slice(1);
+          } else {
+            // Tambahkan tanda negatif jika belum ada
+            return "-" + prevValue;
+          }
         }
       });
     } else if (btn === "π") {
-      setDisplayValue((prevValue) => prevValue + Math.PI);
+      setDisplayValue((prevValue) => prevValue + "π");
     } else if (btn === "√") {
       setDisplayValue((prevValue) => prevValue + "√");
     } else if (btn === "x²") {
-      setDisplayValue((prevValue) => prevValue + "^2");
+      setDisplayValue((prevValue) => prevValue + "²");
     } else if (btn === "x³") {
-      setDisplayValue((prevValue) => prevValue + "^3");
+      setDisplayValue((prevValue) => prevValue + "³");
     } else {
       setDisplayValue((prevValue) => prevValue + btn);
     }
