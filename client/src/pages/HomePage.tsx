@@ -166,7 +166,7 @@ const HomePage = () => {
     } else if (btn === "π") {
       setDisplayValue((prevValue) => prevValue + "π");
     } else if (btn === "√") {
-      setDisplayValue((prevValue) => prevValue + "√");
+      setDisplayValue((prevValue) => "√" + prevValue);
     } else if (btn === "x²") {
       setDisplayValue((prevValue) => prevValue + "²");
     } else if (btn === "x³") {
@@ -342,8 +342,7 @@ const HomePage = () => {
                       <p
                         className="text-black"
                         style={{
-                          fontFamily: "Anonymous Pro",
-                          fontSize: "17px",
+                          fontSize: "15px",
                         }}
                       >
                         Kategori Warna Tidak ditemukan
@@ -429,9 +428,7 @@ const HomePage = () => {
           </fieldset>
 
           <div className="petunjuk mt-4" data-aos="fade-left">
-            <h5 className="flex justify-center font-bold">
-              Petunjuk Mengubah Warna
-            </h5>
+            <h5 className="flex font-bold">Petunjuk Mengubah Warna</h5>
             <div className="flex justify-center mt-3 mb-3">
               <img src={body} width={300} alt="" />
             </div>
