@@ -14,7 +14,7 @@ const AboutProjek = () => {
             width: "70%",
           }}
         >
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-7">
             <p className="mt-2">
               Selamat datang di website CalGenius sebuah projek kalkulator yang
               digunakan untuk menguji kemampuan siswa dalam membuat suatu
@@ -47,7 +47,7 @@ const AboutProjek = () => {
             <span
               className="font-bold"
               style={{
-                marginTop: "-50px",
+                marginTop: "-35px",
                 fontSize: "20px",
               }}
             >
@@ -61,6 +61,7 @@ const AboutProjek = () => {
             className="peger rounded-sm"
             alt=""
             style={{
+              marginTop: "-50px",
               border: "3px double black",
               objectFit: "cover",
             }}
