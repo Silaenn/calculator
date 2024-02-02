@@ -9,9 +9,9 @@ const AboutProjek = () => {
           About Project
         </h1>
         <div
-          className="flex items-center justify-center gap-9"
+          className="flex items-center justify-center gap-6"
           style={{
-            width: "80%",
+            width: "70%",
           }}
         >
           <div className="flex flex-col gap-10">
