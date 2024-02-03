@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   MDBCol,
   MDBContainer,
@@ -10,13 +10,80 @@ import {
   MDBTypography,
   MDBIcon,
 } from "mdb-react-ui-kit";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import html from "@/assets/images/html.svg";
 import css from "@/assets/images/css.png";
 import js from "@/assets/images/js.png";
 import react from "@/assets/images/react.png";
 import deo from "@/assets/images/deo.jpg";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const formSchema = z.object({
+  email: z.string().email().min(2).max(50),
+  content: z
+    .string()
+    .min(1, {
+      message: "Bio must be at least 10 characters.",
+    })
+    .max(160, {
+      message: "Bio must not be longer than 30 characters.",
+    }),
+});
 
 const MyProfile = () => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleClickClose = () => {
+    setIsOpen(false);
+  };
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      content: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      console.log("masuk");
+
+      const response = await axios.post(
+        "http://localhost:2000/messages",
+        values
+      );
+
+      const newMessage = response.data.data;
+      console.log(newMessage);
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  }
+
   return (
     <section className=" h-auto w-auto" style={{ backgroundColor: "" }}>
       <div className=" flex justify-center flex-col items-center animate__animated animate__fadeInDown">
@@ -37,7 +104,7 @@ const MyProfile = () => {
           Terima kasih telah mengunjungi halaman saya!
         </p>
 
-        <p className="mt-1 mb-5 mby">Image by Freepik</p>
+        <p className="mt-1 mb-5 mby">~ Deo Keldi Silaen ~</p>
       </div>
 
       <div className="layout-row">
@@ -74,7 +141,76 @@ const MyProfile = () => {
             <div className="g1-ket">
               The technologies I use in this web development are. . .
             </div>
-            <div className="g1-feed">feedback for me</div>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <div className="g1-feed mt-2">feedback for me</div>
+              </AlertDialogTrigger>
+              {isOpen && (
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Kirimkan Masukan / Saran Anda kepada Kami
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      <Form {...form}>
+                        <form
+                          onSubmit={form.handleSubmit(onSubmit)}
+                          className="space-y-8"
+                        >
+                          <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Input
+                                    placeholder="Masukan Email Anda"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+
+                          <FormField
+                            control={form.control}
+                            name="content"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Textarea
+                                    placeholder="Masukkan Saran Anda"
+                                    {...field}
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+
+                          <div className="flex ml-auto">
+                            <Button
+                              variant="outline"
+                              className="ml-auto"
+                              onClick={() => handleClickClose()}
+                            >
+                              Batal
+                            </Button>
+
+                            <Button
+                              onClick={() => onSubmit}
+                              type="submit"
+                              className="flex ml-2"
+                            >
+                              Kirim
+                            </Button>
+                          </div>
+                        </form>
+                      </Form>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                </AlertDialogContent>
+              )}
+            </AlertDialog>
           </div>
         </div>
 
