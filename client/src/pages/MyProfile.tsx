@@ -34,7 +34,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import toast, { Toaster } from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 
 const formSchema = z.object({
   email: z.string().email().min(2).max(50),
@@ -53,6 +55,10 @@ const MyProfile = () => {
 
   const handleClickClose = () => {
     setIsOpen(false);
+  };
+
+  const handleOpen = () => {
+    setIsOpen(true);
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -74,11 +80,33 @@ const MyProfile = () => {
 
       const newMessage = response.data.data;
       console.log(newMessage);
-      toast({
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your request.",
-      });
+
       setIsOpen(false);
+
+      toast("Pesan Berhasil Terkirim", {
+        duration: 4000,
+        position: "bottom-right",
+
+        // Styling
+        style: {},
+        className: "",
+
+        // Custom Icon
+        icon: "✅",
+
+        // Change colors of success/error/loading icon
+        iconTheme: {
+          primary: "#000",
+          secondary: "#fff",
+        },
+
+        // Aria
+        ariaProps: {
+          role: "status",
+          "aria-live": "polite",
+        },
+      });
+      console.log("keluar");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -142,7 +170,7 @@ const MyProfile = () => {
               The technologies I use in this web development are. . .
             </div>
             <AlertDialog>
-              <AlertDialogTrigger asChild>
+              <AlertDialogTrigger asChild onClick={() => handleOpen()}>
                 <div className="g1-feed mt-2">feedback for me</div>
               </AlertDialogTrigger>
               {isOpen && (

@@ -549,3 +549,9 @@
 .animate__animated.animate__fadeInUp {
   --animate-duration: 2s;
 }
+
+@media screen and (min-width: 920px) and (max-width: 1493px) {
+  .main {
+    overflow-x: hidden;
+  }
+}

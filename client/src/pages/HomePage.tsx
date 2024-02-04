@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import arrow from "../assets/images/arrow.gif";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { warna } from "@/data/index";
+import { warna } from "../data/index.js";
 import body from "@/assets/images/body.png";
 import math from "@/assets/images/math.png";
 import smk from "@/assets/images/smk.png";
@@ -17,26 +16,26 @@ const btnValues = [
   [0, ".", "+/-", "="],
 ];
 
-// const warna = [{ badan: "green", angka: "red", operator: "yellow" }];
-
 const HomePage = () => {
   const [displayValue, setDisplayValue] = useState("");
   const [calculatorColor, setCalculatorColor] = useState("");
   const [nextColor, setNextColor] = useState("");
   const [isColorApplied, setIsColorApplied] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const audioRef = useRef(); // Using useRef directly without useState for audio reference
+  const audioRef = useRef();
 
   const playClickSound = () => {
     audioRef.current.currentTime = 0; // Reset audio to start
     audioRef.current.play();
   };
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setSearchTerm(e.target.value);
   };
 
-  const initializeNextColor = (category, id) => {
+  const initializeNextColor = (category: string, id: string) => {
     setNextColor(warna[category][id]);
     console.log("warna", warna[category][id]);
   };
@@ -63,8 +62,7 @@ const HomePage = () => {
     }
   }, []);
 
-  const getButtonClassName = (btn) => {
-    // Add conditions based on button values to determine the class name
+  const getButtonClassName = (btn: string | number) => {
     switch (btn) {
       case "C":
       case "DEL":
@@ -86,98 +84,108 @@ const HomePage = () => {
   const [additionalButtons, setAdditionalButtons] = useState([]);
 
   const handleScientificModeToggle = () => {
-    setScientificMode(!scientificMode);
+    setScientificMode((prevMode) => !prevMode);
+
     if (!scientificMode) {
       setAdditionalButtons([
-        { label: "Phi", value: "π" },
-        { label: "kuadrat", value: "√" },
-        { label: "Pangkat 2", value: "x²" },
-        { label: "pangkat 3", value: "x³" },
+        { value: "π" },
+        { value: "√" },
+        { value: "x²" },
+        { value: "x³" },
       ]);
     } else {
       setAdditionalButtons([]);
     }
+
+    // Play click sound
     playClickSound();
   };
 
-  const handleButtonClick = (btn) => {
+  const handleButtonClick = (btn: string) => {
     // Handle different button clicks here
-    if (btn === "C") {
-      setDisplayValue("");
-    } else if (btn === "DEL") {
-      setDisplayValue((prevValue) => prevValue.slice(0, -1));
-    } else if (btn === "=") {
-      try {
-        let expression = displayValue.replace(/×/g, "*");
-        expression = expression.replace(
-          /(\d+)π/g,
-          (_, p1) => p1 * 3.141592653589793
-        );
-        expression = expression.replace(/÷/g, "/");
-        expression = expression.replace(/²/g, "**2");
-        expression = expression.replace(/³/g, "**3");
-        expression = expression.replace(/√(\d+(\.\d+)?)/g, (_, p1) =>
-          Math.sqrt(parseFloat(p1))
-        );
-
-        expression = expression.replace(/(\d+)%/g, (_, p1) => p1 / 100);
-        setDisplayValue(eval(expression).toString());
-      } catch (error) {
-        setDisplayValue("Error");
-      }
-    } else if (btn === "%") {
-      setDisplayValue((prevValue) => {
-        if (!prevValue.includes("%")) {
-          return prevValue + "%";
-        }
-        return prevValue;
-      });
-    } else if (btn === "+/-") {
-      setDisplayValue((prevValue) => {
-        if (prevValue.includes("+") || prevValue.includes("-")) {
-          // Jika ekspresi sudah mengandung operasi penjumlahan atau pengurangan
-          let lastIndex =
-            prevValue.lastIndexOf("+") > prevValue.lastIndexOf("-")
-              ? prevValue.lastIndexOf("+")
-              : prevValue.lastIndexOf("-");
-          let firstPart = prevValue.substring(0, lastIndex + 1);
-          let lastPart = prevValue.substring(lastIndex + 1);
-
-          if (lastPart.startsWith("-")) {
-            // Hilangkan tanda negatif jika sudah ada
-            lastPart = lastPart.slice(1);
-          } else {
-            // Tambahkan tanda negatif jika belum ada
-            lastPart = "-" + lastPart;
-          }
-
-          return firstPart + lastPart;
-        } else {
-          // Jika ekspresi hanya berisi satu angka
-          if (prevValue.startsWith("-")) {
-            // Hilangkan tanda negatif jika sudah ada
-            return prevValue.slice(1);
-          } else {
-            // Tambahkan tanda negatif jika belum ada
-            return "-" + prevValue;
-          }
-        }
-      });
-    } else if (btn === "π") {
-      setDisplayValue((prevValue) => prevValue + "π");
-    } else if (btn === "√") {
-      setDisplayValue((prevValue) => "√" + prevValue);
-    } else if (btn === "x²") {
-      setDisplayValue((prevValue) => prevValue + "²");
-    } else if (btn === "x³") {
-      setDisplayValue((prevValue) => prevValue + "³");
-    } else {
-      setDisplayValue((prevValue) => prevValue + btn);
+    switch (btn) {
+      case "C":
+        setDisplayValue("");
+        break;
+      case "DEL":
+        setDisplayValue((prevValue) => prevValue.slice(0, -1));
+        break;
+      case "=":
+        evaluateExpression();
+        break;
+      case "%":
+        appendPercentage();
+        break;
+      case "+/-":
+        toggleSign();
+        break;
+      case "π":
+        appendSymbol("π");
+        break;
+      case "√":
+        appendSymbol("√");
+        break;
+      case "x²":
+        appendSymbol("²");
+        break;
+      case "x³":
+        appendSymbol("³");
+        break;
+      default:
+        setDisplayValue((prevValue) => prevValue + btn);
     }
     playClickSound();
   };
 
-  const scrollDown = (position) => {
+  const evaluateExpression = () => {
+    try {
+      let expression = displayValue
+        .replace(/×/g, "*")
+        .replace(/÷/g, "/")
+        .replace(/(\d+)π/g, (_, p1) => p1 * Math.PI)
+        .replace(/²/g, "**2")
+        .replace(/³/g, "**3")
+        .replace(/√(\d+(\.\d+)?)/g, (_, p1) => Math.sqrt(parseFloat(p1)))
+        .replace(/(\d+)%/g, (_, p1) => p1 / 100);
+
+      setDisplayValue(eval(`(${expression})`).toString());
+    } catch (error) {
+      setDisplayValue("Error");
+    }
+  };
+
+  const appendPercentage = () => {
+    setDisplayValue((prevValue) =>
+      prevValue.includes("%") ? prevValue : prevValue + "%"
+    );
+  };
+
+  const toggleSign = () => {
+    setDisplayValue((prevValue) => {
+      if (prevValue.includes("+") || prevValue.includes("-")) {
+        const lastIndex = Math.max(
+          prevValue.lastIndexOf("+"),
+          prevValue.lastIndexOf("-")
+        );
+        const firstPart = prevValue.substring(0, lastIndex + 1);
+        let lastPart = prevValue.substring(lastIndex + 1);
+
+        lastPart = lastPart.startsWith("-")
+          ? lastPart.slice(1)
+          : "-" + lastPart;
+
+        return firstPart + lastPart;
+      } else {
+        return prevValue.startsWith("-") ? prevValue.slice(1) : "-" + prevValue;
+      }
+    });
+  };
+
+  const appendSymbol = (symbol: string) => {
+    setDisplayValue((prevValue) => prevValue + symbol);
+  };
+
+  const scrollDown = (position: number) => {
     window.scrollTo({
       top: position,
       behavior: "smooth",
@@ -185,16 +193,11 @@ const HomePage = () => {
   };
 
   return (
-    <div className="w-100">
+    <div className="main">
       <div className="w-100 min-vh-100 bg-gray-800 flex items-center">
-        <div
-          className="container relative z-10 flex items-center px-6 py-16 mx-auto md:px-12 xl:py-5 "
-          // style={{
-          //   marginTop: "-150px",
-          // }}
-        >
+        <div className="container relative z-10 flex items-center px-6 py-16 mx-auto md:px-12 xl:py-5">
           <div className="flex items-center ">
-            <div className="relative z-10 flex flex-col items-start  lg:w-3/5 xl:w-2/5">
+            <div className="relative z-10 flex flex-col items-start  lg:w-3/5 xl:w-2/5 ">
               <span className="font-bold text-yellow-400 uppercase flex items-center animate__animated animate__fadeInDown">
                 <img
                   src={smk}
@@ -208,7 +211,7 @@ const HomePage = () => {
                 SMK PGRI PEKANBARU
               </span>
               <h1
-                className="mt-4 text-6xl font-bold leading-tight text-white sm:text-7xl animate__animated animate__fadeInLeft"
+                className="mt-4 text-6xl font-bold leading-tight text-white sm:text-7xl animate__animated animate__fadeInLeft welcome"
                 style={{
                   fontFamily: "NB-international",
                   lineHeight: "1.1",
@@ -236,6 +239,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+
       <header
         className="inti"
         id="containerL"
@@ -269,60 +273,52 @@ const HomePage = () => {
 
                   return (
                     <div key={category}>
-                      {Object.keys(warna[category]).map((id) => (
-                        <div key={id}>
-                          <div
-                            className="badan"
-                            style={{
-                              backgroundColor: `${warna[category][id].badan}`,
-                              borderTop: "1px solid black",
-                              borderBottom: "1px solid black",
-                              borderLeft: "1px solid black",
-                              borderRight: "1px solid black",
-                            }}
-                          >
-                            <p className="bg-slate-700 -tracking-tight hover-text">
-                              {warna[category][id].badan}
-                            </p>
-                          </div>
-                          <div
-                            className="angka"
-                            style={{
-                              backgroundColor: `${warna[category][id].angka}`,
-                              borderBottom: "1px solid black",
-                              borderLeft: "1px solid black",
-                              borderRight: "1px solid black",
-                            }}
-                          >
-                            <p className="bg-slate-700 -tracking-tight hover-text">
-                              {warna[category][id].angka}
-                            </p>
-                          </div>
-                          <div
-                            className="operator"
-                            style={{
-                              backgroundColor: `${warna[category][id].operator}`,
-                              borderBottom: "1px solid black",
-                              borderLeft: "1px solid black",
-                              borderRight: "1px solid black",
-                            }}
-                          >
-                            <p className="bg-slate-700 -tracking-tight hover-text">
-                              {warna[category][id].operator}
-                            </p>
-                          </div>
+                      {Object.keys(warna[category]).map((id) => {
+                        const { badan, angka, operator } = warna[category][id];
 
-                          <Button
-                            className="mt-3 mb-5 bg-violet-950"
-                            onClick={() => {
-                              initializeNextColor(category, id);
-                              applyNewColor();
-                            }}
-                          >
-                            Ganti Warna
-                          </Button>
-                        </div>
-                      ))}
+                        const styleDiv = {
+                          border: "1px solid black",
+                        };
+
+                        return (
+                          <div key={id}>
+                            <div
+                              className="badan"
+                              style={{ ...styleDiv, backgroundColor: badan }}
+                            >
+                              <p className="bg-slate-700 -tracking-tight hover-text">
+                                {badan}
+                              </p>
+                            </div>
+                            <div
+                              className="angka"
+                              style={{ ...styleDiv, backgroundColor: angka }}
+                            >
+                              <p className="bg-slate-700 -tracking-tight hover-text">
+                                {angka}
+                              </p>
+                            </div>
+                            <div
+                              className="operator"
+                              style={{ ...styleDiv, backgroundColor: operator }}
+                            >
+                              <p className="bg-slate-700 -tracking-tight hover-text">
+                                {operator}
+                              </p>
+                            </div>
+
+                            <Button
+                              className="mt-3 mb-5 bg-violet-950"
+                              onClick={() => {
+                                initializeNextColor(category, id);
+                                applyNewColor();
+                              }}
+                            >
+                              Ganti Warna
+                            </Button>
+                          </div>
+                        );
+                      })}
                     </div>
                   );
                 })}

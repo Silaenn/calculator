@@ -10,6 +10,7 @@ import profile from "../assets/images/profile.gif";
 // import Optionwarna from "./Optionwarna";
 import like from "@/assets/images/feedback.gif";
 import user from "@/assets/images/user.gif";
+// import { ToastContainer, toast } from "react-toastify";
 import {
   Popover,
   PopoverContent,
@@ -18,28 +19,17 @@ import {
 
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "./ui/input";
-import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import React from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 ("use client");
 
@@ -47,7 +37,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "./ui/button";
-import { useToast } from "@/components/ui/use-toast";
+// import { useToast } from "@/components/ui/use-toast";
+// import { ToastAction } from "./ui/toast";
 
 const formSchema = z.object({
   email: z.string().email().min(2).max(50),
@@ -72,7 +63,7 @@ function classNames(...classes) {
 
 const NavbarComponent = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
+  // const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(true);
 
   const handleClick = () => {
@@ -107,11 +98,32 @@ const NavbarComponent = () => {
 
       const newMessage = response.data.data;
       console.log(newMessage);
-      toast({
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your request.",
-      });
+
       setIsOpen(false);
+
+      toast("Pesan Berhasil Terkirim", {
+        duration: 4000,
+        position: "bottom-right",
+
+        // Styling
+        style: {},
+        className: "",
+
+        // Custom Icon
+        icon: "✅",
+
+        // Change colors of success/error/loading icon
+        iconTheme: {
+          primary: "#000",
+          secondary: "#fff",
+        },
+
+        // Aria
+        ariaProps: {
+          role: "status",
+          "aria-live": "polite",
+        },
+      });
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -283,6 +295,8 @@ const NavbarComponent = () => {
                     )}
                   </Popover>
                 </Menu>
+                {/* <Button onClick={notify}>Hai</Button>
+                <ToastContainer /> */}
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">

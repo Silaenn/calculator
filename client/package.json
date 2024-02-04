@@ -43,8 +43,11 @@
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.21.1",
     "react-toastify": "^10.0.4",
+    "sonner": "^1.4.0",
+    "sweetalert2": "^11.10.4",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
+    "vue-sweetalert2": "^5.0.5",
     "zod": "^3.22.4"
   },
   "devDependencies": {
