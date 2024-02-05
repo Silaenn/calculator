@@ -135,7 +135,7 @@ const MyProfile = () => {
         <p className="mt-1 mb-5 mby">~ Deo Keldi Silaen ~</p>
       </div>
 
-      <div className="layout-row">
+      <div className="layout-row flex-wrap">
         <div
           className="g1 animate__animated animate__fadeInLeft"
           style={{
@@ -143,18 +143,7 @@ const MyProfile = () => {
           }}
         >
           <div className="g1-one">
-            <div
-              className="g1-img"
-              style={{
-                width: "255px",
-                height: "255px",
-                margin: "0 auto",
-                borderRadius: "50%",
-                backgroundPosition: "50% 50%",
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
+            <div className="g1-img">
               <img
                 src={deo}
                 alt="About Me"
@@ -258,7 +247,7 @@ const MyProfile = () => {
                 <img
                   src={html}
                   alt=""
-                  className="w-36 animate__animated animate__rotateInUpLeft"
+                  className="w-36 animate__animated animate__rotateInUpLeft cod"
                 />
                 <p className="justify-center flex mt-3">HTML</p>
               </div>
@@ -277,7 +266,7 @@ const MyProfile = () => {
                 <img
                   src={css}
                   alt=""
-                  className="w-36 animate__animated animate__rotateInUpLeft"
+                  className="w-36 animate__animated animate__rotateInUpLeft cod"
                 />
                 <p className="justify-center flex mt-3">CSS</p>
               </div>
@@ -296,7 +285,7 @@ const MyProfile = () => {
                 <img
                   src={js}
                   alt=""
-                  className="w-36 animate__animated animate__rotateInUpLeft"
+                  className="w-36 animate__animated animate__rotateInUpLeft cod"
                 />
                 <p className="justify-center flex mt-3">JAVASCRIPT</p>
               </div>
@@ -316,7 +305,7 @@ const MyProfile = () => {
                 <img
                   src={react}
                   alt=""
-                  className="w-36 mb-2 animate__animated animate__rotateInUpLeft"
+                  className="w-36 mb-2 animate__animated animate__rotateInUpLeft cod"
                 />
                 <p className="justify-center flex mt-3">REACT</p>
               </div>

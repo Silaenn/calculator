@@ -383,7 +383,7 @@
   min-height: 560px;
   color: #ffffff;
   background-color: #003ecb;
-  flex: 0 0 45%;
+  flex: 1 1 100%;
   margin-left: 20px;
   margin-right: 20px;
   margin-bottom: 10px;
@@ -436,7 +436,7 @@
 .g2 {
   box-sizing: content-box;
   min-height: 598px;
-  flex: 0 0 55%;
+  flex: 1 1 100%;
   max-width: 50%;
   min-width: 50%;
   text-align: right;
@@ -533,6 +533,16 @@
   transform: scale(1); /* Scale it back to its original size on hover */
 }
 
+.g1-img {
+  width: 255px;
+  height: 255px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background-position: 50% 50%;
+  position: relative;
+  overflow: hidden;
+}
+
 .animate__animated.animate__rotateInUpLeft {
   --animate-duration: 2s;
 }
@@ -554,5 +564,102 @@
 @media screen and (min-width: 920px) and (max-width: 1493px) {
   .main {
     overflow-x: hidden;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .main {
+    overflow-x: hidden;
+  }
+
+  .item1 {
+    flex-wrap: wrap;
+  }
+
+  .kalku {
+    width: 900px;
+    margin-top: 30px;
+  }
+}
+
+@media screen and (min-width: 666px) and (max-width: 999px) {
+  .me {
+    width: 600px;
+  }
+}
+
+@media screen and (max-width: 665px) {
+  .me {
+    width: 500px;
+  }
+}
+
+@media screen and (max-width: 509px) {
+  .me {
+    width: 350px;
+    font-size: 13px;
+  }
+
+  .who {
+    font-size: 40px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .mby {
+    font-size: 13px;
+  }
+
+  .g1-img {
+    width: 200px;
+  }
+
+  .g1-ket {
+    font-size: 20px;
+  }
+
+  .cod {
+    width: 90px;
+  }
+}
+
+@media screen and (min-width: 700px) and (max-width: 999px) {
+  .layout-row {
+    flex-direction: row; /* Mengatur layout menjadi baris saat lebar layar besar */
+  }
+
+  .g1,
+  .g2 {
+    flex: 1 1 50%; /* Membagi ruang menjadi dua kolom */
+    max-width: none; /* Menghapus batasan lebar maksimum */
+  }
+
+  .g2 {
+    margin-top: 20px;
+  }
+
+  .about {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 300px) and (max-width: 699px) {
+  .layout-row {
+    flex-direction: row; /* Mengatur layout menjadi baris saat lebar layar besar */
+  }
+
+  .g1,
+  .g2 {
+    flex: 1 1 50%; /* Membagi ruang menjadi dua kolom */
+    max-width: none; /* Menghapus batasan lebar maksimum */
+  }
+
+  .g2 {
+    margin-top: 20px;
+  }
+  .about {
+    font-size: 13px;
   }
 }

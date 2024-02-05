@@ -9,13 +9,13 @@ const AboutProjek = () => {
           About Project
         </h1>
         <div
-          className="flex items-center justify-center gap-6"
+          className="flex flex-wrap items-center justify-center gap-6"
           style={{
             width: "70%",
           }}
         >
           <div className="flex flex-col gap-7">
-            <p className="mt-2 animate__animated animate__animated animate__slideInDown">
+            <p className="mt-2 animate__animated animate__animated animate__slideInDown about">
               Selamat datang di website CalGenius sebuah projek kalkulator yang
               digunakan untuk menguji kemampuan siswa dalam membuat suatu
               website, dan juga projek ini digunakan sebagai uji kompetensi
@@ -30,7 +30,7 @@ const AboutProjek = () => {
               keingintahuan dan eksplorasi konsep-konsep matematika. Berbeda
               dari kalkulator konvensional
             </p>
-            <p className="animate__animated animate__slideInUp">
+            <p className="animate__animated animate__slideInUp about">
               Calgenius menawarkan fitur-fitur inovatif seperti dapat mengubah
               warna sebuah kalkulator sesuai dengan favorit anda. Kami percaya
               bahwa pembelajaran matematika dapat menjadi lebih menarik ketika
@@ -61,7 +61,6 @@ const AboutProjek = () => {
             className="peger rounded-sm animate__animated animate__slideInRight"
             alt=""
             style={{
-              marginTop: "-50px",
               border: "3px double black",
               objectFit: "cover",
             }}
