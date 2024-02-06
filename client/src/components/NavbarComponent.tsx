@@ -101,7 +101,7 @@ const NavbarComponent = () => {
 
       setIsOpen(false);
 
-      toast("Pesan Berhasil Terkirim", {
+      toast.success("Pesan Berhasil Terkirim", {
         duration: 4000,
         position: "bottom-right",
 
@@ -126,6 +126,30 @@ const NavbarComponent = () => {
       });
     } catch (error) {
       console.error("Error submitting form:", error);
+
+      toast.error("Pesan Tidak Berhasil Terkirim", {
+        duration: 4000,
+        position: "bottom-right",
+
+        // Styling
+        style: {},
+        className: "",
+
+        // Custom Icon
+        icon: "❌",
+
+        // Change colors of success/error/loading icon
+        iconTheme: {
+          primary: "#000",
+          secondary: "#fff",
+        },
+
+        // Aria
+        ariaProps: {
+          role: "status",
+          "aria-live": "polite",
+        },
+      });
     }
   }
 
