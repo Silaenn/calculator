@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import NavbarComponent from "./components/NavbarComponent";
 import FooterComponent from "./components/FooterComponent";
-import LeftComponent from "./components/LeftComponent";
 import MyProfile from "./pages/MyProfile";
 import AboutProjek from "./pages/AboutProjek";
 
