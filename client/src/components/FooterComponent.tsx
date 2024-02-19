@@ -1,7 +1,4 @@
-import React, { useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import email from "@/assets/images/email.png";
 import wa from "@/assets/images/wa.png";
 import fb from "@/assets/images/fb.png";
@@ -9,6 +6,7 @@ import git from "@/assets/images/git.png";
 import ig from "@/assets/images/ig.png";
 import tele from "@/assets/images/tele.png";
 import map from "@/assets/images/maps.png";
+import { Link } from "react-router-dom";
 
 const FooterComponent = () => {
   const WAClick = () => {
@@ -160,7 +158,6 @@ const FooterComponent = () => {
             width="600"
             height="450"
             style={{ border: "0" }}
-            allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
           ></iframe>

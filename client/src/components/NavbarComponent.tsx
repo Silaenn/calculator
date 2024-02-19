@@ -1,7 +1,7 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import calculator from "../assets/images/calculator.png";
 import feedback from "../assets/images/mes.jpg";
@@ -29,7 +29,7 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import React from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 ("use client");
 
@@ -57,7 +57,7 @@ const navigation = [
   { name: "About Project", href: "/aboutProjek", current: false },
 ];
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 

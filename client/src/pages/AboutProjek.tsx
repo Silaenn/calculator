@@ -1,4 +1,3 @@
-import React from "react";
 import orng from "@/assets/images/orng.png";
 
 const AboutProjek = () => {
