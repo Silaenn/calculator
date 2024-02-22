@@ -193,7 +193,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="main">
+    <div className="main overflow-x-hidden">
       <div className="w-100 min-vh-100 bg-gray-800 flex items-center">
         <div className="container relative z-10 flex items-center px-6 py-16 mx-auto md:px-12 xl:py-5">
           <div className="flex items-center item1">

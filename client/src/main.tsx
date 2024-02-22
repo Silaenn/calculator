@@ -13,7 +13,7 @@ import { BrowserRouter } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop.tsx";
 // import { RocketIcon } from "@radix-ui/react-icons";
 // import { Toaster } from "@/components/ui/toaster";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
