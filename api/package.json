@@ -9,9 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.10.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
+    "nodemailer": "^6.9.10",
     "prisma": "^5.8.1"
   }
 }

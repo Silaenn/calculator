@@ -1,25 +1,31 @@
-// Layer untuk handle request dan response
-// Biasanya juga handle validasi body
-
 const express = require("express");
-const prisma = require("../db");
 const nodemailer = require("nodemailer");
+const { getAllMessage, createMessage } = require("./messageService");
 
 const router = express.Router();
 
+// Handle GET request to fetch all messages
 router.get("/", async (req, res) => {
-  const message = await getAllMessage();
-
-  res.send(message);
+  try {
+    const messages = await getAllMessage();
+    res.send(messages);
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
 });
 
+// Handle POST request to create a new message and send email
 router.post("/", async (req, res) => {
-  try {
-    const newMessage = req.body;
+  const newMessage = req.body;
 
+  try {
+    // Send email
+    await sendEmail(newMessage);
+
+    // Create message in the database
     const message = await createMessage(newMessage);
 
-    res.send({
+    res.status(201).send({
       data: message,
       message: "create message success",
     });
@@ -28,29 +34,30 @@ router.post("/", async (req, res) => {
   }
 });
 
-const { getAllMessage, createMessage } = require("./messageService");
-
-// Fungsi untuk mengirim email
+// Function to send email
 async function sendEmail(messageData) {
-  // Konfigurasi transporter Nodemailer
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
       user: "deokeldisilaen@gmail.com",
-      pass: "wes selow",
+      pass: "ttmv rhgf iujy nsvo",
     },
   });
 
-  // Buat pesan email
   const mailOptions = {
-    from: "deokeldisilaen@gmail.com",
-    to: messageData.email,
+    from: messageData.email,
+    to: "deokeldisilaen@gmail.com",
     subject: "Subject Email Anda",
     text: messageData.content,
   };
 
-  // Kirim email
-  await transporter.sendMail(mailOptions);
+  await transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log("Email terkirim: " + info.response);
+    }
+  });
 }
 
 module.exports = router;
