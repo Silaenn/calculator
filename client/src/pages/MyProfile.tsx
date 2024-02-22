@@ -119,7 +119,7 @@ const MyProfile = () => {
 
         <p className="who">Who Am I?</p>
 
-        <p className="text-center me">
+        <p className="text-justify me">
           Halo, nama saya adalah Deo Keldi Silaen. Saya adalah seorang yang
           senang mengeksplorasi berbagai bidang kehidupan. Saat ini, saya fokus
           pada pembelajaran mengenai coding, di sini saya mengejar passion saya
