@@ -167,7 +167,7 @@ const FooterComponent = () => {
           <Col>
             <p className="text-center px-md-0 mt-8  px-3">
               &copy;Copyright {new Date().getFullYear()} by
-              <span className="fw-bold">CalGenius</span>, All Right Reserved
+              <span className="fw-bold">DeoSilaen</span>, All Right Reserved
             </p>
           </Col>
         </Row>
