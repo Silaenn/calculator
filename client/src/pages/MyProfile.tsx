@@ -234,7 +234,7 @@ const MyProfile = () => {
         <div className="g2 animate__animated animate__fadeInUp">
           <div className="g2-one">
             <div
-              className="bidangH"
+              className="bidangH rounded-2xl"
               style={{
                 borderBottom: "20px solid #E34F26",
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
@@ -253,7 +253,7 @@ const MyProfile = () => {
               </div>
             </div>
             <div
-              className="bidangC"
+              className="bidangC rounded-2xl"
               style={{
                 borderBottom: "20px solid #214CE5",
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
@@ -272,7 +272,7 @@ const MyProfile = () => {
               </div>
             </div>
             <div
-              className="bidangJ"
+              className="bidangJ rounded-2xl"
               style={{
                 borderBottom: "20px solid #D6BA32",
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
@@ -291,7 +291,7 @@ const MyProfile = () => {
               </div>
             </div>
             <div
-              className="bidangR"
+              className="bidangR rounded-2xl"
               style={{
                 borderBottom: "20px solid #C3F1FD",
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",

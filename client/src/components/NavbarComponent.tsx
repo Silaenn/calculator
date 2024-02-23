@@ -98,6 +98,7 @@ const NavbarComponent = () => {
 
       const newMessage = response.data.data;
       console.log(newMessage);
+      form.reset();
 
       setIsOpen(false);
 
@@ -126,6 +127,7 @@ const NavbarComponent = () => {
       });
     } catch (error) {
       console.error("Error submitting form:", error);
+      form.reset();
 
       toast.error("Pesan Tidak Berhasil Terkirim", {
         duration: 4000,
