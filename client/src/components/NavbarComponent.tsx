@@ -226,7 +226,7 @@ const NavbarComponent = () => {
                       </div>
                     </PopoverTrigger>
                     {isOpen && (
-                      <PopoverContent className="w-auto h-16 flex items-center justify-center mr-32 p-3 mt-1">
+                      <PopoverContent className="w-auto h-16 flex items-center justify-center mr-0 p-3 mt-1">
                         <AlertDialog>
                           <AlertDialogTrigger
                             className="flex items-center h-auto"
@@ -343,7 +343,7 @@ const NavbarComponent = () => {
                       {isOpen && (
                         <PopoverContent
                           onClick={() => handleClick()}
-                          className="w-auto flex items-center pt-0 pb-0 h-auto mt-2"
+                          className="w-auto flex items-center pt-1 pb-1 h-auto mt-2"
                         >
                           <div
                             className="flex items-center mt-auto mb-auto"
