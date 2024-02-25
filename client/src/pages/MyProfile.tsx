@@ -1,40 +1,22 @@
 import React, { useState } from "react";
-import {
-  MDBCol,
-  MDBContainer,
-  MDBRow,
-  MDBCard,
-  MDBCardText,
-  MDBCardBody,
-  MDBCardImage,
-  MDBTypography,
-  MDBIcon,
-} from "mdb-react-ui-kit";
 
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-import html from "@/assets/images/html.svg";
-import css from "@/assets/images/css.png";
-import js from "@/assets/images/js.png";
-import react from "@/assets/images/react.png";
-import deo from "@/assets/images/deo.jpg";
+import { html, css, js, react, deo } from "@/assets/images/index.ts";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 
@@ -71,8 +53,6 @@ const MyProfile = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log("masuk");
-
       const response = await axios.post(
         "http://localhost:2000/messages",
         values
@@ -106,7 +86,6 @@ const MyProfile = () => {
           "aria-live": "polite",
         },
       });
-      console.log("keluar");
     } catch (error) {
       console.error("Error submitting form:", error);
     }

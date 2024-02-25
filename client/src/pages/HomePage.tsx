@@ -1,13 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { warna } from "../data/index.js";
-import body from "@/assets/images/body.png";
-import math from "@/assets/images/math.png";
-import smk from "@/assets/images/smk.png";
-import noData from "@/assets/images/no data.jpg";
-import sound from "@/assets/images/klik.mp3";
+import { warna } from "../data/index.ts";
+import { body, math, smk, noData, sound } from "@/assets/images/index.ts";
 
+// ini merupakan deskripsi nilai di kalkulator nya yg berupa operator dan angka nya
 const btnValues = [
   ["C", "DEL", "%", "÷"],
   [7, 8, 9, "×"],
@@ -22,11 +19,14 @@ const HomePage = () => {
   const [nextColor, setNextColor] = useState("");
   const [isColorApplied, setIsColorApplied] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const audioRef = useRef();
 
+  // ini fungsi nya membuat suara klik pada kalkulator nya
+  const audioRef = useRef<HTMLAudioElement>(null);
   const playClickSound = () => {
-    audioRef.current.currentTime = 0; // Reset audio to start
-    audioRef.current.play();
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0; // Reset audio to start
+      audioRef.current.play();
+    }
   };
 
   const handleSearchChange = (e: {
@@ -62,6 +62,7 @@ const HomePage = () => {
     }
   }, []);
 
+  // memeberikan css pada button angka dan operator nya
   const getButtonClassName = (btn: string | number) => {
     switch (btn) {
       case "C":
@@ -81,7 +82,9 @@ const HomePage = () => {
   };
 
   const [scientificMode, setScientificMode] = useState(false);
-  const [additionalButtons, setAdditionalButtons] = useState([]);
+  const [additionalButtons, setAdditionalButtons] = useState<
+    { value: string }[]
+  >([]);
 
   const handleScientificModeToggle = () => {
     setScientificMode((prevMode) => !prevMode);
@@ -139,7 +142,7 @@ const HomePage = () => {
 
   const evaluateExpression = () => {
     try {
-      let expression = displayValue
+      const expression = displayValue
         .replace(/×/g, "*")
         .replace(/÷/g, "/")
         .replace(/(\d+)π/g, (_, p1) => p1 * Math.PI)
