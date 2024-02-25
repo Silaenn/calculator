@@ -14,10 +14,15 @@ const btnValues = [
 ];
 
 const HomePage = () => {
+  // untuk state displayValue input kalkulator
   const [displayValue, setDisplayValue] = useState("");
+
+  // untuk state mengubah warna
   const [calculatorColor, setCalculatorColor] = useState("");
   const [nextColor, setNextColor] = useState("");
   const [isColorApplied, setIsColorApplied] = useState(false);
+
+  // untuk state pencarian warna
   const [searchTerm, setSearchTerm] = useState("");
 
   // ini fungsi nya membuat suara klik pada kalkulator nya
@@ -29,12 +34,14 @@ const HomePage = () => {
     }
   };
 
+  // mengambil
   const handleSearchChange = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
     setSearchTerm(e.target.value);
   };
 
+  // logika untuk mengubah warna kalkulator nya sesuai dengan warna yg telah di tentukan
   const initializeNextColor = (category: string, id: string) => {
     setNextColor(warna[category][id]);
     console.log("warna", warna[category][id]);
@@ -81,6 +88,7 @@ const HomePage = () => {
     }
   };
 
+  //fungsi nya untuk menambahkan operator baru saat di klik Scientific Calculator
   const [scientificMode, setScientificMode] = useState(false);
   const [additionalButtons, setAdditionalButtons] = useState<
     { value: string }[]
@@ -102,6 +110,57 @@ const HomePage = () => {
 
     // Play click sound
     playClickSound();
+  };
+
+  const appendPercentage = () => {
+    setDisplayValue((prevValue) =>
+      prevValue.includes("%") ? prevValue : prevValue + "%"
+    );
+  };
+
+  // ini logika untuk operator +/-
+  const toggleSign = () => {
+    setDisplayValue((prevValue) => {
+      if (prevValue.includes("+") || prevValue.includes("-")) {
+        const lastIndex = Math.max(
+          prevValue.lastIndexOf("+"),
+          prevValue.lastIndexOf("-")
+        );
+        const firstPart = prevValue.substring(0, lastIndex + 1);
+        let lastPart = prevValue.substring(lastIndex + 1);
+
+        lastPart = lastPart.startsWith("-")
+          ? lastPart.slice(1)
+          : "-" + lastPart;
+
+        return firstPart + lastPart;
+      } else {
+        return prevValue.startsWith("-") ? prevValue.slice(1) : "-" + prevValue;
+      }
+    });
+  };
+
+  // ini untuk logika mendapatkan hasil sesuai operator nya
+  const evaluateExpression = () => {
+    try {
+      const expression = displayValue
+        .replace(/×/g, "*")
+        .replace(/÷/g, "/")
+        .replace(/(\d+)π/g, (_, p1) => p1 * Math.PI)
+        .replace(/²/g, "**2")
+        .replace(/³/g, "**3")
+        .replace(/√(\d+(\.\d+)?)/g, (_, p1) => Math.sqrt(parseFloat(p1)))
+        .replace(/(\d+)%/g, (_, p1) => p1 / 100);
+
+      setDisplayValue(eval(`(${expression})`).toString());
+    } catch (error) {
+      setDisplayValue("Error");
+    }
+  };
+
+  // bagian khusus untuk logika Scientific Calculator
+  const appendSymbol = (symbol: string) => {
+    setDisplayValue((prevValue) => prevValue + symbol);
   };
 
   const handleButtonClick = (btn: string) => {
@@ -140,54 +199,6 @@ const HomePage = () => {
     playClickSound();
   };
 
-  const evaluateExpression = () => {
-    try {
-      const expression = displayValue
-        .replace(/×/g, "*")
-        .replace(/÷/g, "/")
-        .replace(/(\d+)π/g, (_, p1) => p1 * Math.PI)
-        .replace(/²/g, "**2")
-        .replace(/³/g, "**3")
-        .replace(/√(\d+(\.\d+)?)/g, (_, p1) => Math.sqrt(parseFloat(p1)))
-        .replace(/(\d+)%/g, (_, p1) => p1 / 100);
-
-      setDisplayValue(eval(`(${expression})`).toString());
-    } catch (error) {
-      setDisplayValue("Error");
-    }
-  };
-
-  const appendPercentage = () => {
-    setDisplayValue((prevValue) =>
-      prevValue.includes("%") ? prevValue : prevValue + "%"
-    );
-  };
-
-  const toggleSign = () => {
-    setDisplayValue((prevValue) => {
-      if (prevValue.includes("+") || prevValue.includes("-")) {
-        const lastIndex = Math.max(
-          prevValue.lastIndexOf("+"),
-          prevValue.lastIndexOf("-")
-        );
-        const firstPart = prevValue.substring(0, lastIndex + 1);
-        let lastPart = prevValue.substring(lastIndex + 1);
-
-        lastPart = lastPart.startsWith("-")
-          ? lastPart.slice(1)
-          : "-" + lastPart;
-
-        return firstPart + lastPart;
-      } else {
-        return prevValue.startsWith("-") ? prevValue.slice(1) : "-" + prevValue;
-      }
-    });
-  };
-
-  const appendSymbol = (symbol: string) => {
-    setDisplayValue((prevValue) => prevValue + symbol);
-  };
-
   const scrollDown = (position: number) => {
     window.scrollTo({
       top: position,
@@ -197,6 +208,7 @@ const HomePage = () => {
 
   return (
     <div className="main overflow-x-hidden">
+      {/* tampilan awal  */}
       <div className="w-100 min-vh-100 bg-gray-800 flex items-center">
         <div className="container relative z-10 flex items-center px-6 py-16 mx-auto md:px-12 xl:py-5">
           <div className="flex items-center item1">
@@ -382,6 +394,8 @@ const HomePage = () => {
                 >
                   {scientificMode ? "Simple" : "Scientific Calculator"}
                 </button>
+
+                {/* ini fungsi pada Scientific Calculator     */}
                 {scientificMode &&
                   additionalButtons.map((button, index) => (
                     <button
@@ -393,6 +407,8 @@ const HomePage = () => {
                       {button.value}
                     </button>
                   ))}
+
+                {/* ini fungsi mendapatkan operator dan angka nya      */}
                 {btnValues.flat().map((btn, i) => (
                   <button
                     className={getButtonClassName(btn)}
