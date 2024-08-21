@@ -32,13 +32,13 @@ const FooterComponent = () => {
               semakin personal!
             </p>
             <div className="no mb-1 mt-4">
-              <Link className="text-decoration-none" onClick={WAClick}>
+              <Link className="text-decoration-none" onClick={WAClick} to={""}>
                 <img src={wa} width={15} alt="" />
                 <p className="m-0 hover:text-red-500">+62 898-9311-672</p>
               </Link>
             </div>
             <div className="mail">
-              <Link className="text-decoration-none" onClick={Email}>
+              <Link className="text-decoration-none" onClick={Email} to={""}>
                 <img src={email} width={15} className="mr-1" alt="" />
                 <p className="m-0 hover:text-red-500">
                   deokeldisilaen.@gmail.com

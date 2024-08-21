@@ -13,13 +13,22 @@ const btnValues = [
   [0, ".", "+/-", "="],
 ];
 
+type calculator = {
+  badan: string;
+  angka: string;
+  operator: string;
+};
+
+type BackgroundColor = string | false | undefined;
+type color = any;
+
 const HomePage = () => {
   // untuk state displayValue input kalkulator
   const [displayValue, setDisplayValue] = useState("");
 
   // untuk state mengubah warna
-  const [calculatorColor, setCalculatorColor] = useState("");
-  const [nextColor, setNextColor] = useState("");
+  const [calculatorColor, setCalculatorColor] = useState<calculator>("");
+  const [nextColor, setNextColor] = useState<color>([]);
   const [isColorApplied, setIsColorApplied] = useState(false);
 
   // untuk state pencarian warna
@@ -143,7 +152,7 @@ const HomePage = () => {
   // ini untuk logika mendapatkan hasil sesuai operator nya
   const evaluateExpression = () => {
     try {
-      const expression = displayValue
+      const expression: string | number = displayValue
         .replace(/×/g, "*")
         .replace(/÷/g, "/")
         .replace(/(\d+)π/g, (_, p1) => p1 * Math.PI)
@@ -163,7 +172,7 @@ const HomePage = () => {
     setDisplayValue((prevValue) => prevValue + symbol);
   };
 
-  const handleButtonClick = (btn: string) => {
+  const handleButtonClick = (btn: string | number) => {
     // Handle different button clicks here
     switch (btn) {
       case "C":
@@ -419,7 +428,7 @@ const HomePage = () => {
                     style={{
                       backgroundColor:
                         isColorApplied &&
-                        (btn >= "0" && btn <= "9"
+                        ((btn >= "0" && btn <= "9"
                           ? calculatorColor && calculatorColor.angka
                           : btn === "%" ||
                             btn === "÷" ||
@@ -432,7 +441,7 @@ const HomePage = () => {
                             btn === "C" ||
                             btn === "DEL"
                           ? calculatorColor && calculatorColor.operator
-                          : ""),
+                          : false) as BackgroundColor),
                     }}
                   >
                     {btn}
