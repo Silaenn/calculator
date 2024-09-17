@@ -13,6 +13,8 @@ const btnValues = [
   [0, ".", "+/-", "="],
 ];
 
+// tes
+
 type calculator = {
   badan: string;
   angka: string;
