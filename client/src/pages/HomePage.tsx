@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { warna } from "../data/index.ts";
 import { body, math, smk, noData, sound } from "@/assets/images/index.ts";
+import { evaluate } from "mathjs";
 
 // ini merupakan deskripsi nilai di kalkulator nya yg berupa operator dan angka nya
 const btnValues = [
@@ -21,16 +22,23 @@ type calculator = {
   operator: string;
 };
 
-type BackgroundColor = string | false | undefined;
-type color = any;
-
 const HomePage = () => {
   // untuk state displayValue input kalkulator
   const [displayValue, setDisplayValue] = useState("");
 
   // untuk state mengubah warna
-  const [calculatorColor, setCalculatorColor] = useState<calculator>("");
-  const [nextColor, setNextColor] = useState<color>([]);
+  const [calculatorColor, setCalculatorColor] = useState<calculator>({
+    badan: "",
+    angka: "",
+    operator: "",
+  });
+
+  const [nextColor, setNextColor] = useState<calculator>({
+    badan: "",
+    angka: "",
+    operator: "",
+  });
+
   const [isColorApplied, setIsColorApplied] = useState(false);
 
   // untuk state pencarian warna
@@ -54,8 +62,9 @@ const HomePage = () => {
 
   // logika untuk mengubah warna kalkulator nya sesuai dengan warna yg telah di tentukan
   const initializeNextColor = (category: string, id: string) => {
-    setNextColor(warna[category][id]);
-    console.log("warna", warna[category][id]);
+    const color = warna[category][id] as calculator;
+    setNextColor(color);
+    console.log("warna", color);
   };
 
   const applyNewColor = () => {
@@ -97,6 +106,20 @@ const HomePage = () => {
       default:
         return "button digits";
     }
+  };
+
+  const getButtonStyle = (btn: string | number) => {
+    if (!isColorApplied) return {};
+    if (btn >= "0" && btn <= "9") {
+      return { backgroundColor: calculatorColor.angka };
+    } else if (
+      ["%", "÷", "×", "-", "+", ".", "+/-", "=", "C", "DEL"].includes(
+        btn as string
+      )
+    ) {
+      return { backgroundColor: calculatorColor.operator };
+    }
+    return {};
   };
 
   //fungsi nya untuk menambahkan operator baru saat di klik Scientific Calculator
@@ -154,17 +177,21 @@ const HomePage = () => {
   // ini untuk logika mendapatkan hasil sesuai operator nya
   const evaluateExpression = () => {
     try {
-      const expression: string | number = displayValue
+      // Replace custom operators with mathjs compatible operators
+      let expression = displayValue
         .replace(/×/g, "*")
         .replace(/÷/g, "/")
-        .replace(/(\d+)π/g, (_, p1) => p1 * Math.PI)
+        .replace(/(\d+)π/g, (_, p1) => `${p1} * pi`)
         .replace(/²/g, "**2")
         .replace(/³/g, "**3")
-        .replace(/√(\d+(\.\d+)?)/g, (_, p1) => Math.sqrt(parseFloat(p1)))
-        .replace(/(\d+)%/g, (_, p1) => p1 / 100);
+        .replace(/√(\d+(\.\d+)?)/g, (_, p1) => `sqrt(${p1})`)
+        .replace(/(\d+)%/g, (_, p1) => `${p1} / 100`);
 
-      setDisplayValue(eval(`(${expression})`).toString());
+      // Evaluate the expression using mathjs
+      const result = evaluate(expression);
+      setDisplayValue(result.toString());
     } catch (error) {
+      console.error("Error evaluating expression:", error);
       setDisplayValue("Error");
     }
   };
@@ -427,24 +454,7 @@ const HomePage = () => {
                     onClick={() => handleButtonClick(btn)}
                     value={btn}
                     key={i}
-                    style={{
-                      backgroundColor:
-                        isColorApplied &&
-                        ((btn >= "0" && btn <= "9"
-                          ? calculatorColor && calculatorColor.angka
-                          : btn === "%" ||
-                            btn === "÷" ||
-                            btn === "×" ||
-                            btn === "-" ||
-                            btn === "+" ||
-                            btn === "." ||
-                            btn === "+/-" ||
-                            btn === "=" ||
-                            btn === "C" ||
-                            btn === "DEL"
-                          ? calculatorColor && calculatorColor.operator
-                          : false) as BackgroundColor),
-                    }}
+                    style={getButtonStyle(btn)}
                   >
                     {btn}
                   </button>
