@@ -28,7 +28,6 @@ import {
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import React from "react";
 import toast from "react-hot-toast";
 
 ("use client");
@@ -54,7 +53,7 @@ const formSchema = z.object({
 
 const navigation = [
   { name: "Home", href: "/", current: true },
-  { name: "About Project", href: "/aboutProjek", current: false },
+  { name: "About Project", href: "/AboutProjek", current: false },
 ];
 
 function classNames(...classes: string[]) {
