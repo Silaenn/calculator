@@ -65,7 +65,10 @@ const NavbarComponent = () => {
   // const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(true);
 
-  const handleClick = () => {
+  const handleClick = (path: string) => {
+    navigate(path);
+  };
+  const handleClickProfile = () => {
     navigate("/myProfile");
     setIsOpen(false);
   };
@@ -191,7 +194,7 @@ const NavbarComponent = () => {
                     {navigation.map((item) => (
                       <a
                         key={item.name}
-                        href={item.href}
+                        onClick={() => handleClick(item.href)}
                         className={classNames(
                           item.current
                             ? `bg-gray-900 text-white no-underline`
@@ -343,7 +346,7 @@ const NavbarComponent = () => {
                       </PopoverTrigger>
                       {isOpen && (
                         <PopoverContent
-                          onClick={() => handleClick()}
+                          onClick={() => handleClickProfile()}
                           className="w-auto flex items-center pt-1 pb-1 h-auto mt-2"
                         >
                           <div
