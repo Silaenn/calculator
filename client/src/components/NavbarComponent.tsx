@@ -53,7 +53,7 @@ const formSchema = z.object({
 
 const navigation = [
   { name: "Home", href: "/", current: true },
-  { name: "About Project", href: "/AboutProjek", current: false },
+  { name: "About Project", href: "/aboutProjek", current: false },
 ];
 
 function classNames(...classes: string[]) {
