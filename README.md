@@ -15,7 +15,7 @@
 
 ## 🚀 Demo
 
-Anda dapat mengakses proyek ini secara langsung di: [CalGenius](https://deoosilaen.vercel.app)
+Anda dapat mengakses proyek ini secara langsung di: [CalGenius](https://calculatordeo.vercel.app/)
 
 ---
 
