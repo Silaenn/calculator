@@ -37,11 +37,6 @@ Anda dapat mengakses proyek ini secara langsung di: [CalGenius](https://calculat
 
 ---
 
-## 🛠️ Cara Menjalankan Proyek Secara Lokal
-
-1. Clone repositori ini:
-   ```bash
-   git clone https://github.com/username/calgenius.git
 
 
 
