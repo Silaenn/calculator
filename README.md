@@ -1,4 +1,4 @@
-# CalGenius - Scientific Calculator
+# CalGeniu - Scientific Calculator
 
 **CalGenius** adalah sebuah kalkulator ilmiah berbasis web yang dirancang untuk memberikan pengalaman menghitung yang nyaman, modern, dan personal! Dengan desain interaktif, pengguna dapat mengubah warna kalkulator sesuai preferensi untuk membuat pengalaman menghitung lebih menyenangkan.
 
