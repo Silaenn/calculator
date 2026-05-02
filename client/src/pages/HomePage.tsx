@@ -5,7 +5,6 @@ import { warna } from "../data/index.ts";
 import { body, math, smk, noData, sound } from "@/assets/images/index.ts";
 import { evaluate } from "mathjs";
 
-// ini merupakan deskripsi nilai di kalkulator nya yg berupa operator dan angka nya
 const btnValues = [
   ["C", "DEL", "%", "÷"],
   [7, 8, 9, "×"],
@@ -14,446 +13,291 @@ const btnValues = [
   [0, ".", "+/-", "="],
 ];
 
-// tes
-
 type calculator = {
   badan: string;
   angka: string;
   operator: string;
 };
 
+// ── Hook: scroll-triggered, fires ONCE only ──
+function useScrollReveal(ref: React.RefObject<HTMLElement>, threshold = 0.12) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return visible;
+}
+
 const HomePage = () => {
-  // untuk state displayValue input kalkulator
   const [displayValue, setDisplayValue] = useState("");
-
-  // untuk state mengubah warna
-  const [calculatorColor, setCalculatorColor] = useState<calculator>({
-    badan: "",
-    angka: "",
-    operator: "",
-  });
-
-  const [nextColor, setNextColor] = useState<calculator>({
-    badan: "",
-    angka: "",
-    operator: "",
-  });
-
+  const [isPopping, setIsPopping] = useState(false);
+  const [calculatorColor, setCalculatorColor] = useState<calculator>({ badan: "", angka: "", operator: "" });
+  const [nextColor, setNextColor] = useState<calculator>({ badan: "", angka: "", operator: "" });
   const [isColorApplied, setIsColorApplied] = useState(false);
-
-  // untuk state pencarian warna
   const [searchTerm, setSearchTerm] = useState("");
+  const [scientificMode, setScientificMode] = useState(false);
+  const [additionalButtons, setAdditionalButtons] = useState<{ value: string }[]>([]);
 
-  // ini fungsi nya membuat suara klik pada kalkulator nya
+  // refs for scroll reveal
+  const mainRef     = useRef<HTMLElement>(null);
+  const warnaRef    = useRef<HTMLDivElement>(null);
+  const calcRef     = useRef<HTMLFieldSetElement>(null);
+  const petunjukRef = useRef<HTMLDivElement>(null);
+
+  const mainVisible     = useScrollReveal(mainRef as React.RefObject<HTMLElement>, 0.05);
+  const warnaVisible    = useScrollReveal(warnaRef as React.RefObject<HTMLElement>, 0.1);
+  const calcVisible     = useScrollReveal(calcRef as React.RefObject<HTMLElement>, 0.1);
+  const petunjukVisible = useScrollReveal(petunjukRef as React.RefObject<HTMLElement>, 0.1);
+
   const audioRef = useRef<HTMLAudioElement>(null);
   const playClickSound = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0; // Reset audio to start
-      audioRef.current.play();
-    }
+    if (audioRef.current) { audioRef.current.currentTime = 0; audioRef.current.play(); }
   };
 
-  // mengambil
-  const handleSearchChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
+  useEffect(() => {
+    setIsPopping(true);
+    const t = setTimeout(() => setIsPopping(false), 150);
+    return () => clearTimeout(t);
+  }, [displayValue]);
+
+  const handleSearchChange = (e: { target: { value: React.SetStateAction<string> } }) =>
     setSearchTerm(e.target.value);
-  };
 
-  // logika untuk mengubah warna kalkulator nya sesuai dengan warna yg telah di tentukan
-  const initializeNextColor = (category: string, id: string) => {
-    const color = warna[category][id] as calculator;
-    setNextColor(color);
-    console.log("warna", color);
-  };
+  const initializeNextColor = (category: string, id: string) =>
+    setNextColor(warna[category][id] as calculator);
 
   const applyNewColor = () => {
     setIsColorApplied(true);
-
     setCalculatorColor(nextColor);
-
     localStorage.setItem("calculatorColor", JSON.stringify(nextColor));
   };
 
-  useEffect(() => {
-    if (nextColor) {
-      applyNewColor();
-    }
-  }, [nextColor]);
+  useEffect(() => { if (nextColor.badan) applyNewColor(); }, [nextColor]);
 
   useEffect(() => {
-    const storedColor = localStorage.getItem("calculatorColor");
-    if (storedColor) {
-      setCalculatorColor(JSON.parse(storedColor));
-      setIsColorApplied(true);
-    }
+    const stored = localStorage.getItem("calculatorColor");
+    if (stored) { setCalculatorColor(JSON.parse(stored)); setIsColorApplied(true); }
   }, []);
 
-  // memeberikan css pada button angka dan operator nya
   const getButtonClassName = (btn: string | number) => {
     switch (btn) {
-      case "C":
-      case "DEL":
-      case "%":
-      case "÷":
-      case "×":
-      case "-":
-      case "+":
-      case ".":
-      case "+/-":
-      case "=":
-        return `button mathButtons`;
-      default:
-        return "button digits";
+      case "C": case "DEL": return "button btn-danger";
+      case "=": return "button btn-equals";
+      case "%": case "÷": case "×": case "-": case "+": case ".": case "+/-":
+        return "button btn-operator";
+      default: return "button btn-digit";
     }
   };
 
   const getButtonStyle = (btn: string | number) => {
     if (!isColorApplied) return {};
-    if (btn >= "0" && btn <= "9") {
+    if (typeof btn === "number" || (typeof btn === "string" && btn >= "0" && btn <= "9"))
       return { backgroundColor: calculatorColor.angka };
-    } else if (
-      ["%", "÷", "×", "-", "+", ".", "+/-", "=", "C", "DEL"].includes(
-        btn as string
-      )
-    ) {
+    if (["%","÷","×","-","+",".","÷","+/-","=","C","DEL"].includes(btn as string))
       return { backgroundColor: calculatorColor.operator };
-    }
     return {};
   };
 
-  //fungsi nya untuk menambahkan operator baru saat di klik Scientific Calculator
-  const [scientificMode, setScientificMode] = useState(false);
-  const [additionalButtons, setAdditionalButtons] = useState<
-    { value: string }[]
-  >([]);
-
   const handleScientificModeToggle = () => {
-    setScientificMode((prevMode) => !prevMode);
-
-    if (!scientificMode) {
-      setAdditionalButtons([
-        { value: "π" },
-        { value: "√" },
-        { value: "x²" },
-        { value: "x³" },
-      ]);
-    } else {
-      setAdditionalButtons([]);
-    }
-
-    // Play click sound
+    setScientificMode((p) => !p);
+    setAdditionalButtons(!scientificMode
+      ? [{ value: "π" }, { value: "√" }, { value: "x²" }, { value: "x³" }]
+      : []);
     playClickSound();
   };
 
-  const appendPercentage = () => {
-    setDisplayValue((prevValue) =>
-      prevValue.includes("%") ? prevValue : prevValue + "%"
-    );
-  };
-
-  // ini logika untuk operator +/-
-  const toggleSign = () => {
-    setDisplayValue((prevValue) => {
-      if (prevValue.includes("+") || prevValue.includes("-")) {
-        const lastIndex = Math.max(
-          prevValue.lastIndexOf("+"),
-          prevValue.lastIndexOf("-")
-        );
-        const firstPart = prevValue.substring(0, lastIndex + 1);
-        let lastPart = prevValue.substring(lastIndex + 1);
-
-        lastPart = lastPart.startsWith("-")
-          ? lastPart.slice(1)
-          : "-" + lastPart;
-
-        return firstPart + lastPart;
-      } else {
-        return prevValue.startsWith("-") ? prevValue.slice(1) : "-" + prevValue;
-      }
-    });
-  };
-
-  // ini untuk logika mendapatkan hasil sesuai operator nya
   const evaluateExpression = () => {
     try {
-      // Replace custom operators with mathjs compatible operators
-      let expression = displayValue
-        .replace(/×/g, "*")
-        .replace(/÷/g, "/")
-        .replace(/(\d+)π/g, (_, p1) => `${p1} * pi`)
-        .replace(/²/g, "**2")
-        .replace(/³/g, "**3")
-        .replace(/√(\d+(\.\d+)?)/g, (_, p1) => `sqrt(${p1})`)
-        .replace(/(\d+)%/g, (_, p1) => `${p1} / 100`);
-
-      // Evaluate the expression using mathjs
-      const result = evaluate(expression);
-      setDisplayValue(result.toString());
-    } catch (error) {
-      console.error("Error evaluating expression:", error);
-      setDisplayValue("Error");
-    }
-  };
-
-  // bagian khusus untuk logika Scientific Calculator
-  const appendSymbol = (symbol: string) => {
-    setDisplayValue((prevValue) => prevValue + symbol);
+      const expr = displayValue
+        .replace(/×/g, "*").replace(/÷/g, "/")
+        .replace(/(\d+)π/g, (_, p) => `${p} * pi`)
+        .replace(/²/g, "**2").replace(/³/g, "**3")
+        .replace(/√(\d+(\.\d+)?)/g, (_, p) => `sqrt(${p})`)
+        .replace(/(\d+)%/g, (_, p) => `${p} / 100`);
+      setDisplayValue(evaluate(expr).toString());
+    } catch { setDisplayValue("Error"); }
   };
 
   const handleButtonClick = (btn: string | number) => {
-    // Handle different button clicks here
+    const symMap: Record<string, string> = { "π":"π","√":"√","x²":"²","x³":"³" };
     switch (btn) {
-      case "C":
-        setDisplayValue("");
-        break;
-      case "DEL":
-        setDisplayValue((prevValue) => prevValue.slice(0, -1));
-        break;
-      case "=":
-        evaluateExpression();
-        break;
-      case "%":
-        appendPercentage();
-        break;
+      case "C":   setDisplayValue(""); break;
+      case "DEL": setDisplayValue((v) => v.slice(0, -1)); break;
+      case "=":   evaluateExpression(); break;
+      case "%":   setDisplayValue((v) => v.includes("%") ? v : v + "%"); break;
       case "+/-":
-        toggleSign();
-        break;
-      case "π":
-        appendSymbol("π");
-        break;
-      case "√":
-        appendSymbol("√");
-        break;
-      case "x²":
-        appendSymbol("²");
-        break;
-      case "x³":
-        appendSymbol("³");
+        setDisplayValue((v) => {
+          if (v.includes("+") || v.includes("-")) {
+            const i = Math.max(v.lastIndexOf("+"), v.lastIndexOf("-"));
+            const a = v.substring(0, i + 1);
+            let b = v.substring(i + 1);
+            b = b.startsWith("-") ? b.slice(1) : "-" + b;
+            return a + b;
+          }
+          return v.startsWith("-") ? v.slice(1) : "-" + v;
+        });
         break;
       default:
-        setDisplayValue((prevValue) => prevValue + btn);
+        if (symMap[btn as string]) setDisplayValue((v) => v + symMap[btn as string]);
+        else setDisplayValue((v) => v + btn);
     }
     playClickSound();
   };
 
-  const scrollDown = (position: number) => {
-    window.scrollTo({
-      top: position,
-      behavior: "smooth",
-    });
-  };
+  const scrollDown = (pos: number) => window.scrollTo({ top: pos, behavior: "smooth" });
 
   return (
     <div className="main overflow-x-hidden">
-      {/* tampilan awal  */}
-      <div className="w-100 min-vh-100 bg-gray-800 flex items-center">
-        <div className="container relative z-10 flex items-center px-6 py-16 mx-auto md:px-12 xl:py-5">
-          <div className="flex items-center item1">
-            <div className="relative z-10 flex flex-col items-start  lg:w-3/5 xl:w-2/5 ">
-              <span className="font-bold text-yellow-400 uppercase flex items-center animate__animated animate__fadeInDown">
-                <img
-                  src={smk}
-                  className="bg-white mr-2"
-                  style={{
-                    borderRadius: "70px",
-                  }}
-                  width={50}
-                  alt=""
-                />
-                SMK PGRI PEKANBARU
-              </span>
-              <h1
-                className="mt-4 text-6xl font-bold leading-tight text-white sm:text-7xl animate__animated animate__fadeInLeft welcome"
-                style={{
-                  fontFamily: "NB-international",
-                  lineHeight: "1.1",
-                }}
-              >
-                Welcome to Calgenius
-                <br />
-                by Deo Silaen
-              </h1>
-              <button
-                className="block px-4 py-3 mt-10 text-lg font-bold text-gray-800 uppercase bg-white rounded-lg hover:bg-gray-100 animate__animated animate__fadeInUp"
-                onClick={() => scrollDown(800)}
-              >
-                Lihat Kalkulator
-              </button>
+
+      {/* ══════════════════════════════
+          HERO SECTION
+      ══════════════════════════════ */}
+      <div className="hero-section">
+        <div className="hero-bubble">CALC!</div>
+        <div className="hero-zap">✦ NEW!</div>
+        <div className="hero-star">★</div>
+
+        <div className="hero-inner">
+          <div className="hero-content">
+            <div className="hero-badge animate__animated animate__fadeInDown">
+              <img src={smk} style={{ borderRadius: "50%", width: 28, height: 28, objectFit: "cover" }} alt="SMK" />
+              SMK PGRI PEKANBARU
             </div>
-            <div className="ml-auto flex">
-              <img
-                src={math}
-                width={600}
-                alt=""
-                className="animate__animated animate__fadeInRight kalku"
-              />
-            </div>
+            <h1 className="hero-title animate__animated animate__fadeInLeft">
+              Welcome to<br />
+              <span className="hero-title-accent">Calgenius</span>
+            </h1>
+            <p className="hero-sub animate__animated animate__fadeInLeft">
+              by <strong>Deo Silaen</strong> — Kalkulator serba bisa
+            </p>
+            <button className="hero-cta animate__animated animate__fadeInUp" onClick={() => scrollDown(800)}>
+              Lihat Kalkulator ↓
+            </button>
+          </div>
+          <div className="hero-img-wrap animate__animated animate__fadeInRight">
+            <img src={math} alt="Kalkulator ilustrasi" className="hero-img" />
           </div>
         </div>
       </div>
 
-      <header
-        className="inti"
-        id="containerL"
-        style={{
-          marginTop: "90px",
-        }}
-      >
+      {/* ══════════════════════════════
+          MAIN CONTENT SECTION
+      ══════════════════════════════ */}
+      <main className="main-section" ref={mainRef}>
+        {/* Background decorations */}
+        <div className="main-bg-deco" aria-hidden="true">
+          <div className="main-deco-1" />
+          <div className="main-deco-2" />
+          <div className="main-deco-3" />
+          <div className="main-deco-dots" />
+        </div>
+
+        {/* Section heading */}
+        <div className={`main-heading-wrap reveal-fade ${mainVisible ? "revealed" : ""}`}>
+          <div className="main-section-tag">⚡ Kalkulator Interaktif</div>
+          <h2 className="main-heading">Hitung. Warnai. Ekspresikan.</h2>
+          <p className="main-subheading">
+            Sesuaikan tampilan kalkulator dengan warna favoritmu,
+            atau aktifkan mode scientific untuk perhitungan yang lebih kompleks.
+          </p>
+        </div>
+
         <div className="containerL">
-          <div className="warna mt-4" data-aos="fade-right">
-            <h5 className="justify-center flex font-bold">
-              Tentukan Warna Favoritmu
-            </h5>
+          {/* ── Panel kiri: Pilih Warna ── */}
+          <div
+            className={`panel warna reveal-left ${warnaVisible ? "revealed" : ""}`}
+            ref={warnaRef}
+          >
+            <h5>🎨 Pilih Warna</h5>
             <Input
               placeholder="Cari Jenis Warna"
               className="mb-3"
               value={searchTerm}
               onChange={handleSearchChange}
+              style={{ border: "2px solid var(--nb-black)", borderRadius: 8, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
             />
-            <div className="max-h-80 pr-3 overflow-y-auto text-slate-200 text-sm">
-              <div className="mt-1 rounded-md ">
-                {Object.keys(warna).map((category) => {
-                  // Pencarian berdasarkan kategori
-                  const isCategoryMatched = category
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase());
-
-                  // Menampilkan pesan "Kategori tidak ada" jika tidak ada kategori yang cocok
-                  if (!isCategoryMatched) {
-                    return null; // Tidak menampilkan apapun jika kategori tidak cocok dengan pencarian
-                  }
-
-                  return (
-                    <div key={category}>
-                      {Object.keys(warna[category]).map((id) => {
-                        const { badan, angka, operator } = warna[category][id];
-
-                        const styleDiv = {
-                          border: "1px solid black",
-                        };
-
-                        return (
-                          <div key={id}>
-                            <div
-                              className="badan"
-                              style={{ ...styleDiv, backgroundColor: badan }}
-                            >
-                              <p className="bg-slate-700 -tracking-tight hover-text">
-                                {badan}
-                              </p>
-                            </div>
-                            <div
-                              className="angka"
-                              style={{ ...styleDiv, backgroundColor: angka }}
-                            >
-                              <p className="bg-slate-700 -tracking-tight hover-text">
-                                {angka}
-                              </p>
-                            </div>
-                            <div
-                              className="operator"
-                              style={{ ...styleDiv, backgroundColor: operator }}
-                            >
-                              <p className="bg-slate-700 -tracking-tight hover-text">
-                                {operator}
-                              </p>
-                            </div>
-
-                            <Button
-                              className="mt-3 mb-5 bg-violet-950"
-                              onClick={() => {
-                                initializeNextColor(category, id);
-                                applyNewColor();
-                              }}
-                            >
-                              Ganti Warna
-                            </Button>
+            <div className="swatch-scroll">
+              {Object.keys(warna).map((category) => {
+                if (!category.toLowerCase().includes(searchTerm.toLowerCase())) return null;
+                return (
+                  <div key={category}>
+                    {Object.keys(warna[category]).map((id) => {
+                      const { badan, angka, operator } = warna[category][id];
+                      const bd = { border: "2px solid var(--nb-black)" };
+                      return (
+                        <div key={id} className="swatch-group">
+                          <div className="swatch-item" style={{ ...bd, backgroundColor: badan, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
+                            <span className="swatch-label">{badan}</span>
                           </div>
-                        );
-                      })}
-                    </div>
-                  );
-                })}
-                {/* Menampilkan pesan "Kategori tidak ada" jika tidak ada kategori yang cocok dengan pencarian */}
-                {Object.keys(warna).length > 0 &&
-                  Object.keys(warna).every(
-                    (category) =>
-                      !category.toLowerCase().includes(searchTerm.toLowerCase())
-                  ) && (
-                    <div className="flex justify-center items-center h-60 flex-col">
-                      <img
-                        src={noData}
-                        width={200}
-                        className="mb-6 mt-2"
-                        alt=""
-                      />
-                      <p
-                        className="text-black"
-                        style={{
-                          fontSize: "15px",
-                        }}
-                      >
-                        Kategori Warna Tidak ditemukan
-                      </p>
-                    </div>
-                  )}
-              </div>
+                          <div className="swatch-item" style={{ ...bd, backgroundColor: angka }}>
+                            <span className="swatch-label">{angka}</span>
+                          </div>
+                          <div className="swatch-item" style={{ ...bd, backgroundColor: operator, borderBottomLeftRadius: 6, borderBottomRightRadius: 6 }}>
+                            <span className="swatch-label">{operator}</span>
+                          </div>
+                          <Button className="btn-ganti" onClick={() => { initializeNextColor(category, id); applyNewColor(); }}>
+                            Ganti Warna
+                          </Button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+              {Object.keys(warna).every(c => !c.toLowerCase().includes(searchTerm.toLowerCase())) && (
+                <div className="no-data">
+                  <img src={noData} width={140} className="mb-4" alt="Tidak ada data" />
+                  <p style={{ fontSize: 13, fontWeight: 700 }}>Kategori tidak ditemukan</p>
+                </div>
+              )}
             </div>
           </div>
 
+          {/* ── Kalkulator ── */}
           <fieldset
             id="container"
-            data-aos="zoom-in"
-            style={{
-              backgroundColor: isColorApplied ? calculatorColor.badan : "",
-            }}
+            ref={calcRef}
+            className={`reveal-up ${calcVisible ? "revealed" : ""}`}
+            style={{ backgroundColor: isColorApplied ? calculatorColor.badan : "" }}
           >
             <form name="calculator">
-              <audio ref={audioRef} hidden>
-                <source src={sound} type="audio/mp3" />
-                Maaf, browser Anda tidak mendukung elemen audio.
-              </audio>
-              <input className="display" type="text" value={displayValue} />
-              <div className="justify-center flex flex-wrap">
-                <button
-                  type="button"
-                  style={{
-                    width: "250px",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    backgroundColor: "#DDE6ED",
-                    border: "2px solid #181818",
-                    marginBottom: "5px",
-                    fontWeight: "bold",
-                    color: "black",
-                  }}
-                  onClick={handleScientificModeToggle}
-                >
-                  {scientificMode ? "Simple" : "Scientific Calculator"}
+              <audio ref={audioRef} hidden><source src={sound} type="audio/mp3" /></audio>
+              <div className="calc-brand">CALGENIUS FX-1</div>
+              <input
+                className={`display ${isPopping ? "display-pop" : ""}`}
+                type="text"
+                value={displayValue}
+                readOnly
+                placeholder="0"
+              />
+              <div className="btn-grid">
+                <button type="button" className="button btn-scientific" onClick={handleScientificModeToggle}>
+                  {scientificMode ? "⬅ Simple" : "Scientific ⚗️"}
                 </button>
-
-                {/* ini fungsi pada Scientific Calculator     */}
-                {scientificMode &&
-                  additionalButtons.map((button, index) => (
-                    <button
-                      type="button"
-                      key={index}
-                      className="button mathButtons"
-                      onClick={() => handleButtonClick(button.value)}
-                    >
-                      {button.value}
-                    </button>
-                  ))}
-
-                {/* ini fungsi mendapatkan operator dan angka nya      */}
+                {scientificMode && additionalButtons.map((b, i) => (
+                  <button type="button" key={i} className="button btn-sci-extra" onClick={() => handleButtonClick(b.value)}>
+                    {b.value}
+                  </button>
+                ))}
                 {btnValues.flat().map((btn, i) => (
                   <button
                     className={getButtonClassName(btn)}
                     type="button"
-                    onClick={() => handleButtonClick(btn)}
-                    value={btn}
                     key={i}
+                    value={String(btn)}
+                    onClick={() => handleButtonClick(btn)}
                     style={getButtonStyle(btn)}
                   >
                     {btn}
@@ -463,51 +307,32 @@ const HomePage = () => {
             </form>
           </fieldset>
 
-          <div className="petunjuk mt-4" data-aos="fade-left">
-            <h5 className="flex font-bold">Petunjuk Mengubah Warna</h5>
-            <div className="flex justify-center mt-3 mb-3">
-              <img src={body} width={300} alt="" />
+          {/* ── Panel kanan: Petunjuk ── */}
+          <div
+            className={`panel petunjuk reveal-right ${petunjukVisible ? "revealed" : ""}`}
+            ref={petunjukRef}
+          >
+            <h5>📖 Petunjuk</h5>
+            <div className="flex justify-center mt-3 mb-4">
+              <img src={body} width={220} alt="Petunjuk warna"
+                style={{ border: "2.5px solid var(--nb-black)", borderRadius: 8, boxShadow: "4px 4px 0px var(--nb-black)" }}
+              />
             </div>
-
-            <ol>
-              <li
-                style={{
-                  listStyle: "-moz-initial",
-                  fontSize: "15px",
-                }}
-              >
-                Dalam mencari warna hanya terdapat beberapa opsi, anda bisa
-                ketikan ini :
-                <br />
-              </li>
-              <ul
-                style={{
-                  marginTop: "5px",
-                  marginLeft: "-25px",
-                  fontSize: "15px",
-                }}
-              >
-                <li className="color">Default</li>
-                <li className="color">Pastel</li>
-                <li className="color">Cold</li>
-                <li className="color">Sky</li>
-                <li className="color">Rainbow</li>
-                <li className="color">Coffee</li>
-              </ul>
-              <li
-                style={{
-                  listStyle: "-moz-initial",
-                  marginTop: "5px",
-                  fontSize: "15px",
-                }}
-              >
-                Dan kamu bisa menentukan pilihan warna yang kamu suka, silahkan
-                mencoba ya!
-              </li>
-            </ol>
+            <p style={{ fontSize: 13, fontWeight: 700, marginBottom: 8 }}>
+              Cari warna dengan ketik salah satu:
+            </p>
+            <div className="color-tags">
+              {["Default","Pastel","Cold","Sky","Rainbow","Coffee"].map((tag) => (
+                <span key={tag} className="color-tag">{tag}</span>
+              ))}
+            </div>
+            <p style={{ fontSize: 13, marginTop: 14, lineHeight: 1.7 }}>
+              Pilih warna favoritmu lalu klik <strong>Ganti Warna</strong> untuk mengubah tampilan kalkulator!
+            </p>
           </div>
         </div>
-      </header>
+      </main>
+
     </div>
   );
 };
