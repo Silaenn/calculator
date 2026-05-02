@@ -70,6 +70,11 @@ body {
   font-family: 'Space Grotesk', sans-serif;
   margin: 0;
   padding: 0;
+  overscroll-behavior: none;
+}
+
+html {
+  overscroll-behavior: none;
 }
 
 h1,
