@@ -40,7 +40,11 @@ function useScrollReveal(ref: React.RefObject<HTMLElement>, threshold = 0.12) {
   return visible;
 }
 
-const HomePage = () => {
+interface HomePageProps {
+  isNavbarScrolled?: boolean;
+}
+
+const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
   const [displayValue, setDisplayValue] = useState("");
   const [isPopping, setIsPopping] = useState(false);
   const [calculatorColor, setCalculatorColor] = useState<calculator>({ badan: "", angka: "", operator: "" });
@@ -159,181 +163,192 @@ const HomePage = () => {
   const scrollDown = (pos: number) => window.scrollTo({ top: pos, behavior: "smooth" });
 
   return (
-    <div className="main overflow-x-hidden">
-
+    <>
       {/* ══════════════════════════════
-          HERO SECTION
+          SPACER: Mencegah konten tertutup navbar fixed
       ══════════════════════════════ */}
-      <div className="hero-section">
-        <div className="hero-bubble">CALC!</div>
-        <div className="hero-zap">✦ NEW!</div>
-        <div className="hero-star">★</div>
+      <div 
+        className={`transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+          isNavbarScrolled ? "h-20" : "h-16"
+        }`} 
+      />
 
-        <div className="hero-inner">
-          <div className="hero-content">
-            <div className="hero-badge animate__animated animate__fadeInDown">
-              <img src={smk} style={{ borderRadius: "50%", width: 28, height: 28, objectFit: "cover" }} alt="SMK" />
-              SMK PGRI PEKANBARU
+      <div className="main overflow-x-hidden">
+
+        {/* ══════════════════════════════
+            HERO SECTION
+        ══════════════════════════════ */}
+        <div className="hero-section">
+          <div className="hero-bubble">CALC!</div>
+          <div className="hero-zap">✦ NEW!</div>
+          <div className="hero-star">★</div>
+
+          <div className="hero-inner">
+            <div className="hero-content">
+              <div className="hero-badge animate__animated animate__fadeInDown">
+                <img src={smk} style={{ borderRadius: "50%", width: 28, height: 28, objectFit: "cover" }} alt="SMK" />
+                SMK PGRI PEKANBARU
+              </div>
+              <h1 className="hero-title animate__animated animate__fadeInLeft">
+                Welcome to<br />
+                <span className="hero-title-accent">Calgenius</span>
+              </h1>
+              <p className="hero-sub animate__animated animate__fadeInLeft">
+                by <strong>Deo Silaen</strong> — Kalkulator serba bisa
+              </p>
+              <button className="hero-cta animate__animated animate__fadeInUp" onClick={() => scrollDown(800)}>
+                Lihat Kalkulator ↓
+              </button>
             </div>
-            <h1 className="hero-title animate__animated animate__fadeInLeft">
-              Welcome to<br />
-              <span className="hero-title-accent">Calgenius</span>
-            </h1>
-            <p className="hero-sub animate__animated animate__fadeInLeft">
-              by <strong>Deo Silaen</strong> — Kalkulator serba bisa
+            <div className="hero-img-wrap animate__animated animate__fadeInRight">
+              <img src={math} alt="Kalkulator ilustrasi" className="hero-img" />
+            </div>
+          </div>
+        </div>
+
+        {/* ══════════════════════════════
+            MAIN CONTENT SECTION
+        ══════════════════════════════ */}
+        <main className="main-section" ref={mainRef}>
+          {/* Background decorations */}
+          <div className="main-bg-deco" aria-hidden="true">
+            <div className="main-deco-1" />
+            <div className="main-deco-2" />
+            <div className="main-deco-3" />
+            <div className="main-deco-dots" />
+          </div>
+
+          {/* Section heading */}
+          <div className={`main-heading-wrap reveal-fade ${mainVisible ? "revealed" : ""}`}>
+            <div className="main-section-tag">⚡ Kalkulator Interaktif</div>
+            <h2 className="main-heading">Hitung. Warnai. Ekspresikan.</h2>
+            <p className="main-subheading">
+              Sesuaikan tampilan kalkulator dengan warna favoritmu,
+              atau aktifkan mode scientific untuk perhitungan yang lebih kompleks.
             </p>
-            <button className="hero-cta animate__animated animate__fadeInUp" onClick={() => scrollDown(800)}>
-              Lihat Kalkulator ↓
-            </button>
-          </div>
-          <div className="hero-img-wrap animate__animated animate__fadeInRight">
-            <img src={math} alt="Kalkulator ilustrasi" className="hero-img" />
-          </div>
-        </div>
-      </div>
-
-      {/* ══════════════════════════════
-          MAIN CONTENT SECTION
-      ══════════════════════════════ */}
-      <main className="main-section" ref={mainRef}>
-        {/* Background decorations */}
-        <div className="main-bg-deco" aria-hidden="true">
-          <div className="main-deco-1" />
-          <div className="main-deco-2" />
-          <div className="main-deco-3" />
-          <div className="main-deco-dots" />
-        </div>
-
-        {/* Section heading */}
-        <div className={`main-heading-wrap reveal-fade ${mainVisible ? "revealed" : ""}`}>
-          <div className="main-section-tag">⚡ Kalkulator Interaktif</div>
-          <h2 className="main-heading">Hitung. Warnai. Ekspresikan.</h2>
-          <p className="main-subheading">
-            Sesuaikan tampilan kalkulator dengan warna favoritmu,
-            atau aktifkan mode scientific untuk perhitungan yang lebih kompleks.
-          </p>
-        </div>
-
-        <div className="containerL">
-          {/* ── Panel kiri: Pilih Warna ── */}
-          <div
-            className={`panel warna reveal-left ${warnaVisible ? "revealed" : ""}`}
-            ref={warnaRef}
-          >
-            <h5>🎨 Pilih Warna</h5>
-            <Input
-              placeholder="Cari Jenis Warna"
-              className="mb-3"
-              value={searchTerm}
-              onChange={handleSearchChange}
-              style={{ border: "2px solid var(--nb-black)", borderRadius: 8, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
-            />
-            <div className="swatch-scroll">
-              {Object.keys(warna).map((category) => {
-                if (!category.toLowerCase().includes(searchTerm.toLowerCase())) return null;
-                return (
-                  <div key={category}>
-                    {Object.keys(warna[category]).map((id) => {
-                      const { badan, angka, operator } = warna[category][id];
-                      const bd = { border: "2px solid var(--nb-black)" };
-                      return (
-                        <div key={id} className="swatch-group">
-                          <div className="swatch-item" style={{ ...bd, backgroundColor: badan, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
-                            <span className="swatch-label">{badan}</span>
-                          </div>
-                          <div className="swatch-item" style={{ ...bd, backgroundColor: angka }}>
-                            <span className="swatch-label">{angka}</span>
-                          </div>
-                          <div className="swatch-item" style={{ ...bd, backgroundColor: operator, borderBottomLeftRadius: 6, borderBottomRightRadius: 6 }}>
-                            <span className="swatch-label">{operator}</span>
-                          </div>
-                          <Button className="btn-ganti" onClick={() => { initializeNextColor(category, id); applyNewColor(); }}>
-                            Ganti Warna
-                          </Button>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-              })}
-              {Object.keys(warna).every(c => !c.toLowerCase().includes(searchTerm.toLowerCase())) && (
-                <div className="no-data">
-                  <img src={noData} width={140} className="mb-4" alt="Tidak ada data" />
-                  <p style={{ fontSize: 13, fontWeight: 700 }}>Kategori tidak ditemukan</p>
-                </div>
-              )}
-            </div>
           </div>
 
-          {/* ── Kalkulator ── */}
-          <fieldset
-            id="container"
-            ref={calcRef}
-            className={`reveal-up ${calcVisible ? "revealed" : ""}`}
-            style={{ backgroundColor: isColorApplied ? calculatorColor.badan : "" }}
-          >
-            <form name="calculator">
-              <audio ref={audioRef} hidden><source src={sound} type="audio/mp3" /></audio>
-              <div className="calc-brand">CALGENIUS FX-1</div>
-              <input
-                className={`display ${isPopping ? "display-pop" : ""}`}
-                type="text"
-                value={displayValue}
-                readOnly
-                placeholder="0"
+          <div className="containerL">
+            {/* ── Panel kiri: Pilih Warna ── */}
+            <div
+              className={`panel warna reveal-left ${warnaVisible ? "revealed" : ""}`}
+              ref={warnaRef}
+            >
+              <h5>🎨 Pilih Warna</h5>
+              <Input
+                placeholder="Cari Jenis Warna"
+                className="mb-3"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                style={{ border: "2px solid var(--nb-black)", borderRadius: 8, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
               />
-              <div className="btn-grid">
-                <button type="button" className="button btn-scientific" onClick={handleScientificModeToggle}>
-                  {scientificMode ? "⬅ Simple" : "Scientific ⚗️"}
-                </button>
-                {scientificMode && additionalButtons.map((b, i) => (
-                  <button type="button" key={i} className="button btn-sci-extra" onClick={() => handleButtonClick(b.value)}>
-                    {b.value}
+              <div className="swatch-scroll">
+                {Object.keys(warna).map((category) => {
+                  if (!category.toLowerCase().includes(searchTerm.toLowerCase())) return null;
+                  return (
+                    <div key={category}>
+                      {Object.keys(warna[category]).map((id) => {
+                        const { badan, angka, operator } = warna[category][id];
+                        const bd = { border: "2px solid var(--nb-black)" };
+                        return (
+                          <div key={id} className="swatch-group">
+                            <div className="swatch-item" style={{ ...bd, backgroundColor: badan, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
+                              <span className="swatch-label">{badan}</span>
+                            </div>
+                            <div className="swatch-item" style={{ ...bd, backgroundColor: angka }}>
+                              <span className="swatch-label">{angka}</span>
+                            </div>
+                            <div className="swatch-item" style={{ ...bd, backgroundColor: operator, borderBottomLeftRadius: 6, borderBottomRightRadius: 6 }}>
+                              <span className="swatch-label">{operator}</span>
+                            </div>
+                            <Button className="btn-ganti" onClick={() => { initializeNextColor(category, id); applyNewColor(); }}>
+                              Ganti Warna
+                            </Button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+                {Object.keys(warna).every(c => !c.toLowerCase().includes(searchTerm.toLowerCase())) && (
+                  <div className="no-data">
+                    <img src={noData} width={140} className="mb-4" alt="Tidak ada data" />
+                    <p style={{ fontSize: 13, fontWeight: 700 }}>Kategori tidak ditemukan</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* ── Kalkulator ── */}
+            <fieldset
+              id="container"
+              ref={calcRef}
+              className={`reveal-up ${calcVisible ? "revealed" : ""}`}
+              style={{ backgroundColor: isColorApplied ? calculatorColor.badan : "" }}
+            >
+              <form name="calculator">
+                <audio ref={audioRef} hidden><source src={sound} type="audio/mp3" /></audio>
+                <div className="calc-brand">CALGENIUS FX-1</div>
+                <input
+                  className={`display ${isPopping ? "display-pop" : ""}`}
+                  type="text"
+                  value={displayValue}
+                  readOnly
+                  placeholder="0"
+                />
+                <div className="btn-grid">
+                  <button type="button" className="button btn-scientific" onClick={handleScientificModeToggle}>
+                    {scientificMode ? "⬅ Simple" : "Scientific ⚗️"}
                   </button>
-                ))}
-                {btnValues.flat().map((btn, i) => (
-                  <button
-                    className={getButtonClassName(btn)}
-                    type="button"
-                    key={i}
-                    value={String(btn)}
-                    onClick={() => handleButtonClick(btn)}
-                    style={getButtonStyle(btn)}
-                  >
-                    {btn}
-                  </button>
+                  {scientificMode && additionalButtons.map((b, i) => (
+                    <button type="button" key={i} className="button btn-sci-extra" onClick={() => handleButtonClick(b.value)}>
+                      {b.value}
+                    </button>
+                  ))}
+                  {btnValues.flat().map((btn, i) => (
+                    <button
+                      className={getButtonClassName(btn)}
+                      type="button"
+                      key={i}
+                      value={String(btn)}
+                      onClick={() => handleButtonClick(btn)}
+                      style={getButtonStyle(btn)}
+                    >
+                      {btn}
+                    </button>
+                  ))}
+                </div>
+              </form>
+            </fieldset>
+
+            {/* ── Panel kanan: Petunjuk ── */}
+            <div
+              className={`panel petunjuk reveal-right ${petunjukVisible ? "revealed" : ""}`}
+              ref={petunjukRef}
+            >
+              <h5>📖 Petunjuk</h5>
+              <div className="flex justify-center mt-3 mb-4">
+                <img src={body} width={220} alt="Petunjuk warna"
+                  style={{ border: "2.5px solid var(--nb-black)", borderRadius: 8, boxShadow: "4px 4px 0px var(--nb-black)" }}
+                />
+              </div>
+              <p style={{ fontSize: 13, fontWeight: 700, marginBottom: 8 }}>
+                Cari warna dengan ketik salah satu:
+              </p>
+              <div className="color-tags">
+                {["Default","Pastel","Cold","Sky","Rainbow","Coffee"].map((tag) => (
+                  <span key={tag} className="color-tag">{tag}</span>
                 ))}
               </div>
-            </form>
-          </fieldset>
-
-          {/* ── Panel kanan: Petunjuk ── */}
-          <div
-            className={`panel petunjuk reveal-right ${petunjukVisible ? "revealed" : ""}`}
-            ref={petunjukRef}
-          >
-            <h5>📖 Petunjuk</h5>
-            <div className="flex justify-center mt-3 mb-4">
-              <img src={body} width={220} alt="Petunjuk warna"
-                style={{ border: "2.5px solid var(--nb-black)", borderRadius: 8, boxShadow: "4px 4px 0px var(--nb-black)" }}
-              />
+              <p style={{ fontSize: 13, marginTop: 14, lineHeight: 1.7 }}>
+                Pilih warna favoritmu lalu klik <strong>Ganti Warna</strong> untuk mengubah tampilan kalkulator!
+              </p>
             </div>
-            <p style={{ fontSize: 13, fontWeight: 700, marginBottom: 8 }}>
-              Cari warna dengan ketik salah satu:
-            </p>
-            <div className="color-tags">
-              {["Default","Pastel","Cold","Sky","Rainbow","Coffee"].map((tag) => (
-                <span key={tag} className="color-tag">{tag}</span>
-              ))}
-            </div>
-            <p style={{ fontSize: 13, marginTop: 14, lineHeight: 1.7 }}>
-              Pilih warna favoritmu lalu klik <strong>Ganti Warna</strong> untuk mengubah tampilan kalkulator!
-            </p>
           </div>
-        </div>
-      </main>
+        </main>
 
-    </div>
+      </div>
+    </>
   );
 };
 
