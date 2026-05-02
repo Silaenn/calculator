@@ -5,6 +5,8 @@ import { warna } from "../data/index.ts";
 import { body, math, smk, sound } from "@/assets/images/index.ts";
 import { evaluate } from "mathjs";
 import { TrashIcon, BackspaceIcon, BeakerIcon, AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPalette, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 const btnValues = [
   ["C", "DEL", "%", "÷"],
@@ -277,7 +279,7 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
               ref={warnaRef}
             >
               <h5 className="font-black uppercase tracking-widest mb-6 flex items-center gap-2">
-                <span className="text-2xl">🎨</span> Pilih Warna
+                <FontAwesomeIcon icon={faPalette} className="text-xl" /> Pilih Warna
               </h5>
               <div className="relative mb-6">
                 <Input
@@ -421,7 +423,7 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
               ref={petunjukRef}
             >
               <h5 className="font-black uppercase tracking-widest mb-8 flex items-center gap-2">
-                <span className="text-2xl">🎨</span> Color Guide
+                <FontAwesomeIcon icon={faCircleInfo} className="text-xl" /> Color Guide
               </h5>
 
               <div className="space-y-6 mb-10">
@@ -475,7 +477,7 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
               </div>
               
               <div className="text-sm font-medium leading-relaxed bg-[#f0f0f0] p-4 rounded-xl border-2 border-black border-dashed">
-                <p>💡 <strong>Tips:</strong> Gunakan kategori di atas pada kolom pencarian di panel kiri untuk menemukan tema yang spesifik!</p>
+                <p><strong>Tips:</strong> Gunakan kategori di atas pada kolom pencarian di panel kiri untuk menemukan tema yang spesifik!</p>
               </div>
             </div>
 
