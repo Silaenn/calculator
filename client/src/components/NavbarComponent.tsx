@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import calculator from "../assets/images/calculator.png";
 import profile from "../assets/images/profile.gif";
 import feedbackIcon from "../assets/images/mes.jpg";
@@ -176,85 +178,48 @@ const NavbarComponent: React.FC<NavbarProps> = ({onScrollChange}) => {
               <div className="flex items-center gap-4">
                 
                 {/* FEEDBACK */}
-                <Popover open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
-                  <PopoverTrigger asChild>
-                    <button className="p-0.5 bg-white border-2 border-black rounded-full shadow-[2px_2px_0px_#000]">
-                      <img src={feedbackIcon} className="h-8 w-8 rounded-full" />
-                    </button>
-                  </PopoverTrigger>
-
-                  <PopoverContent className="w-56 p-2 bg-white border-[2.5px] border-black shadow-[6px_6px_0px_#000] rounded-xl">
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <button className="w-full p-2 hover:bg-[#6BCB77] rounded-lg font-bold">
-                          Berikan Feedback
-                        </button>
-                      </AlertDialogTrigger>
-
-                      <AlertDialogContent className="bg-[#FFF5E1] border-[3px] border-black shadow-[8px_8px_0px_#000] rounded-2xl">
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>
-                            Kirim Masukan 📝
-                          </AlertDialogTitle>
-
-                          <AlertDialogDescription>
-                            <Form {...form}>
-                              <form
-                                onSubmit={form.handleSubmit(onSubmit)}
-                                className="space-y-4"
-                              >
-                                <FormField
-                                  control={form.control}
-                                  name="email"
-                                  render={({ field }) => (
-                                    <FormItem>
-                                      <FormControl>
-                                        <Input
-                                          placeholder="Email"
-                                          {...field}
-                                          className="border-2 border-black"
-                                        />
-                                      </FormControl>
-                                    </FormItem>
-                                  )}
-                                />
-
-                                <FormField
-                                  control={form.control}
-                                  name="content"
-                                  render={({ field }) => (
-                                    <FormItem>
-                                      <FormControl>
-                                        <Textarea
-                                          placeholder="Pesan..."
-                                          {...field}
-                                          rows={4}
-                                          className="border-2 border-black"
-                                        />
-                                      </FormControl>
-                                    </FormItem>
-                                  )}
-                                />
-
-                                <div className="flex justify-end gap-3">
-                                  <AlertDialogCancel asChild>
-                                    <Button variant="outline">
-                                      Batal
-                                    </Button>
-                                  </AlertDialogCancel>
-
-                                  <Button type="submit">
-                                    Kirim
-                                  </Button>
-                                </div>
-                              </form>
-                            </Form>
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </PopoverContent>
-                </Popover>
+                <div className="flex gap-2">
+                  <Popover open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
+                    <PopoverTrigger asChild>
+                      <button className="p-0.5 bg-white border-2 border-black rounded-full shadow-[2px_2px_0px_#000]">
+                        <img src={feedbackIcon} className="h-8 w-8 rounded-full" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-56 p-2 bg-[#FFFDF5] border-[2.5px] border-black shadow-[6px_6px_0px_#000] rounded-xl">
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <button className="w-full p-2 hover:bg-[#6BCB77] rounded-lg font-bold">
+                            Berikan Feedback
+                          </button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent className="bg-[#FFFDF5] border-[4px] border-black shadow-[10px_10px_0px_var(--nb-black)] rounded-2xl">
+                          <AlertDialogHeader>
+                            <AlertDialogTitle className="font-black text-2xl uppercase">
+                              <FontAwesomeIcon icon={faMessage} className="mr-2" />
+                              Kirim Masukan
+                            </AlertDialogTitle>
+                            <AlertDialogDescription className="pt-4">
+                              <Form {...form}>
+                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                                  <FormField control={form.control} name="email" render={({ field }) => (
+                                    <FormItem><FormControl><Input placeholder="Email" {...field} className="border-2 border-black rounded-lg" /></FormControl></FormItem>
+                                  )} />
+                                  <FormField control={form.control} name="content" render={({ field }) => (
+                                    <FormItem><FormControl><Textarea placeholder="Pesan..." {...field} rows={4} className="border-2 border-black rounded-lg" /></FormControl></FormItem>
+                                  )} />
+                                  <div className="flex justify-end gap-3 pt-2">
+                                    <AlertDialogCancel asChild><Button variant="outline" className="border-2 border-black">Batal</Button></AlertDialogCancel>
+                                    <Button type="submit" className="bg-black text-white border-2 border-black shadow-[2px_2px_0px_#000]">Kirim</Button>
+                                  </div>
+                                </form>
+                              </Form>
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </PopoverContent>
+                  </Popover>
+                </div>
 
                 {/* PROFILE */}
                 <Popover open={isProfileOpen} onOpenChange={setIsProfileOpen}>
