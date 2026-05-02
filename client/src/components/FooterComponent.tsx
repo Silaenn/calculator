@@ -1,22 +1,10 @@
 import { Container, Row, Col } from "react-bootstrap";
-import email from "@/assets/images/email.png";
-import wa from "@/assets/images/wa.png";
-import fb from "@/assets/images/fb.png";
-import git from "@/assets/images/git.png";
-import ig from "@/assets/images/ig.png";
-import tele from "@/assets/images/tele.png";
-import map from "@/assets/images/maps.png";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWhatsapp, faInstagram, faFacebook, faGithub, faTelegram } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope, faLocationDot, faHouse, faFileLines, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const FooterComponent = () => {
-  const WAClick = () => {
-    window.open("https://api.whatsapp.com/send?phone=628989311672", "_blank");
-  };
-
-  const Email = () => {
-    window.location.href = "mailto:deokeldisilaen@gmail.com";
-  };
-
   return (
     <footer className="footer">
       <Container>
@@ -31,12 +19,12 @@ const FooterComponent = () => {
             </p>
             <div className="footer-contact">
               <a href="https://api.whatsapp.com/send?phone=628989311672" target="_blank" rel="noopener noreferrer">
-                <img src={wa} width={18} alt="WhatsApp" />
+                <FontAwesomeIcon icon={faWhatsapp} className="mr-2" />
                 +62 898-9311-672
               </a>
               <br />
               <a href="mailto:deokeldisilaen@gmail.com">
-                <img src={email} width={18} alt="Email" />
+                <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
                 deokeldisilaen@gmail.com
               </a>
             </div>
@@ -45,9 +33,9 @@ const FooterComponent = () => {
           {/* ── Col 2: Menu ── */}
           <Col lg="2" className="mb-5 mb-lg-0">
             <div className="footer-menu-title">Menu</div>
-            <Link to="/" className="footer-menu-link">🏠 Home</Link>
-            <Link to="/aboutProjek" className="footer-menu-link">📁 About Projek</Link>
-            <Link to="/myProfile" className="footer-menu-link">👤 My Profile</Link>
+            <Link to="/" className="footer-menu-link"><FontAwesomeIcon icon={faHouse} className="mr-2" /> Home</Link>
+            <Link to="/aboutProjek" className="footer-menu-link"><FontAwesomeIcon icon={faFileLines} className="mr-2" /> About Projek</Link>
+            <Link to="/myProfile" className="footer-menu-link"><FontAwesomeIcon icon={faUser} className="mr-2" /> My Profile</Link>
           </Col>
 
           {/* ── Col 3: Sosial Media ── */}
@@ -59,47 +47,23 @@ const FooterComponent = () => {
               rel="noopener noreferrer"
               className="footer-social-link"
             >
-              <img src={ig} width={20} alt="Instagram SMK" />
+              <FontAwesomeIcon icon={faInstagram} className="mr-2" />
               @Smk_pgri_pekanbaru
             </a>
 
             <div className="footer-menu-title mt-4">My Media Sosial</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
-              <a
-                href="https://www.facebook.com/deo.silaen?mibextid=ZbWKwL"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-social-link"
-              >
-                <img src={fb} width={18} alt="Facebook" />
-                @Deo_Silaen
+              <a href="https://www.facebook.com/deo.silaen?mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+                <FontAwesomeIcon icon={faFacebook} className="mr-2" /> @Deo_Silaen
               </a>
-              <a
-                href="https://www.instagram.com/deoosilaen?igsh=MXE0Yjdob2ozbm1hYw=="
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-social-link"
-              >
-                <img src={ig} width={18} alt="Instagram" />
-                @deoosilaen
+              <a href="https://www.instagram.com/deoosilaen?igsh=MXE0Yjdob2ozbm1hYw==" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+                <FontAwesomeIcon icon={faInstagram} className="mr-2" /> @deoosilaen
               </a>
-              <a
-                href="https://github.com/Silaenn"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-social-link"
-              >
-                <img src={git} width={18} alt="GitHub" />
-                Deo_Silaen
+              <a href="https://github.com/Silaenn" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+                <FontAwesomeIcon icon={faGithub} className="mr-2" /> Deo_Silaen
               </a>
-              <a
-                href="https://t.me/deoosilaen22"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-social-link"
-              >
-                <img src={tele} width={18} alt="Telegram" />
-                @deoosilaen22
+              <a href="https://t.me/deoosilaen22" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+                <FontAwesomeIcon icon={faTelegram} className="mr-2" /> @deoosilaen22
               </a>
             </div>
           </Col>
@@ -109,7 +73,7 @@ const FooterComponent = () => {
         <Row className="mt-5">
           <Col>
             <div className="footer-menu-title">
-              <img src={map} width={16} alt="Map" style={{ marginRight: 8, filter: "invert(1)" }} />
+              <FontAwesomeIcon icon={faLocationDot} className="mr-2" />
               My Address
             </div>
             <div className="footer-map-wrap">
