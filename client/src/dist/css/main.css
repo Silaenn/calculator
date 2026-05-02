@@ -42,17 +42,30 @@
 }
 
 /* ════════════════════════════════════════
-   NEOBRUTALISM DESIGN TOKENS
+   NEOBRUTALISM DESIGN TOKENS — v2
+   
+   PERAN WARNA:
+   --nb-yellow  → Primary Brand (hero, CTA, navbar active, footer accent)
+   --nb-red     → Danger/Destructive (C, DEL, error state)
+   --nb-teal    → Confirm/Success (apply theme, sci extra, about bg)
+   --nb-violet  → Special/Scientific (equals, scientific mode, profile bg)
+   --nb-black   → Structure (semua border, shadow, teks utama)
+   --nb-bg      → Warm background (body, panel)
+   --nb-white   → Surface (button digit, card bg)
+   
+   DIHAPUS: --nb-orange (tidak ada peran fungsional)
+             --nb-blue   (misleading — sebenarnya hijau, diganti teal)
+             --nb-purple (terlalu dusty, diganti violet lebih vibrant)
+             --nb-pink   (digabung ke --nb-red untuk konsistensi danger)
 ════════════════════════════════════════ */
 :root {
   --nb-bg: #FFF5E1;
   --nb-black: #1A1A1A;
   --nb-yellow: #FFD93D;
-  --nb-blue: #6BCB77;
-  --nb-pink: #FF6B6B;
-  --nb-purple: #845EC2;
+  --nb-red: #FF6B6B;
+  --nb-teal: #4ECDC4;
+  --nb-violet: #6B48FF;
   --nb-white: #FFFFFF;
-  --nb-orange: #FF9A3C;
 
   --shadow-sm: 3px 3px 0px var(--nb-black);
   --shadow-md: 5px 5px 0px var(--nb-black);
@@ -112,7 +125,7 @@ h6 {
   z-index: 0;
 }
 
-/* Pink blob pojok kanan */
+/* Teal blob pojok kanan — ganti dari pink */
 .hero-section::after {
   content: '';
   position: absolute;
@@ -120,20 +133,20 @@ h6 {
   right: -80px;
   width: 460px;
   height: 460px;
-  background: var(--nb-pink);
+  background: var(--nb-teal);
   border: 4px solid var(--nb-black);
   border-radius: 50%;
-  opacity: 0.20;
+  opacity: 0.18;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Speech bubble */
+/* Speech bubble — pakai red (danger/energetic) */
 .hero-bubble {
   position: absolute;
   top: 64px;
   right: 100px;
-  background-color: var(--nb-pink);
+  background-color: var(--nb-red);
   border: 3px solid var(--nb-black);
   border-radius: 50%;
   width: 96px;
@@ -144,7 +157,7 @@ h6 {
   font-family: 'Space Mono', monospace;
   font-size: 18px;
   font-weight: 700;
-  color: var(--nb-black);
+  color: var(--nb-white);
   box-shadow: 4px 4px 0px var(--nb-black);
   z-index: 2;
   animation: wobble-bubble 3s ease-in-out infinite;
@@ -157,14 +170,15 @@ h6 {
   left: 18px;
   border-left: 10px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 20px solid var(--nb-pink);
+  border-top: 20px solid var(--nb-red);
 }
 
+/* Zap badge — pakai teal (confirm/fresh) */
 .hero-zap {
   position: absolute;
   top: 48px;
   left: 48px;
-  background-color: var(--nb-blue);
+  background-color: var(--nb-teal);
   border: 3px solid var(--nb-black);
   border-radius: 6px;
   padding: 8px 16px;
@@ -182,8 +196,8 @@ h6 {
   bottom: 80px;
   left: 60px;
   font-size: 52px;
-  color: var(--nb-pink);
-  opacity: 0.25;
+  color: var(--nb-red);
+  opacity: 0.20;
   z-index: 1;
   animation: spin-slow 10s linear infinite;
 }
@@ -268,8 +282,9 @@ h6 {
   margin: 0 0 8px;
 }
 
+/* Accent pakai white + shadow black — biar kontras di atas yellow */
 .hero-title-accent {
-  color: var(--nb-pink);
+  color: var(--nb-white);
   text-shadow: 4px 4px 0px var(--nb-black);
 }
 
@@ -289,8 +304,8 @@ h6 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: var(--nb-black);
-  background-color: var(--nb-white);
+  color: var(--nb-white);
+  background-color: var(--nb-black);
   border: 3px solid var(--nb-black);
   border-radius: 6px;
   box-shadow: 5px 5px 0px var(--nb-black);
@@ -319,7 +334,7 @@ h6 {
 }
 
 /* ════════════════════════════════════════
-   MAIN SECTION — background & spacing
+   MAIN SECTION
 ════════════════════════════════════════ */
 .main-section {
   position: relative;
@@ -329,7 +344,6 @@ h6 {
   border-bottom: 4px solid var(--nb-black);
 }
 
-/* Decorative shapes inside main section */
 .main-bg-deco {
   position: absolute;
   inset: 0;
@@ -337,7 +351,6 @@ h6 {
   z-index: 0;
 }
 
-/* Halftone dots — sama seperti hero tapi lebih muda */
 .main-deco-dots {
   position: absolute;
   inset: 0;
@@ -346,19 +359,19 @@ h6 {
   opacity: 0.05;
 }
 
-/* Circle pink pojok kiri atas */
+/* Circle teal pojok kiri atas — ganti dari pink */
 .main-deco-1 {
   position: absolute;
   top: -100px;
   left: -100px;
   width: 380px;
   height: 380px;
-  background: var(--nb-pink);
+  background: var(--nb-teal);
   border-radius: 50%;
-  opacity: 0.12;
+  opacity: 0.10;
 }
 
-/* Circle kuning pojok kanan bawah */
+/* Circle yellow pojok kanan bawah — tetap warm */
 .main-deco-2 {
   position: absolute;
   bottom: -80px;
@@ -371,7 +384,7 @@ h6 {
   opacity: 0.35;
 }
 
-/* Stripe horizontal dekoratif */
+/* Rainbow stripe — sekarang 4 warna sistem saja, no orange */
 .main-deco-3 {
   position: absolute;
   top: 0;
@@ -379,14 +392,13 @@ h6 {
   right: 0;
   height: 6px;
   background: repeating-linear-gradient(90deg,
-      var(--nb-pink) 0px, var(--nb-pink) 40px,
+      var(--nb-red) 0px, var(--nb-red) 40px,
       var(--nb-yellow) 40px, var(--nb-yellow) 80px,
-      var(--nb-blue) 80px, var(--nb-blue) 120px,
-      var(--nb-purple) 120px, var(--nb-purple) 160px);
+      var(--nb-teal) 80px, var(--nb-teal) 120px,
+      var(--nb-violet) 120px, var(--nb-violet) 160px);
   opacity: 0.85;
 }
 
-/* Section heading */
 .main-heading-wrap {
   position: relative;
   z-index: 1;
@@ -394,9 +406,10 @@ h6 {
   margin-bottom: 56px;
 }
 
+/* Section tag — pakai violet (special) */
 .main-section-tag {
   display: inline-block;
-  background-color: var(--nb-purple);
+  background-color: var(--nb-violet);
   color: var(--nb-white);
   font-family: 'Space Mono', monospace;
   font-size: 12px;
@@ -429,7 +442,7 @@ h6 {
 }
 
 /* ════════════════════════════════════════
-   SCROLL REVEAL ANIMATIONS (fire once)
+   SCROLL REVEAL ANIMATIONS
 ════════════════════════════════════════ */
 .reveal-fade,
 .reveal-left,
@@ -464,7 +477,6 @@ h6 {
   transform: translate(0, 0);
 }
 
-/* Staggered delays for containerL children */
 .warna.reveal-left {
   transition-delay: 0ms;
 }
@@ -493,7 +505,7 @@ h6 {
 }
 
 /* ════════════════════════════════════════
-   PANELS (warna & petunjuk)
+   PANELS
 ════════════════════════════════════════ */
 .panel {
   background-color: var(--nb-white);
@@ -514,7 +526,6 @@ h6 {
   color: var(--nb-black);
 }
 
-/* Swatch */
 .swatch-scroll {
   max-height: 360px;
   overflow-y: auto;
@@ -560,11 +571,12 @@ h6 {
   transform: translateY(0);
 }
 
+/* Apply button — teal (confirm action) */
 .btn-ganti {
   margin-top: 10px;
   width: 100%;
-  background-color: var(--nb-purple) !important;
-  color: white !important;
+  background-color: var(--nb-teal) !important;
+  color: var(--nb-black) !important;
   border: 2.5px solid var(--nb-black) !important;
   border-radius: 6px !important;
   box-shadow: var(--shadow-sm) !important;
@@ -619,7 +631,6 @@ h6 {
   text-transform: uppercase;
 }
 
-/* Display */
 .display {
   display: block;
   width: 100%;
@@ -697,25 +708,30 @@ h6 {
   box-shadow: none;
 }
 
+/* Digit — white surface, netral */
 .btn-digit {
   background-color: var(--nb-white);
 }
 
+/* Operator — yellow (primary brand, aksi utama) */
 .btn-operator {
-  background-color: var(--nb-pink);
-  color: #fff;
+  background-color: var(--nb-yellow);
+  color: var(--nb-black);
 }
 
+/* Equals — violet (special result) */
 .btn-equals {
-  background-color: var(--nb-purple);
-  color: #fff;
+  background-color: var(--nb-violet);
+  color: var(--nb-white);
 }
 
+/* Danger — red (destructive: C & DEL) */
 .btn-danger {
-  background-color: #FF4545;
-  color: #fff;
+  background-color: var(--nb-red);
+  color: var(--nb-white);
 }
 
+/* Scientific toggle — full width */
 .btn-scientific {
   width: 100%;
   height: 44px;
@@ -725,8 +741,9 @@ h6 {
   margin-bottom: 4px;
 }
 
+/* Sci extra buttons — teal (confirm/special feature) */
 .btn-sci-extra {
-  background-color: var(--nb-blue);
+  background-color: var(--nb-teal);
   color: var(--nb-black);
   font-size: 14px;
 }
@@ -765,7 +782,6 @@ h6 {
   overflow: hidden;
 }
 
-/* Halftone dots di footer */
 .footer::before {
   content: '';
   position: absolute;
@@ -776,7 +792,7 @@ h6 {
   z-index: 0;
 }
 
-/* Rainbow stripe di atas footer */
+/* Rainbow stripe footer — 4 warna sistem */
 .footer::after {
   content: '';
   position: absolute;
@@ -786,9 +802,9 @@ h6 {
   height: 5px;
   background: repeating-linear-gradient(90deg,
       var(--nb-yellow) 0px, var(--nb-yellow) 40px,
-      var(--nb-pink) 40px, var(--nb-pink) 80px,
-      var(--nb-blue) 80px, var(--nb-blue) 120px,
-      var(--nb-purple) 120px, var(--nb-purple) 160px);
+      var(--nb-red) 40px, var(--nb-red) 80px,
+      var(--nb-teal) 80px, var(--nb-teal) 120px,
+      var(--nb-violet) 120px, var(--nb-violet) 160px);
 }
 
 .footer .container {
@@ -796,7 +812,6 @@ h6 {
   z-index: 1;
 }
 
-/* Footer brand */
 .footer-brand {
   font-family: 'Space Mono', monospace;
   font-size: 28px;
@@ -817,7 +832,6 @@ h6 {
   max-width: 320px;
 }
 
-/* Contact links */
 .footer-contact a {
   display: inline-flex;
   align-items: center;
@@ -834,7 +848,6 @@ h6 {
   color: var(--nb-yellow);
 }
 
-/* Footer menu */
 .footer-menu-title {
   font-family: 'Space Mono', monospace;
   font-size: 12px;
@@ -876,7 +889,7 @@ h6 {
   transform: translateX(4px);
 }
 
-/* Social links */
+/* Social link hover — teal (bukan yellow, biar ada variasi) */
 .footer-social-link {
   display: inline-flex;
   align-items: center;
@@ -894,14 +907,13 @@ h6 {
 }
 
 .footer-social-link:hover {
-  background-color: var(--nb-yellow);
+  background-color: var(--nb-teal);
   color: var(--nb-black);
-  border-color: var(--nb-yellow);
+  border-color: var(--nb-teal);
   transform: translate(2px, -2px);
-  box-shadow: -2px 2px 0px var(--nb-yellow);
+  box-shadow: -2px 2px 0px var(--nb-teal);
 }
 
-/* Maps */
 .footer-map-wrap {
   border: 2.5px solid rgba(255, 255, 255, 0.15);
   border-radius: 10px;
@@ -916,7 +928,6 @@ h6 {
   border: none;
 }
 
-/* Footer bottom bar */
 .footer-bottom {
   margin-top: 60px;
   padding: 20px 0;
@@ -953,8 +964,8 @@ h6 {
 
 .navbar .nav-link:hover,
 .navbar .nav-link:active {
-  background-color: var(--nb-pink);
-  color: var(--nb-white);
+  background-color: var(--nb-yellow);
+  color: var(--nb-black);
   border-radius: 4px;
 }
 
@@ -1038,7 +1049,6 @@ h6 {
   }
 }
 
-/* Animate durations */
 .animate__animated.animate__fadeInLeft,
 .animate__animated.animate__fadeInDown,
 .animate__animated.animate__fadeInUp,

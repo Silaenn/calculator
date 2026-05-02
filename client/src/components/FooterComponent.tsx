@@ -1,8 +1,12 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWhatsapp, faInstagram, faFacebook, faGithub, faTelegram } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope, faLocationDot, faHouse, faFileLines, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faWhatsapp, faInstagram, faFacebook, faGithub, faTelegram,
+} from "@fortawesome/free-brands-svg-icons";
+import {
+  faEnvelope, faLocationDot, faHouse, faFileLines, faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 const FooterComponent = () => {
   return (
@@ -12,6 +16,7 @@ const FooterComponent = () => {
 
           {/* ── Col 1: Brand & Kontak ── */}
           <Col lg="4" className="mb-5 mb-lg-0">
+            {/* Brand — yellow text, yellow underline (primary) */}
             <div className="footer-brand">CalGenius ✦</div>
             <p className="footer-desc">
               Kalkulator web serba bisa dengan tampilan yang bisa kamu kustomisasi sendiri.
@@ -32,15 +37,23 @@ const FooterComponent = () => {
 
           {/* ── Col 2: Menu ── */}
           <Col lg="2" className="mb-5 mb-lg-0">
+            {/* Title — yellow via .footer-menu-title */}
             <div className="footer-menu-title">Menu</div>
-            <Link to="/" className="footer-menu-link"><FontAwesomeIcon icon={faHouse} className="mr-2" /> Home</Link>
-            <Link to="/aboutProjek" className="footer-menu-link"><FontAwesomeIcon icon={faFileLines} className="mr-2" /> About Projek</Link>
-            <Link to="/myProfile" className="footer-menu-link"><FontAwesomeIcon icon={faUser} className="mr-2" /> My Profile</Link>
+            <Link to="/" className="footer-menu-link">
+              <FontAwesomeIcon icon={faHouse} className="mr-2" /> Home
+            </Link>
+            <Link to="/aboutProjek" className="footer-menu-link">
+              <FontAwesomeIcon icon={faFileLines} className="mr-2" /> About Projek
+            </Link>
+            <Link to="/myProfile" className="footer-menu-link">
+              <FontAwesomeIcon icon={faUser} className="mr-2" /> My Profile
+            </Link>
           </Col>
 
           {/* ── Col 3: Sosial Media ── */}
           <Col lg="4">
             <div className="footer-menu-title">SMKS PGRI Pekanbaru</div>
+            {/* Social hover — teal via .footer-social-link:hover */}
             <a
               href="https://www.instagram.com/smk_pgri_pekanbaru?igsh=MXFsZGN3bTVrZTdqbw=="
               target="_blank"
@@ -53,16 +66,32 @@ const FooterComponent = () => {
 
             <div className="footer-menu-title mt-4">My Media Sosial</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
-              <a href="https://www.facebook.com/deo.silaen?mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+              <a
+                href="https://www.facebook.com/deo.silaen?mibextid=ZbWKwL"
+                target="_blank" rel="noopener noreferrer"
+                className="footer-social-link"
+              >
                 <FontAwesomeIcon icon={faFacebook} className="mr-2" /> @Deo_Silaen
               </a>
-              <a href="https://www.instagram.com/deoosilaen?igsh=MXE0Yjdob2ozbm1hYw==" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+              <a
+                href="https://www.instagram.com/deoosilaen?igsh=MXE0Yjdob2ozbm1hYw=="
+                target="_blank" rel="noopener noreferrer"
+                className="footer-social-link"
+              >
                 <FontAwesomeIcon icon={faInstagram} className="mr-2" /> @deoosilaen
               </a>
-              <a href="https://github.com/Silaenn" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+              <a
+                href="https://github.com/Silaenn"
+                target="_blank" rel="noopener noreferrer"
+                className="footer-social-link"
+              >
                 <FontAwesomeIcon icon={faGithub} className="mr-2" /> Deo_Silaen
               </a>
-              <a href="https://t.me/deoosilaen22" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+              <a
+                href="https://t.me/deoosilaen22"
+                target="_blank" rel="noopener noreferrer"
+                className="footer-social-link"
+              >
                 <FontAwesomeIcon icon={faTelegram} className="mr-2" /> @deoosilaen22
               </a>
             </div>

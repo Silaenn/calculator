@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { warna } from "../data/index.ts";
-import { body, math, smk, noData, sound } from "@/assets/images/index.ts";
+import { body, math, smk, sound } from "@/assets/images/index.ts";
 import { evaluate } from "mathjs";
 
 const btnValues = [
@@ -19,7 +19,6 @@ type calculator = {
   operator: string;
 };
 
-// ── Hook: scroll-triggered, fires ONCE only ──
 function useScrollReveal(ref: React.RefObject<HTMLElement>, threshold = 0.12) {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -54,7 +53,6 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
   const [scientificMode, setScientificMode] = useState(false);
   const [additionalButtons, setAdditionalButtons] = useState<{ value: string }[]>([]);
 
-  // refs for scroll reveal
   const mainRef     = useRef<HTMLElement>(null);
   const warnaRef    = useRef<HTMLDivElement>(null);
   const calcRef     = useRef<HTMLFieldSetElement>(null);
@@ -97,11 +95,11 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
 
   const getButtonClassName = (btn: string | number) => {
     switch (btn) {
-      case "C": case "DEL": return "button btn-danger";
-      case "=": return "button btn-equals";
-      case "%": case "÷": case "×": case "-": case "+": case ".": case "+/-":
-        return "button btn-operator";
-      default: return "button btn-digit";
+      case "C": case "DEL":                           return "button btn-danger";
+      case "=":                                        return "button btn-equals";
+      case "%": case "÷": case "×": case "-":
+      case "+": case ".": case "+/-":                  return "button btn-operator";
+      default:                                         return "button btn-digit";
     }
   };
 
@@ -164,13 +162,11 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
 
   return (
     <>
-      {/* ══════════════════════════════
-          SPACER: Mencegah konten tertutup navbar fixed
-      ══════════════════════════════ */}
-      <div 
-        className={`transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] bg-[#FFD93D] ${
-          isNavbarScrolled ? "h-20" : "h-16"
-        }`} 
+      {/* Spacer navbar */}
+      <div
+        className={`transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] bg-[var(--nb-yellow)] ${
+          isNavbarScrolled ? "h-24 md:h-20" : "h-16"
+        }`}
       />
 
       <div className="main overflow-x-hidden">
@@ -178,30 +174,48 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
         {/* ══════════════════════════════
             HERO SECTION
         ══════════════════════════════ */}
-        <div className="hero-section">
-          <div className="hero-bubble">CALC!</div>
-          <div className="hero-zap">✦ NEW!</div>
-          <div className="hero-star">★</div>
+        <div className="hero-section min-h-[90vh] py-20 px-6 sm:px-12 relative flex flex-col justify-center overflow-hidden">
+          {/* Decorative elements — warna sesuai sistem */}
+          <div className="hero-bubble hidden lg:flex">CALC!</div>
+          <div className="hero-zap hidden lg:block">✦ NEW!</div>
+          <div className="hero-star hidden lg:block">★</div>
 
-          <div className="hero-inner">
-            <div className="hero-content">
-              <div className="hero-badge animate__animated animate__fadeInDown">
-                <img src={smk} style={{ borderRadius: "50%", width: 28, height: 28, objectFit: "cover" }} alt="SMK" />
-                SMK PGRI PEKANBARU
+          <div className="hero-inner flex flex-col-reverse lg:flex-row items-center justify-between gap-12 max-w-7xl mx-auto w-full">
+            <div className="hero-content md:text-center lg:text-left z-10 flex-1">
+              {/* Badge */}
+              <div className="hero-badge animate__animated animate__fadeInDown inline-flex items-center gap-2 px-4 py-2 mb-6">
+                <img src={smk} style={{ borderRadius: "50%", width: 24, height: 24, objectFit: "cover" }} alt="SMK" />
+                <span className="font-black text-xs sm:text-sm tracking-widest">SMK PGRI PEKANBARU</span>
               </div>
-              <h1 className="hero-title animate__animated animate__fadeInLeft">
+
+              {/* Title */}
+              <h1 className="hero-title animate__animated animate__fadeInLeft text-4xl sm:text-6xl md:text-7xl font-black mb-6 leading-[1.1] uppercase tracking-tighter">
                 Welcome to<br />
+                {/* hero-title-accent = white + black shadow di atas yellow bg */}
                 <span className="hero-title-accent">Calgenius</span>
               </h1>
-              <p className="hero-sub animate__animated animate__fadeInLeft">
-                by <strong>Deo Silaen</strong> — Kalkulator serba bisa
+
+              <p className="hero-sub animate__animated animate__fadeInLeft text-base sm:text-xl font-bold mb-10 max-w-xl mx-auto lg:mx-0">
+                by <strong>Deo Silaen</strong> — Kalkulator interaktif serba bisa dengan kustomisasi warna favoritmu!
               </p>
-              <button className="hero-cta animate__animated animate__fadeInUp" onClick={() => scrollDown(1000)}>
-                Lihat Kalkulator ↓
+
+              {/* CTA — black bg, yellow shadow (brand) */}
+              <button
+                className="hero-cta animate__animated animate__fadeInUp"
+                onClick={() => scrollDown(1100)}
+              >
+                Let's Calculate ↓
               </button>
             </div>
-            <div className="hero-img-wrap animate__animated animate__fadeInRight">
-              <img src={math} alt="Kalkulator ilustrasi" className="hero-img" />
+
+            <div className="hero-img-wrap animate__animated animate__fadeInRight w-full max-w-[300px] sm:max-w-[450px] lg:max-w-[500px] relative">
+              {/* Glow blob — teal, bukan pink */}
+              <div className="absolute inset-0 bg-[var(--nb-teal)] rounded-full blur-[80px] opacity-25 animate-pulse"></div>
+              <img
+                src={math}
+                alt="Kalkulator ilustrasi"
+                className="hero-img w-full h-auto relative z-10 drop-shadow-[20px_20px_0px_rgba(0,0,0,0.1)]"
+              />
             </div>
           </div>
         </div>
@@ -209,8 +223,7 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
         {/* ══════════════════════════════
             MAIN CONTENT SECTION
         ══════════════════════════════ */}
-        <main className="main-section" ref={mainRef}>
-          {/* Background decorations */}
+        <main className="main-section py-20 px-6" ref={mainRef}>
           <div className="main-bg-deco" aria-hidden="true">
             <div className="main-deco-1" />
             <div className="main-deco-2" />
@@ -219,50 +232,57 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
           </div>
 
           {/* Section heading */}
-          <div className={`main-heading-wrap reveal-fade ${mainVisible ? "revealed" : ""}`}>
-            <div className="main-section-tag">⚡ Kalkulator Interaktif</div>
-            <h2 className="main-heading">Hitung. Warnai. Ekspresikan.</h2>
-            <p className="main-subheading">
+          <div className={`main-heading-wrap reveal-fade mb-20 text-center ${mainVisible ? "revealed" : ""}`}>
+            {/* Tag — violet (special) */}
+            <div className="main-section-tag inline-block px-4 py-1 mb-4">
+              ⚡ Kalkulator Interaktif
+            </div>
+            <h2 className="main-heading text-3xl sm:text-5xl font-black uppercase mb-4 tracking-tighter">
+              Hitung. Warnai. Ekspresikan.
+            </h2>
+            <p className="main-subheading text-base sm:text-lg font-medium max-w-2xl mx-auto">
               Sesuaikan tampilan kalkulator dengan warna favoritmu,
               atau aktifkan mode scientific untuk perhitungan yang lebih kompleks.
             </p>
           </div>
 
-          <div className="containerL">
+          <div className="containerL flex flex-col lg:flex-row gap-12 items-center lg:items-start max-w-7xl mx-auto">
+
             {/* ── Panel kiri: Pilih Warna ── */}
             <div
-              className={`panel warna reveal-left ${warnaVisible ? "revealed" : ""}`}
+              className={`panel warna w-full max-w-md bg-white p-6 border-[3px] border-black rounded-2xl shadow-[8px_8px_0px_#000] reveal-left ${warnaVisible ? "revealed" : ""}`}
               ref={warnaRef}
             >
-              <h5>🎨 Pilih Warna</h5>
+              <h5 className="font-black uppercase tracking-widest mb-6 flex items-center gap-2">
+                <span className="text-2xl">🎨</span> Pilih Warna
+              </h5>
               <Input
-                placeholder="Cari Jenis Warna"
-                className="mb-3"
+                placeholder="Cari Jenis Warna (ex: Pastel, Cold)"
+                className="mb-6 h-12 border-2 border-black rounded-xl font-bold px-4"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                style={{ border: "2px solid var(--nb-black)", borderRadius: 8, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
               />
-              <div className="swatch-scroll">
+              <div className="swatch-scroll max-h-[400px] overflow-y-auto pr-2 space-y-4">
                 {Object.keys(warna).map((category) => {
                   if (!category.toLowerCase().includes(searchTerm.toLowerCase())) return null;
                   return (
-                    <div key={category}>
+                    <div key={category} className="space-y-4">
+                      <p className="font-black text-xs uppercase opacity-40 mb-2 border-b-2 border-black inline-block">{category}</p>
                       {Object.keys(warna[category]).map((id) => {
                         const { badan, angka, operator } = warna[category][id];
-                        const bd = { border: "2px solid var(--nb-black)" };
                         return (
-                          <div key={id} className="swatch-group">
-                            <div className="swatch-item" style={{ ...bd, backgroundColor: badan, borderTopLeftRadius: 6, borderTopRightRadius: 6 }}>
-                              <span className="swatch-label">{badan}</span>
+                          <div key={id} className="bg-[#f8f8f8] p-4 border-2 border-black rounded-xl shadow-[4px_4px_0px_#000] space-y-3">
+                            <div className="flex gap-2 h-10">
+                              <div className="flex-1 rounded-lg border-2 border-black" style={{ backgroundColor: badan }} />
+                              <div className="flex-1 rounded-lg border-2 border-black" style={{ backgroundColor: angka }} />
+                              <div className="flex-1 rounded-lg border-2 border-black" style={{ backgroundColor: operator }} />
                             </div>
-                            <div className="swatch-item" style={{ ...bd, backgroundColor: angka }}>
-                              <span className="swatch-label">{angka}</span>
-                            </div>
-                            <div className="swatch-item" style={{ ...bd, backgroundColor: operator, borderBottomLeftRadius: 6, borderBottomRightRadius: 6 }}>
-                              <span className="swatch-label">{operator}</span>
-                            </div>
-                            <Button className="btn-ganti" onClick={() => { initializeNextColor(category, id); applyNewColor(); }}>
-                              Ganti Warna
+                            {/* Apply button — teal via btn-ganti class */}
+                            <Button
+                              className="btn-ganti w-full font-black uppercase text-xs rounded-lg h-10"
+                              onClick={() => { initializeNextColor(category, id); applyNewColor(); }}
+                            >
+                              Apply Theme
                             </Button>
                           </div>
                         );
@@ -270,80 +290,102 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
                     </div>
                   );
                 })}
-                {Object.keys(warna).every(c => !c.toLowerCase().includes(searchTerm.toLowerCase())) && (
-                  <div className="no-data">
-                    <img src={noData} width={140} className="mb-4" alt="Tidak ada data" />
-                    <p style={{ fontSize: 13, fontWeight: 700 }}>Kategori tidak ditemukan</p>
-                  </div>
-                )}
               </div>
             </div>
 
             {/* ── Kalkulator ── */}
-            <fieldset
-              id="container"
-              ref={calcRef}
-              className={`reveal-up ${calcVisible ? "revealed" : ""}`}
-              style={{ backgroundColor: isColorApplied ? calculatorColor.badan : "" }}
-            >
-              <form name="calculator">
-                <audio ref={audioRef} hidden><source src={sound} type="audio/mp3" /></audio>
-                <div className="calc-brand">CALGENIUS FX-1</div>
-                <input
-                  className={`display ${isPopping ? "display-pop" : ""}`}
-                  type="text"
-                  value={displayValue}
-                  readOnly
-                  placeholder="0"
-                />
-                <div className="btn-grid">
-                  <button type="button" className="button btn-scientific" onClick={handleScientificModeToggle}>
-                    {scientificMode ? "⬅ Simple" : "Scientific ⚗️"}
-                  </button>
-                  {scientificMode && additionalButtons.map((b, i) => (
-                    <button type="button" key={i} className="button btn-sci-extra" onClick={() => handleButtonClick(b.value)}>
-                      {b.value}
-                    </button>
-                  ))}
-                  {btnValues.flat().map((btn, i) => (
+            <div className="flex-1 flex justify-center w-full">
+              <fieldset
+                id="container"
+                ref={calcRef}
+                className={`reveal-up w-full max-w-[360px] sm:max-w-[400px] p-6 sm:p-8 border-[4px] border-black rounded-[2.5rem] shadow-[12px_12px_0px_#000] ${calcVisible ? "revealed" : ""}`}
+                style={{ backgroundColor: isColorApplied ? calculatorColor.badan : "var(--nb-yellow)" }}
+              >
+                <form name="calculator">
+                  <audio ref={audioRef} hidden><source src={sound} type="audio/mp3" /></audio>
+                  <div className="calc-brand font-black text-xs tracking-[0.3em] text-center mb-6 opacity-30">
+                    CALGENIUS FX-1
+                  </div>
+                  <input
+                    className={`display ${isPopping ? "display-pop" : ""} w-full h-20 bg-white border-[3px] border-black rounded-2xl mb-8 px-6 text-right text-3xl font-black shadow-inner`}
+                    type="text"
+                    value={displayValue}
+                    readOnly
+                    placeholder="0"
+                  />
+                  <div className="grid grid-cols-4 gap-3 sm:gap-4">
+                    {/* Scientific toggle — black bg, yellow shadow */}
                     <button
-                      className={getButtonClassName(btn)}
                       type="button"
-                      key={i}
-                      value={String(btn)}
-                      onClick={() => handleButtonClick(btn)}
-                      style={getButtonStyle(btn)}
+                      className="col-span-2 button btn-scientific bg-black text-white rounded-xl h-12 sm:h-14 font-black uppercase text-xs tracking-widest border-2 border-black shadow-[4px_4px_0px_var(--nb-yellow)] active:shadow-none transition-all mb-2"
+                      onClick={handleScientificModeToggle}
                     >
-                      {btn}
+                      {scientificMode ? "Simple" : "Scientific"}
                     </button>
-                  ))}
-                </div>
-              </form>
-            </fieldset>
+
+                    {/* Scientific extra buttons — teal via btn-sci-extra */}
+                    {scientificMode && additionalButtons.map((b, i) => (
+                      <button
+                        type="button"
+                        key={i}
+                        className="button btn-sci-extra border-2 border-black rounded-xl h-12 sm:h-14 font-black text-xl shadow-[3px_3px_0px_#000] active:shadow-none transition-all"
+                        onClick={() => handleButtonClick(b.value)}
+                      >
+                        {b.value}
+                      </button>
+                    ))}
+
+                    {btnValues.flat().map((btn, i) => (
+                      <button
+                        className={`${getButtonClassName(btn)} flex items-center justify-center rounded-xl sm:rounded-2xl h-14 sm:h-16 border-[3px] border-black font-black text-xl sm:text-2xl shadow-[4px_4px_0px_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all`}
+                        type="button"
+                        key={i}
+                        value={String(btn)}
+                        onClick={() => handleButtonClick(btn)}
+                        style={getButtonStyle(btn)}
+                      >
+                        {btn}
+                      </button>
+                    ))}
+                  </div>
+                </form>
+              </fieldset>
+            </div>
 
             {/* ── Panel kanan: Petunjuk ── */}
             <div
-              className={`panel petunjuk reveal-right ${petunjukVisible ? "revealed" : ""}`}
+              className={`panel petunjuk w-full max-w-md bg-white p-8 border-[3px] border-black rounded-2xl shadow-[8px_8px_0px_#000] reveal-right ${petunjukVisible ? "revealed" : ""}`}
               ref={petunjukRef}
             >
-              <h5>📖 Petunjuk</h5>
-              <div className="flex justify-center mt-3 mb-4">
-                <img src={body} width={220} alt="Petunjuk warna"
-                  style={{ border: "2.5px solid var(--nb-black)", borderRadius: 8, boxShadow: "4px 4px 0px var(--nb-black)" }}
-                />
+              <h5 className="font-black uppercase tracking-widest mb-6">📖 Quick Guide</h5>
+              <div className="flex justify-center mt-3 mb-8">
+                <div className="relative group">
+                  {/* Rotated bg — yellow (primary brand) */}
+                  <div className="absolute inset-0 bg-[var(--nb-yellow)] border-2 border-black rounded-xl rotate-3 group-hover:rotate-0 transition-all"></div>
+                  <img
+                    src={body}
+                    width={220}
+                    alt="Petunjuk warna"
+                    className="relative border-[3px] border-black rounded-xl shadow-[4px_4px_0px_#000]"
+                  />
+                </div>
               </div>
-              <p style={{ fontSize: 13, fontWeight: 700, marginBottom: 8 }}>
-                Cari warna dengan ketik salah satu:
-              </p>
-              <div className="color-tags">
+              <p className="font-black text-sm uppercase mb-4 border-b-2 border-black inline-block">Color Categories:</p>
+              <div className="flex flex-wrap gap-2 mb-8">
                 {["Default","Pastel","Cold","Sky","Rainbow","Coffee"].map((tag) => (
-                  <span key={tag} className="color-tag">{tag}</span>
+                  <span
+                    key={tag}
+                    className="px-3 py-1 bg-[var(--nb-yellow)] border-2 border-black rounded-lg font-bold text-xs uppercase shadow-[2px_2px_0px_#000]"
+                  >
+                    {tag}
+                  </span>
                 ))}
               </div>
-              <p style={{ fontSize: 13, marginTop: 14, lineHeight: 1.7 }}>
-                Pilih warna favoritmu lalu klik <strong>Ganti Warna</strong> untuk mengubah tampilan kalkulator!
+              <p className="text-sm font-medium leading-relaxed bg-[var(--nb-bg)] p-4 rounded-xl border-2 border-black border-dashed">
+                Pilih warna favoritmu lalu klik <strong>Apply Theme</strong> untuk mengubah tampilan kalkulator secara real-time!
               </p>
             </div>
+
           </div>
         </main>
 

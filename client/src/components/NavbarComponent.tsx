@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Disclosure } from "@headlessui/react";
-import { Bars3Icon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import calculator from "../assets/images/calculator.png";
@@ -51,7 +51,7 @@ interface NavbarProps {
   onScrollChange?: (scrolled: boolean) => void;
 }
 
-const NavbarComponent: React.FC<NavbarProps> = ({onScrollChange}) => {
+const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -65,185 +65,197 @@ const NavbarComponent: React.FC<NavbarProps> = ({onScrollChange}) => {
       setIsScrolled(scrolled);
       onScrollChange?.(scrolled);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [onScrollChange]);
 
   const navigation = [
-    { name: "Home", href: "/", current: location.pathname === "/" },
-    {
-      name: "About Project",
-      href: "/aboutProjek",
-      current: location.pathname === "/aboutProjek",
-    },
+    { name: "Home",          href: "/",            current: location.pathname === "/" },
+    { name: "About Project", href: "/aboutProjek", current: location.pathname === "/aboutProjek" },
   ];
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      content: "",
-    },
+    defaultValues: { email: "", content: "" },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/messages`,
-        values
-      );
-
+      await axios.post(`${import.meta.env.VITE_API_URL}/messages`, values);
       form.reset();
       setIsFeedbackOpen(false);
-
-      toast.success("Pesan Berhasil Terkirim", {
-        duration: 4000,
-        position: "bottom-right",
-      });
+      toast.success("Pesan Berhasil Terkirim", { duration: 4000, position: "bottom-right" });
     } catch (error) {
       console.error(error);
-      toast.error("Pesan Gagal Terkirim", {
-        position: "bottom-right",
-      });
+      toast.error("Pesan Gagal Terkirim", { position: "bottom-right" });
     }
   }
 
   return (
     <div
       className={`fixed left-0 right-0 z-[1000] flex justify-center transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-        ${isScrolled ? "top-4 p-0" : "top-0 p-0"}
+        ${isScrolled ? "top-4 px-4" : "top-0 p-0"}
       `}
     >
       <Disclosure
         as="nav"
         className={`transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-          bg-[#FFF5E1] border-[#1A1A1A]
-          flex items-center justify-center
+          bg-[var(--nb-bg)] border-[var(--nb-black)]
+          flex flex-col items-center justify-center relative
           ${isScrolled
-            ? "w-3/5 rounded-full border-[3px] shadow-[4px_4px_0px_#000] h-14"
-            : "w-full rounded-none border-b-[3px] shadow-none h-16"
+            /* Scrolled: floating pill — shadow pakai yellow (brand) */
+            ? "w-full md:w-3/5 rounded-2xl md:rounded-full border-[3px] shadow-[4px_4px_0px_var(--nb-yellow)] h-auto min-h-[56px]"
+            /* Normal: full-width flat bar */
+            : "w-full rounded-none border-b-[3px] shadow-none h-auto min-h-[64px]"
           }
         `}
       >
-        {() => (
+        {({ open }) => (
           <>
-            <div className="w-full max-w-7xl px-4 h-full flex items-center justify-between">
-              
-              {/* MOBILE BUTTON */}
-              <div className="flex sm:hidden">
-                <Disclosure.Button className="p-2 rounded-lg hover:bg-[#FFD93D] border-2 border-transparent hover:border-black transition-all">
-                  <Bars3Icon className="h-6 w-6" />
-                </Disclosure.Button>
+            <div className="w-full max-w-7xl px-4 h-14 md:h-16 flex items-center justify-between">
+
+              {/* LEFT: Logo — yellow bg, black border */}
+              <div
+                className="flex items-center gap-2 cursor-pointer shrink-0"
+                onClick={() => navigate("/")}
+              >
+                <div className="bg-[var(--nb-yellow)] p-1 border-2 border-[var(--nb-black)] rounded-lg shadow-[2px_2px_0px_var(--nb-black)]">
+                  <img className="h-6 w-6" src={calculator} alt="Logo" />
+                </div>
+                <span className="hidden sm:block font-black text-lg tracking-tight uppercase">
+                  CalGenius
+                </span>
               </div>
 
-              {/* LEFT */}
-              <div className="flex items-center flex-1 justify-center sm:justify-start gap-4">
-                <div
-                  className="flex items-center gap-2 cursor-pointer"
-                  onClick={() => navigate("/")}
-                >
-                  <div className="bg-[#FFD93D] p-1 border-2 border-black rounded-lg shadow-[2px_2px_0px_#000]">
-                    <img className="h-6" src={calculator} />
-                  </div>
-
-                  {!isScrolled && (
-                    <span className="hidden md:block font-bold text-lg">
-                      CalGenius ✦
-                    </span>
-                  )}
-                </div>
-
-                <div className="hidden sm:flex ml-6">
-                  <div className="flex space-x-2">
-                    {navigation.map((item) => (
-                      <button
-                        key={item.name}
-                        onClick={() => navigate(item.href)}
-                        className={classNames(
-                          item.current
-                            ? "bg-black text-white"
-                            : "hover:bg-[#FFD93D]",
-                          "rounded-lg px-3 py-1 text-xs font-bold border-2 border-transparent transition-colors"
-                        )}
-                      >
-                        {item.name}
-                      </button>
-                    ))}
-                  </div>
+              {/* CENTER: Desktop Menu */}
+              <div className="hidden md:flex flex-1 justify-center">
+                <div className="flex space-x-2">
+                  {navigation.map((item) => (
+                    <button
+                      key={item.name}
+                      onClick={() => navigate(item.href)}
+                      className={classNames(
+                        item.current
+                          /* Active: black bg, white text — jelas & bold */
+                          ? "bg-[var(--nb-black)] text-[var(--nb-white)]"
+                          /* Hover: yellow (primary brand) */
+                          : "hover:bg-[var(--nb-yellow)] hover:text-[var(--nb-black)]",
+                        "rounded-lg px-4 py-1.5 text-xs font-black border-2 border-transparent transition-all active:scale-95"
+                      )}
+                    >
+                      {item.name}
+                    </button>
+                  ))}
                 </div>
               </div>
 
-              {/* RIGHT */}
-              <div className="flex items-center gap-4">
-                
-                {/* FEEDBACK */}
-                <div className="flex gap-2">
-                  <Popover open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
-                    <PopoverTrigger asChild>
-                      <button className="p-0.5 bg-white border-2 border-black rounded-full shadow-[2px_2px_0px_#000]">
-                        <img src={feedbackIcon} className="h-8 w-8 rounded-full" />
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent className="mt-2 w-56 p-2 bg-[#FFFDF5] border-[2.5px] border-black shadow-[6px_6px_0px_#000] rounded-xl">
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <button className="w-full p-2 hover:bg-[#6BCB77] rounded-lg font-bold">
-                            Berikan Feedback
-                          </button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent className="bg-[#FFFDF5] border-[4px] border-black shadow-[10px_10px_0px_var(--nb-black)] rounded-2xl">
-                          <AlertDialogHeader>
-                            <AlertDialogTitle className="font-black text-2xl uppercase">
-                              <FontAwesomeIcon icon={faMessage} className="mr-2" />
-                              Kirim Masukan
-                            </AlertDialogTitle>
-                            <AlertDialogDescription className="pt-4">
-                              <Form {...form}>
-                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                                  <FormField control={form.control} name="email" render={({ field }) => (
-                                    <FormItem><FormControl><Input placeholder="Email" {...field} className="border-2 border-black rounded-lg" /></FormControl></FormItem>
-                                  )} />
-                                  <FormField control={form.control} name="content" render={({ field }) => (
-                                    <FormItem><FormControl><Textarea placeholder="Pesan..." {...field} rows={4} className="border-2 border-black rounded-lg" /></FormControl></FormItem>
-                                  )} />
-                                  <div className="flex justify-end gap-3 pt-2">
-                                    <AlertDialogCancel asChild><Button variant="outline" className="border-2 border-black">Batal</Button></AlertDialogCancel>
-                                    <Button type="submit" className="bg-black text-white border-2 border-black shadow-[2px_2px_0px_#000]">Kirim</Button>
-                                  </div>
-                                </form>
-                              </Form>
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </PopoverContent>
-                  </Popover>
-                </div>
+              {/* RIGHT: Actions */}
+              <div className="flex items-center gap-2 md:gap-4">
 
-                {/* PROFILE */}
-                <Popover open={isProfileOpen} onOpenChange={setIsProfileOpen}>
+                {/* FEEDBACK button */}
+                <Popover open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
                   <PopoverTrigger asChild>
-                    <button className="p-0.5 bg-white border-2 border-black rounded-full shadow-[2px_2px_0px_#000]">
-                      <img className="h-9 w-9 rounded-full" src={profile} />
+                    <button className="p-0.5 bg-[var(--nb-white)] border-2 border-[var(--nb-black)] rounded-full shadow-[2px_2px_0px_var(--nb-black)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">
+                      <img src={feedbackIcon} className="h-8 w-8 rounded-full" alt="Feedback" />
                     </button>
                   </PopoverTrigger>
+                  <PopoverContent className="mt-2 w-64 p-2 bg-[var(--nb-bg)] border-[2.5px] border-[var(--nb-black)] shadow-[6px_6px_0px_var(--nb-black)] rounded-xl">
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        {/* Hover: teal (confirm/action) */}
+                        <button className="w-full p-2 hover:bg-[var(--nb-teal)] rounded-lg font-black uppercase text-sm border-2 border-transparent hover:border-[var(--nb-black)] transition-all">
+                          Send Feedback
+                        </button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="bg-[var(--nb-bg)] border-[4px] border-[var(--nb-black)] shadow-[10px_10px_0px_var(--nb-black)] rounded-2xl max-w-[90vw] md:max-w-lg">
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="font-black text-2xl uppercase flex items-center">
+                            <FontAwesomeIcon icon={faMessage} className="mr-3" />
+                            Feedback
+                          </AlertDialogTitle>
+                          <AlertDialogDescription className="pt-4 text-left">
+                            <Form {...form}>
+                              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                                <FormField control={form.control} name="email" render={({ field }) => (
+                                  <FormItem><FormControl>
+                                    <Input placeholder="Email" {...field} className="border-2 border-[var(--nb-black)] rounded-xl p-6 font-bold" />
+                                  </FormControl></FormItem>
+                                )} />
+                                <FormField control={form.control} name="content" render={({ field }) => (
+                                  <FormItem><FormControl>
+                                    <Textarea placeholder="How can we improve?" {...field} rows={4} className="border-2 border-[var(--nb-black)] rounded-xl p-4 font-bold" />
+                                  </FormControl></FormItem>
+                                )} />
+                                <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4">
+                                  <AlertDialogCancel asChild>
+                                    <Button variant="outline" className="border-2 border-[var(--nb-black)] font-black uppercase rounded-xl">
+                                      Cancel
+                                    </Button>
+                                  </AlertDialogCancel>
+                                  {/* Submit — black bg, teal hover */}
+                                  <Button
+                                    type="submit"
+                                    className="bg-[var(--nb-black)] text-[var(--nb-white)] border-2 border-[var(--nb-black)] shadow-[3px_3px_0px_var(--nb-black)] font-black uppercase rounded-xl px-8 hover:bg-[var(--nb-teal)] hover:text-[var(--nb-black)] transition-all"
+                                  >
+                                    Send it!
+                                  </Button>
+                                </div>
+                              </form>
+                            </Form>
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </PopoverContent>
+                </Popover>
 
-                  <PopoverContent className="mt-1 w-32 p-2 bg-white border-[2.5px] border-black shadow-[6px_6px_0px_#000] rounded-xl">
+                {/* PROFILE button */}
+                <Popover open={isProfileOpen} onOpenChange={setIsProfileOpen}>
+                  <PopoverTrigger asChild>
+                    <button className="p-0.5 bg-[var(--nb-white)] border-2 border-[var(--nb-black)] rounded-full shadow-[2px_2px_0px_var(--nb-black)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">
+                      <img className="h-8 w-8 rounded-full" src={profile} alt="Profile" />
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="mt-2 w-40 p-2 bg-[var(--nb-bg)] border-[2.5px] border-[var(--nb-black)] shadow-[6px_6px_0px_var(--nb-black)] rounded-xl">
+                    {/* Profile hover — violet (special page) */}
                     <button
-                      onClick={() => {
-                        navigate("/myProfile");
-                        setIsProfileOpen(false);
-                      }}
-                      className="w-full p-2 hover:bg-[#845EC2] hover:text-white rounded-lg font-bold"
+                      onClick={() => { navigate("/myProfile"); setIsProfileOpen(false); }}
+                      className="w-full p-2 hover:bg-[var(--nb-violet)] hover:text-[var(--nb-white)] rounded-lg font-black uppercase text-sm border-2 border-transparent hover:border-[var(--nb-black)] transition-all"
                     >
-                      My Profile
+                      Profile
                     </button>
                   </PopoverContent>
                 </Popover>
 
+                {/* MOBILE TOGGLE — yellow bg */}
+                <div className="flex md:hidden">
+                  <Disclosure.Button className="p-1.5 bg-[var(--nb-yellow)] border-2 border-[var(--nb-black)] rounded-lg shadow-[2px_2px_0px_var(--nb-black)] active:shadow-none transition-all">
+                    {open ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
+                  </Disclosure.Button>
+                </div>
+
               </div>
             </div>
+
+            {/* Mobile Menu Panel */}
+            <Disclosure.Panel className="md:hidden w-full px-4 pb-4 animate__animated animate__fadeIn">
+              <div className="flex flex-col gap-2 border-t-2 border-[var(--nb-black)] pt-4">
+                {navigation.map((item) => (
+                  <button
+                    key={item.name}
+                    onClick={() => navigate(item.href)}
+                    className={classNames(
+                      item.current
+                        ? "bg-[var(--nb-black)] text-[var(--nb-white)] shadow-none translate-x-[2px] translate-y-[2px]"
+                        : "bg-[var(--nb-white)] hover:bg-[var(--nb-yellow)] hover:text-[var(--nb-black)]",
+                      "block w-full text-left px-5 py-4 rounded-xl text-sm font-black border-2 border-[var(--nb-black)] shadow-[3px_3px_0px_var(--nb-black)] transition-all active:scale-95"
+                    )}
+                  >
+                    {item.name}
+                  </button>
+                ))}
+              </div>
+            </Disclosure.Panel>
           </>
         )}
       </Disclosure>
