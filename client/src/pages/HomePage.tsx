@@ -168,7 +168,7 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
           SPACER: Mencegah konten tertutup navbar fixed
       ══════════════════════════════ */}
       <div 
-        className={`transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+        className={`transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] bg-[#FFD93D] ${
           isNavbarScrolled ? "h-20" : "h-16"
         }`} 
       />

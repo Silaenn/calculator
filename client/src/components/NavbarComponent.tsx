@@ -124,7 +124,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({onScrollChange}) => {
           }
         `}
       >
-        {({ open }) => (
+        {() => (
           <>
             <div className="w-full max-w-7xl px-4 h-full flex items-center justify-between">
               
