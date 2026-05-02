@@ -1,14 +1,5 @@
 import { useState } from "react";
-
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-
+import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { html, css, js, react, deo } from "@/assets/images/index.ts";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -22,273 +13,86 @@ import axios from "axios";
 
 const formSchema = z.object({
   email: z.string().email().min(2).max(50),
-  content: z
-    .string()
-    .min(1, {
-      message: "Bio must be at least 10 characters.",
-    })
-    .max(160, {
-      message: "Bio must not be longer than 30 characters.",
-    }),
+  content: z.string().min(1, "Bio must be at least 1 character.").max(160, "Bio must not be longer than 160 characters."),
 });
 
 const MyProfile = () => {
-  const [isOpen, setIsOpen] = useState(true);
-
-  const handleClickClose = () => {
-    setIsOpen(false);
-  };
-
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      content: "",
-    },
-  });
+  const [isOpen, setIsOpen] = useState(false);
+  const form = useForm<z.infer<typeof formSchema>>({ resolver: zodResolver(formSchema), defaultValues: { email: "", content: "" } });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await axios.post(
-        "http://localhost:2000/messages",
-        values
-      );
-
-      const newMessage = response.data.data;
-      console.log(newMessage);
-
+      await axios.post("http://localhost:2000/messages", values);
       setIsOpen(false);
-
-      toast("Pesan Berhasil Terkirim", {
-        duration: 4000,
-        position: "bottom-right",
-
-        // Styling
-        style: {},
-        className: "",
-
-        // Custom Icon
-        icon: "✅",
-
-        // Change colors of success/error/loading icon
-        iconTheme: {
-          primary: "#000",
-          secondary: "#fff",
-        },
-
-        // Aria
-        ariaProps: {
-          role: "status",
-          "aria-live": "polite",
-        },
-      });
+      toast.success("Pesan Berhasil Terkirim", { icon: "✅" });
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error:", error);
     }
   }
 
   return (
-    <section className=" h-auto w-auto" style={{ backgroundColor: "" }}>
-      <div className=" flex justify-center flex-col items-center animate__animated animate__fadeInDown">
-        <h5 className="mt-4 title">A BIT ABOUT ME</h5>
+    <section className="min-h-screen bg-[var(--nb-purple)] font-['Space_Grotesk'] pb-20 relative overflow-hidden animate__animated animate__fadeIn">
+      <div className="h-16 bg-[var(--nb-purple)]" />
+      
+      {/* Distinct Diagonal Slash Pattern */}
+      <div className="absolute inset-0 z-0 opacity-[0.2]" 
+           style={{ backgroundImage: "repeating-linear-gradient(45deg, var(--nb-black), var(--nb-black) 2px, transparent 2px, transparent 20px)", backgroundSize: "40px 40px" }} />
 
-        <p className="who">Who Am I?</p>
-
-        <p className="text-justify me">
-          Halo, nama saya adalah Deo Keldi Silaen. Saya adalah seorang yang
-          senang mengeksplorasi berbagai bidang kehidupan. Saat ini, saya fokus
-          pada pembelajaran mengenai coding, di sini saya mengejar passion saya
-          dalam pemograman. Selain itu, saya memiliki minat yang luas dalam
-          bidang olahraga dan musik, di mana saya sering menghabiskan waktu
-          luang saya untuk melakukan nya. Saya percaya bahwa kehidupan adalah
-          petualangan yang tak terbatas, dan saya selalu mencari peluang untuk
-          belajar dan berkembang. Melalui platform ini, saya berharap dapat
-          berbagi pengalaman, pengetahuan, dan inspirasi dengan Anda semua.
-          Terima kasih telah mengunjungi halaman saya!
-        </p>
-
-        <p className="mt-1 mb-5 mby">~ Deo Keldi Silaen ~</p>
+      {/* Floating Math Symbols */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[20%] left-[8%] -rotate-6 text-5xl opacity-30 font-mono text-white animate-pulse">E=mc²</div>
+        <div className="absolute top-[50%] right-[10%] text-6xl opacity-30 font-mono text-white animate-bounce">Σ</div>
+        <div className="absolute bottom-[10%] left-[15%] rotate-12 text-4xl opacity-30 font-mono text-white animate-pulse delay-700">√x</div>
       </div>
 
-      <div className="layout-row flex-wrap">
-        <div
-          className="g1 animate__animated animate__fadeInLeft"
-          style={{
-            borderRadius: "10px",
-          }}
-        >
-          <div className="g1-one">
-            <div className="g1-img">
-              <img
-                src={deo}
-                alt="About Me"
-                style={{
-                  width: "100%",
-                  height: "330px",
-                  objectFit: "cover",
-                }}
-              />
-            </div>
-
-            <div className="g1-ket">
-              The technologies I use in this web development are. . .
-            </div>
-            <AlertDialog>
-              <AlertDialogTrigger asChild onClick={() => handleOpen()}>
-                <div className="g1-feed mt-2">feedback for me</div>
-              </AlertDialogTrigger>
-              {isOpen && (
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Kirimkan Masukan / Saran Anda kepada Kami
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      <Form {...form}>
-                        <form
-                          onSubmit={form.handleSubmit(onSubmit)}
-                          className="space-y-8"
-                        >
-                          <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Input
-                                    placeholder="Masukan Email Anda"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </FormItem>
-                            )}
-                          />
-
-                          <FormField
-                            control={form.control}
-                            name="content"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Textarea
-                                    placeholder="Masukkan Saran Anda"
-                                    {...field}
-                                  />
-                                </FormControl>
-                              </FormItem>
-                            )}
-                          />
-
-                          <div className="flex ml-auto">
-                            <Button
-                              variant="outline"
-                              className="ml-auto"
-                              onClick={() => handleClickClose()}
-                            >
-                              Batal
-                            </Button>
-
-                            <Button
-                              onClick={() => onSubmit}
-                              type="submit"
-                              className="flex ml-2"
-                            >
-                              Kirim
-                            </Button>
-                          </div>
-                        </form>
-                      </Form>
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                </AlertDialogContent>
-              )}
-            </AlertDialog>
-          </div>
+      <div className="max-w-5xl mx-auto px-6 pt-12 space-y-12 relative z-10 animate__animated animate__fadeInUp">
+        {/* Profile Header Card */}
+        <div className="bg-[#FAF9F6] p-8 border-[4px] border-[var(--nb-black)] rounded-2xl shadow-[10px_10px_0px_var(--nb-black)]">
+          <h5 className="font-['Space_Mono'] font-bold tracking-widest uppercase text-sm mb-2 text-[var(--nb-purple)]">A Bit About Me</h5>
+          <h2 className="text-4xl font-black mb-6 uppercase">Who Am I?</h2>
+          <p className="text-lg leading-relaxed mb-4 text-slate-800">
+            Halo, nama saya Deo Keldi Silaen. Saya seorang pengembang yang fokus pada pemrograman, musik, dan olahraga. Saya percaya hidup adalah petualangan untuk terus berkembang. Mari terhubung!
+          </p>
+          <span className="font-black text-lg">~ Deo Keldi Silaen ~</span>
         </div>
 
-        <div className="g2 animate__animated animate__fadeInUp">
-          <div className="g2-one">
-            <div
-              className="bidangH rounded-2xl"
-              style={{
-                borderBottom: "20px solid #E34F26",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <div
-                className="flex flex-col
-              "
-              >
-                <img
-                  src={html}
-                  alt=""
-                  className="w-36 animate__animated animate__rotateInUpLeft cod"
-                />
-                <p className="justify-center flex mt-3">HTML</p>
+        {/* Content Layout */}
+        <div className="grid md:grid-cols-3 gap-8">
+          {/* Profile Image & Feedback */}
+          <div className="bg-[#FAF9F6] p-6 border-[4px] border-[var(--nb-black)] rounded-2xl shadow-[8px_8px_0px_var(--nb-black)] space-y-4">
+            <img src={deo} alt="Deo" className="w-full h-64 object-cover border-[3px] border-[var(--nb-black)] rounded-lg" />
+            <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+              <AlertDialogTrigger asChild>
+                <Button className="w-full bg-[var(--nb-pink)] border-[2px] border-[var(--nb-black)] shadow-[3px_3px_0px_var(--nb-black)] font-black uppercase text-black hover:bg-[var(--nb-yellow)]">Feedback Me</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="bg-[#FAF9F6] border-[4px] border-[var(--nb-black)] rounded-2xl shadow-[10px_10px_0px_var(--nb-black)]">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Kirim Masukan</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    <Form {...form}>
+                      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                        <FormField control={form.control} name="email" render={({ field }) => (<FormItem><FormControl><Input placeholder="Email" {...field} /></FormControl></FormItem>)} />
+                        <FormField control={form.control} name="content" render={({ field }) => (<FormItem><FormControl><Textarea placeholder="Saran Anda" {...field} /></FormControl></FormItem>)} />
+                        <div className="flex gap-2 justify-end">
+                          <Button variant="outline" onClick={() => setIsOpen(false)}>Batal</Button>
+                          <Button type="submit">Kirim</Button>
+                        </div>
+                      </form>
+                    </Form>
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+
+          {/* Tech Stack */}
+          <div className="md:col-span-2 grid grid-cols-2 gap-4">
+            {[html, css, js, react].map((img, i) => (
+              <div key={i} className="bg-[#FAF9F6] p-6 border-[4px] border-[var(--nb-black)] rounded-2xl shadow-[6px_6px_0px_var(--nb-black)] flex flex-col items-center hover:translate-y-[-5px] transition-transform">
+                <img src={img} alt="tech" className="w-20 h-20 object-contain mb-4" />
+                <p className="font-black uppercase">{['HTML', 'CSS', 'JS', 'REACT'][i]}</p>
               </div>
-            </div>
-            <div
-              className="bidangC rounded-2xl"
-              style={{
-                borderBottom: "20px solid #214CE5",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <div
-                className="flex flex-col
-              "
-              >
-                <img
-                  src={css}
-                  alt=""
-                  className="w-36 animate__animated animate__rotateInUpLeft cod"
-                />
-                <p className="justify-center flex mt-3">CSS</p>
-              </div>
-            </div>
-            <div
-              className="bidangJ rounded-2xl"
-              style={{
-                borderBottom: "20px solid #D6BA32",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <div
-                className="flex flex-col
-              "
-              >
-                <img
-                  src={js}
-                  alt=""
-                  className="w-36 animate__animated animate__rotateInUpLeft cod"
-                />
-                <p className="justify-center flex mt-3">JAVASCRIPT</p>
-              </div>
-            </div>
-            <div
-              className="bidangR rounded-2xl"
-              style={{
-                borderBottom: "20px solid #C3F1FD",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              {" "}
-              <div
-                className="flex flex-col
-              "
-              >
-                <img
-                  src={react}
-                  alt=""
-                  className="w-36 mb-2 animate__animated animate__rotateInUpLeft cod"
-                />
-                <p className="justify-center flex mt-3">REACT</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
