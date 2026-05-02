@@ -185,7 +185,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({onScrollChange}) => {
                         <img src={feedbackIcon} className="h-8 w-8 rounded-full" />
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-56 p-2 bg-[#FFFDF5] border-[2.5px] border-black shadow-[6px_6px_0px_#000] rounded-xl">
+                    <PopoverContent className="mt-2 w-56 p-2 bg-[#FFFDF5] border-[2.5px] border-black shadow-[6px_6px_0px_#000] rounded-xl">
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <button className="w-full p-2 hover:bg-[#6BCB77] rounded-lg font-bold">
@@ -229,7 +229,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({onScrollChange}) => {
                     </button>
                   </PopoverTrigger>
 
-                  <PopoverContent className="w-32 p-2 bg-white border-[2.5px] border-black shadow-[6px_6px_0px_#000] rounded-xl">
+                  <PopoverContent className="mt-1 w-32 p-2 bg-white border-[2.5px] border-black shadow-[6px_6px_0px_#000] rounded-xl">
                     <button
                       onClick={() => {
                         navigate("/myProfile");

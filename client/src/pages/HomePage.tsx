@@ -196,7 +196,7 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
               <p className="hero-sub animate__animated animate__fadeInLeft">
                 by <strong>Deo Silaen</strong> — Kalkulator serba bisa
               </p>
-              <button className="hero-cta animate__animated animate__fadeInUp" onClick={() => scrollDown(800)}>
+              <button className="hero-cta animate__animated animate__fadeInUp" onClick={() => scrollDown(1000)}>
                 Lihat Kalkulator ↓
               </button>
             </div>
