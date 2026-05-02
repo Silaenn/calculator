@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { warna } from "../data/index.ts";
 import { body, math, smk, sound } from "@/assets/images/index.ts";
 import { evaluate } from "mathjs";
+import { TrashIcon, BackspaceIcon, BeakerIcon, AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 
 const btnValues = [
   ["C", "DEL", "%", "÷"],
@@ -45,6 +46,7 @@ interface HomePageProps {
 
 const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
   const [displayValue, setDisplayValue] = useState("");
+  const [prevExpression, setPrevExpression] = useState("");
   const [isPopping, setIsPopping] = useState(false);
   const [calculatorColor, setCalculatorColor] = useState<calculator>({ badan: "", angka: "", operator: "" });
   const [nextColor, setNextColor] = useState<calculator>({ badan: "", angka: "", operator: "" });
@@ -74,7 +76,7 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
     return () => clearTimeout(t);
   }, [displayValue]);
 
-  const handleSearchChange = (e: { target: { value: React.SetStateAction<string> } }) =>
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(e.target.value);
 
   const initializeNextColor = (category: string, id: string) =>
@@ -121,6 +123,7 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
   };
 
   const evaluateExpression = () => {
+    if (!displayValue) return;
     try {
       const expr = displayValue
         .replace(/×/g, "*").replace(/÷/g, "/")
@@ -128,17 +131,37 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
         .replace(/²/g, "**2").replace(/³/g, "**3")
         .replace(/√(\d+(\.\d+)?)/g, (_, p) => `sqrt(${p})`)
         .replace(/(\d+)%/g, (_, p) => `${p} / 100`);
-      setDisplayValue(evaluate(expr).toString());
-    } catch { setDisplayValue("Error"); }
+      
+      const result = evaluate(expr);
+      setPrevExpression(displayValue + " =");
+      setDisplayValue(result.toString());
+    } catch { 
+      setDisplayValue("Error"); 
+    }
   };
 
   const handleButtonClick = (btn: string | number) => {
     const symMap: Record<string, string> = { "π":"π","√":"√","x²":"²","x³":"³" };
+    
+    // Clear previous expression if starting a new calculation after an "="
+    if (prevExpression.includes("=")) {
+      setPrevExpression("");
+    }
+
     switch (btn) {
-      case "C":   setDisplayValue(""); break;
-      case "DEL": setDisplayValue((v) => v.slice(0, -1)); break;
-      case "=":   evaluateExpression(); break;
-      case "%":   setDisplayValue((v) => v.includes("%") ? v : v + "%"); break;
+      case "C":   
+        setDisplayValue(""); 
+        setPrevExpression("");
+        break;
+      case "DEL": 
+        setDisplayValue((v) => v.slice(0, -1)); 
+        break;
+      case "=":   
+        evaluateExpression(); 
+        break;
+      case "%":   
+        setDisplayValue((v) => v.includes("%") ? v : v + "%"); 
+        break;
       case "+/-":
         setDisplayValue((v) => {
           if (v.includes("+") || v.includes("-")) {
@@ -246,7 +269,7 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
             </p>
           </div>
 
-          <div className="containerL flex flex-col lg:flex-row gap-12 items-center lg:items-start max-w-7xl mx-auto">
+          <div className="containerL flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap gap-8 justify-center items-center md:items-start max-w-7xl mx-auto">
 
             {/* ── Panel kiri: Pilih Warna ── */}
             <div
@@ -256,13 +279,18 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
               <h5 className="font-black uppercase tracking-widest mb-6 flex items-center gap-2">
                 <span className="text-2xl">🎨</span> Pilih Warna
               </h5>
-              <Input
-                placeholder="Cari Jenis Warna (ex: Pastel, Cold)"
-                className="mb-6 h-12 border-2 border-black rounded-xl font-bold px-4"
-                value={searchTerm}
-                onChange={handleSearchChange}
-              />
-              <div className="swatch-scroll max-h-[400px] overflow-y-auto pr-2 space-y-4">
+              <div className="relative mb-6">
+                <Input
+                  placeholder="Cari Jenis Warna (ex: Pastel, Cold)"
+                  className="h-12 border-2 border-black rounded-xl font-bold px-4 focus:ring-0 focus:border-black"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+                <div className="absolute right-3 top-3 opacity-20">
+                  <AdjustmentsHorizontalIcon className="w-6 h-6" />
+                </div>
+              </div>
+              <div className="swatch-scroll max-h-[400px] overflow-y-auto pr-3 space-y-6">
                 {Object.keys(warna).map((category) => {
                   if (!category.toLowerCase().includes(searchTerm.toLowerCase())) return null;
                   return (
@@ -271,15 +299,15 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
                       {Object.keys(warna[category]).map((id) => {
                         const { badan, angka, operator } = warna[category][id];
                         return (
-                          <div key={id} className="bg-[#f8f8f8] p-4 border-2 border-black rounded-xl shadow-[4px_4px_0px_#000] space-y-3">
+                          <div key={id} className="bg-[#f8f8f8] p-4 border-2 border-black rounded-xl shadow-[4px_4px_0px_#000] space-y-3 transition-transform hover:translate-y-1 hover:translate-x-0.5 mb-2">
                             <div className="flex gap-2 h-10">
-                              <div className="flex-1 rounded-lg border-2 border-black" style={{ backgroundColor: badan }} />
-                              <div className="flex-1 rounded-lg border-2 border-black" style={{ backgroundColor: angka }} />
-                              <div className="flex-1 rounded-lg border-2 border-black" style={{ backgroundColor: operator }} />
+                              <div className="flex-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_#000]" style={{ backgroundColor: badan }} title="Background" />
+                              <div className="flex-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_#000]" style={{ backgroundColor: angka }} title="Digits" />
+                              <div className="flex-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_#000]" style={{ backgroundColor: operator }} title="Operators" />
                             </div>
                             {/* Apply button — teal via btn-ganti class */}
                             <Button
-                              className="btn-ganti w-full font-black uppercase text-xs rounded-lg h-10"
+                              className="btn-ganti w-full font-black uppercase text-xs rounded-lg h-10 shadow-[3px_3px_0px_#000] active:shadow-none active:translate-y-[2px]"
                               onClick={() => { initializeNextColor(category, id); applyNewColor(); }}
                             >
                               Apply Theme
@@ -298,92 +326,157 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
               <fieldset
                 id="container"
                 ref={calcRef}
-                className={`reveal-up w-full max-w-[360px] sm:max-w-[400px] p-6 sm:p-8 border-[4px] border-black rounded-[2.5rem] shadow-[12px_12px_0px_#000] ${calcVisible ? "revealed" : ""}`}
+                className={`reveal-up w-full max-w-[360px] sm:max-w-[500px] p-6 sm:p-10 border-[4px] border-black rounded-[3rem] shadow-[16px_16px_0px_#000] transition-all duration-300 ${calcVisible ? "revealed" : ""}`}
                 style={{ backgroundColor: isColorApplied ? calculatorColor.badan : "var(--nb-yellow)" }}
               >
-                <form name="calculator">
+                <form name="calculator" onSubmit={(e) => e.preventDefault()}>
                   <audio ref={audioRef} hidden><source src={sound} type="audio/mp3" /></audio>
-                  <div className="calc-brand font-black text-xs tracking-[0.3em] text-center mb-6 opacity-30">
-                    CALGENIUS FX-1
+                  
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="calc-brand font-black text-[10px] tracking-[0.4em] uppercase opacity-40">
+                      CALGENIUS FX-2.0
+                    </div>
+                    <div className="flex gap-1">
+                      <div className="w-2 h-2 rounded-full bg-black opacity-20"></div>
+                      <div className="w-2 h-2 rounded-full bg-black opacity-20"></div>
+                    </div>
                   </div>
-                  <input
-                    className={`display ${isPopping ? "display-pop" : ""} w-full h-20 bg-white border-[3px] border-black rounded-2xl mb-8 px-6 text-right text-3xl font-black shadow-inner`}
-                    type="text"
-                    value={displayValue}
-                    readOnly
-                    placeholder="0"
-                  />
+
+                  <div className="display-container relative w-full mb-8">
+                    <div className="absolute top-2 right-6 text-right text-xs font-black opacity-40 h-4 overflow-hidden">
+                      {prevExpression}
+                    </div>
+                    <input
+                      className={`display ${isPopping ? "display-pop" : ""} w-full h-24 bg-white border-[4px] border-black rounded-[1.5rem] pt-6 px-6 text-right text-4xl font-black shadow-[inset_4px_4px_0px_rgba(0,0,0,0.1)] focus:outline-none`}
+                      type="text"
+                      value={displayValue}
+                      readOnly
+                      placeholder="0"
+                    />
+                  </div>
+
                   <div className="grid grid-cols-4 gap-3 sm:gap-4">
-                    {/* Scientific toggle — black bg, yellow shadow */}
-                    <button
-                      type="button"
-                      className="col-span-2 button btn-scientific bg-black text-white rounded-xl h-12 sm:h-14 font-black uppercase text-xs tracking-widest border-2 border-black shadow-[4px_4px_0px_var(--nb-yellow)] active:shadow-none transition-all mb-2"
-                      onClick={handleScientificModeToggle}
-                    >
-                      {scientificMode ? "Simple" : "Scientific"}
-                    </button>
-
-                    {/* Scientific extra buttons — teal via btn-sci-extra */}
-                    {scientificMode && additionalButtons.map((b, i) => (
+                    {/* Scientific toggle */}
+                    <div className="col-span-4">
                       <button
                         type="button"
-                        key={i}
-                        className="button btn-sci-extra border-2 border-black rounded-xl h-12 sm:h-14 font-black text-xl shadow-[3px_3px_0px_#000] active:shadow-none transition-all"
-                        onClick={() => handleButtonClick(b.value)}
+                        className={`!w-full button flex items-center justify-center gap-2 rounded-xl h-12 font-black uppercase text-xs tracking-widest border-2 border-black transition-all mb-2 ${
+                          scientificMode 
+                          ? "bg-[var(--nb-teal)] text-black shadow-[4px_4px_0px_#000]" 
+                          : "bg-black text-white shadow-[4px_4px_0px_var(--nb-yellow)]"
+                        } active:shadow-none active:translate-y-[2px]`}
+                        onClick={handleScientificModeToggle}
                       >
-                        {b.value}
+                        <BeakerIcon className="w-4 h-4" />
+                        {scientificMode ? "Simple Mode" : "Scientific Mode"}
                       </button>
-                    ))}
+                    </div>
 
-                    {btnValues.flat().map((btn, i) => (
-                      <button
-                        className={`${getButtonClassName(btn)} flex items-center justify-center rounded-xl sm:rounded-2xl h-14 sm:h-16 border-[3px] border-black font-black text-xl sm:text-2xl shadow-[4px_4px_0px_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all`}
-                        type="button"
-                        key={i}
-                        value={String(btn)}
-                        onClick={() => handleButtonClick(btn)}
-                        style={getButtonStyle(btn)}
-                      >
-                        {btn}
-                      </button>
-                    ))}
+                    {/* Scientific extra buttons */}
+                    {scientificMode && (
+                      <div className="col-span-4 grid grid-cols-4 gap-3 sm:gap-4 mb-2 animate__animated animate__fadeInDown animate__faster">
+                        {additionalButtons.map((b, i) => (
+                          <button
+                            type="button"
+                            key={i}
+                            className="button !w-full !h-12 sm:!h-14 flex items-center justify-center border-2 border-black rounded-xl font-black text-xl shadow-[4px_4px_0px_#000] active:shadow-none active:translate-y-[2px] transition-all bg-white hover:bg-gray-50"
+                            onClick={() => handleButtonClick(b.value)}
+                          >
+                            {b.value}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {btnValues.flat().map((btn, i) => {
+                      const isSpecial = ["C", "DEL"].includes(btn as string);
+                      const isOperator = ["÷", "×", "-", "+", "=", "%", ".", "+/-"].includes(btn as string);
+                      
+                      return (
+                        <button
+                          className={`${getButtonClassName(btn)} !w-full !h-14 sm:!h-16 flex items-center justify-center rounded-2xl border-[3px] border-black font-black text-xl sm:text-2xl shadow-[4px_4px_0px_#000] hover:-translate-y-[2px] hover:-translate-x-[2px] hover:shadow-[6px_6px_0px_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all`}
+                          type="button"
+                          key={i}
+                          onClick={() => handleButtonClick(btn)}
+                          style={getButtonStyle(btn)}
+                        >
+                          {btn === "C" ? (
+                            <TrashIcon className="w-6 h-6 sm:w-7 sm:h-7" />
+                          ) : btn === "DEL" ? (
+                            <BackspaceIcon className="w-6 h-6 sm:w-7 sm:h-7" />
+                          ) : (
+                            btn
+                          )}
+                        </button>
+                      );
+                    })}
                   </div>
                 </form>
               </fieldset>
             </div>
 
-            {/* ── Panel kanan: Petunjuk ── */}
+            {/* ── Panel kanan: Panduan Warna ── */}
             <div
               className={`panel petunjuk w-full max-w-md bg-white p-8 border-[3px] border-black rounded-2xl shadow-[8px_8px_0px_#000] reveal-right ${petunjukVisible ? "revealed" : ""}`}
               ref={petunjukRef}
             >
-              <h5 className="font-black uppercase tracking-widest mb-6">📖 Quick Guide</h5>
-              <div className="flex justify-center mt-3 mb-8">
-                <div className="relative group">
-                  {/* Rotated bg — yellow (primary brand) */}
-                  <div className="absolute inset-0 bg-[var(--nb-yellow)] border-2 border-black rounded-xl rotate-3 group-hover:rotate-0 transition-all"></div>
-                  <img
-                    src={body}
-                    width={220}
-                    alt="Petunjuk warna"
-                    className="relative border-[3px] border-black rounded-xl shadow-[4px_4px_0px_#000]"
+              <h5 className="font-black uppercase tracking-widest mb-8 flex items-center gap-2">
+                <span className="text-2xl">🎨</span> Color Guide
+              </h5>
+
+              <div className="space-y-6 mb-10">
+                {/* Background Guide */}
+                <div className="flex items-center gap-4 group">
+                  <div 
+                    className="w-16 h-16 rounded-xl border-[3px] border-black shadow-[4px_4px_0px_#000] flex-shrink-0 transition-transform group-hover:rotate-3"
+                    style={{ backgroundColor: isColorApplied ? calculatorColor.badan : "var(--nb-yellow)" }}
                   />
+                  <div>
+                    <p className="font-black text-sm uppercase tracking-tight mb-1">Background (Badan)</p>
+                    <p className="text-xs font-medium opacity-70">Warna utama untuk bingkai dan dasar kalkulator.</p>
+                  </div>
+                </div>
+
+                {/* Digits Guide */}
+                <div className="flex items-center gap-4 group">
+                  <div 
+                    className="w-16 h-16 rounded-xl border-[3px] border-black shadow-[4px_4px_0px_#000] flex-shrink-0 transition-transform group-hover:-rotate-3"
+                    style={{ backgroundColor: isColorApplied ? calculatorColor.angka : "#FAFAFA" }}
+                  />
+                  <div>
+                    <p className="font-black text-sm uppercase tracking-tight mb-1">Digits (Angka)</p>
+                    <p className="text-xs font-medium opacity-70">Warna untuk tombol angka 0-9 dan titik desimal.</p>
+                  </div>
+                </div>
+
+                {/* Operators Guide */}
+                <div className="flex items-center gap-4 group">
+                  <div 
+                    className="w-16 h-16 rounded-xl border-[3px] border-black shadow-[4px_4px_0px_#000] flex-shrink-0 transition-transform group-hover:rotate-3"
+                    style={{ backgroundColor: isColorApplied ? calculatorColor.operator : "var(--nb-teal)" }}
+                  />
+                  <div>
+                    <p className="font-black text-sm uppercase tracking-tight mb-1">Operators (Simbol)</p>
+                    <p className="text-xs font-medium opacity-70">Warna untuk tombol fungsi (+, -, ×, ÷, =, dll).</p>
+                  </div>
                 </div>
               </div>
-              <p className="font-black text-sm uppercase mb-4 border-b-2 border-black inline-block">Color Categories:</p>
+
+              <p className="font-black text-sm uppercase mb-4 border-b-2 border-black inline-block">Style Categories:</p>
               <div className="flex flex-wrap gap-2 mb-8">
                 {["Default","Pastel","Cold","Sky","Rainbow","Coffee"].map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 bg-[var(--nb-yellow)] border-2 border-black rounded-lg font-bold text-xs uppercase shadow-[2px_2px_0px_#000]"
+                    className="px-3 py-1 bg-[var(--nb-yellow)] border-2 border-black rounded-lg font-bold text-xs uppercase shadow-[3px_3px_0px_#000] hover:translate-y-[-2px] transition-transform cursor-default"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
-              <p className="text-sm font-medium leading-relaxed bg-[var(--nb-bg)] p-4 rounded-xl border-2 border-black border-dashed">
-                Pilih warna favoritmu lalu klik <strong>Apply Theme</strong> untuk mengubah tampilan kalkulator secara real-time!
-              </p>
+              
+              <div className="text-sm font-medium leading-relaxed bg-[#f0f0f0] p-4 rounded-xl border-2 border-black border-dashed">
+                <p>💡 <strong>Tips:</strong> Gunakan kategori di atas pada kolom pencarian di panel kiri untuk menemukan tema yang spesifik!</p>
+              </div>
             </div>
 
           </div>

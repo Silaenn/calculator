@@ -496,11 +496,11 @@ h6 {
   position: relative;
   z-index: 1;
   display: flex;
-  gap: 80px;
+  gap: 50px;
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
-  max-width: 1100px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -513,8 +513,9 @@ h6 {
   border-radius: 14px;
   box-shadow: var(--shadow-md);
   padding: 24px 20px;
-  width: 268px;
-  flex-shrink: 0;
+  width: 100%;
+  max-width: 360px;
+  flex-shrink: 1;
 }
 
 .panel h5 {
@@ -529,7 +530,6 @@ h6 {
 .swatch-scroll {
   max-height: 360px;
   overflow-y: auto;
-  padding-right: 2px;
 }
 
 .swatch-group {
@@ -615,8 +615,9 @@ h6 {
   border-radius: 14px;
   box-shadow: var(--shadow-lg);
   padding: 18px 16px 24px;
-  width: 380px;
-  flex-shrink: 0;
+  width: 100%;
+  max-width: 500px;
+  flex-shrink: 1;
 }
 
 .calc-brand {

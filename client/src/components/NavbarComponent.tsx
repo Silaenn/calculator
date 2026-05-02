@@ -72,6 +72,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
   const navigation = [
     { name: "Home",          href: "/",            current: location.pathname === "/" },
     { name: "About Project", href: "/aboutProjek", current: location.pathname === "/aboutProjek" },
+    { name: "My Profile",    href: "/myProfile",   current: location.pathname === "/myProfile" },
   ];
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -127,9 +128,9 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
                 </span>
               </div>
 
-              {/* CENTER: Desktop Menu */}
-              <div className="hidden md:flex flex-1 justify-center">
-                <div className="flex space-x-2">
+              {/* RIGHT: Desktop Menu & Actions */}
+              <div className="hidden md:flex flex-1 justify-end items-center gap-2">
+                <div className="flex items-center space-x-2">
                   {navigation.map((item) => (
                     <button
                       key={item.name}
@@ -146,94 +147,61 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
                       {item.name}
                     </button>
                   ))}
+
+                  {/* FEEDBACK action directly in menu */}
+                  <AlertDialog open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
+                    <AlertDialogTrigger asChild>
+                      <button className="rounded-lg px-4 py-1.5 text-xs font-black border-2 border-transparent transition-all hover:bg-[var(--nb-teal)] hover:text-[var(--nb-black)] active:scale-95">
+                        Feedback
+                      </button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="bg-[var(--nb-bg)] border-[4px] border-[var(--nb-black)] shadow-[10px_10px_0px_var(--nb-black)] rounded-2xl max-w-[90vw] md:max-w-lg">
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="font-black text-2xl uppercase flex items-center">
+                          <FontAwesomeIcon icon={faMessage} className="mr-3" />
+                          Feedback
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className="pt-4 text-left">
+                          <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                              <FormField control={form.control} name="email" render={({ field }) => (
+                                <FormItem><FormControl>
+                                  <Input placeholder="Email" {...field} className="border-2 border-[var(--nb-black)] rounded-xl p-6 font-bold" />
+                                </FormControl></FormItem>
+                              )} />
+                              <FormField control={form.control} name="content" render={({ field }) => (
+                                <FormItem><FormControl>
+                                  <Textarea placeholder="How can we improve?" {...field} rows={4} className="border-2 border-[var(--nb-black)] rounded-xl p-4 font-bold" />
+                                </FormControl></FormItem>
+                              )} />
+                              <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4">
+                                <AlertDialogCancel asChild>
+                                  <Button variant="outline" className="border-2 border-[var(--nb-black)] font-black uppercase rounded-xl">
+                                    Cancel
+                                  </Button>
+                                </AlertDialogCancel>
+                                {/* Submit — black bg, teal hover */}
+                                <Button
+                                  type="submit"
+                                  className="bg-[var(--nb-black)] text-[var(--nb-white)] border-2 border-[var(--nb-black)] shadow-[3px_3px_0px_var(--nb-black)] font-black uppercase rounded-xl px-8 hover:bg-[var(--nb-teal)] hover:text-[var(--nb-black)] transition-all"
+                                >
+                                  Send it!
+                                </Button>
+                              </div>
+                            </form>
+                          </Form>
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
 
-              {/* RIGHT: Actions */}
-              <div className="flex items-center gap-2 md:gap-4">
-
-                {/* FEEDBACK button */}
-                <Popover open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
-                  <PopoverTrigger asChild>
-                    <button className="p-0.5 bg-[var(--nb-white)] border-2 border-[var(--nb-black)] rounded-full shadow-[2px_2px_0px_var(--nb-black)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">
-                      <img src={feedbackIcon} className="h-8 w-8 rounded-full" alt="Feedback" />
-                    </button>
-                  </PopoverTrigger>
-                  <PopoverContent className="mt-2 w-64 p-2 bg-[var(--nb-bg)] border-[2.5px] border-[var(--nb-black)] shadow-[6px_6px_0px_var(--nb-black)] rounded-xl">
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        {/* Hover: teal (confirm/action) */}
-                        <button className="w-full p-2 hover:bg-[var(--nb-teal)] rounded-lg font-black uppercase text-sm border-2 border-transparent hover:border-[var(--nb-black)] transition-all">
-                          Send Feedback
-                        </button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className="bg-[var(--nb-bg)] border-[4px] border-[var(--nb-black)] shadow-[10px_10px_0px_var(--nb-black)] rounded-2xl max-w-[90vw] md:max-w-lg">
-                        <AlertDialogHeader>
-                          <AlertDialogTitle className="font-black text-2xl uppercase flex items-center">
-                            <FontAwesomeIcon icon={faMessage} className="mr-3" />
-                            Feedback
-                          </AlertDialogTitle>
-                          <AlertDialogDescription className="pt-4 text-left">
-                            <Form {...form}>
-                              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                                <FormField control={form.control} name="email" render={({ field }) => (
-                                  <FormItem><FormControl>
-                                    <Input placeholder="Email" {...field} className="border-2 border-[var(--nb-black)] rounded-xl p-6 font-bold" />
-                                  </FormControl></FormItem>
-                                )} />
-                                <FormField control={form.control} name="content" render={({ field }) => (
-                                  <FormItem><FormControl>
-                                    <Textarea placeholder="How can we improve?" {...field} rows={4} className="border-2 border-[var(--nb-black)] rounded-xl p-4 font-bold" />
-                                  </FormControl></FormItem>
-                                )} />
-                                <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4">
-                                  <AlertDialogCancel asChild>
-                                    <Button variant="outline" className="border-2 border-[var(--nb-black)] font-black uppercase rounded-xl">
-                                      Cancel
-                                    </Button>
-                                  </AlertDialogCancel>
-                                  {/* Submit — black bg, teal hover */}
-                                  <Button
-                                    type="submit"
-                                    className="bg-[var(--nb-black)] text-[var(--nb-white)] border-2 border-[var(--nb-black)] shadow-[3px_3px_0px_var(--nb-black)] font-black uppercase rounded-xl px-8 hover:bg-[var(--nb-teal)] hover:text-[var(--nb-black)] transition-all"
-                                  >
-                                    Send it!
-                                  </Button>
-                                </div>
-                              </form>
-                            </Form>
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </PopoverContent>
-                </Popover>
-
-                {/* PROFILE button */}
-                <Popover open={isProfileOpen} onOpenChange={setIsProfileOpen}>
-                  <PopoverTrigger asChild>
-                    <button className="p-0.5 bg-[var(--nb-white)] border-2 border-[var(--nb-black)] rounded-full shadow-[2px_2px_0px_var(--nb-black)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">
-                      <img className="h-8 w-8 rounded-full" src={profile} alt="Profile" />
-                    </button>
-                  </PopoverTrigger>
-                  <PopoverContent className="mt-2 w-40 p-2 bg-[var(--nb-bg)] border-[2.5px] border-[var(--nb-black)] shadow-[6px_6px_0px_var(--nb-black)] rounded-xl">
-                    {/* Profile hover — violet (special page) */}
-                    <button
-                      onClick={() => { navigate("/myProfile"); setIsProfileOpen(false); }}
-                      className="w-full p-2 hover:bg-[var(--nb-violet)] hover:text-[var(--nb-white)] rounded-lg font-black uppercase text-sm border-2 border-transparent hover:border-[var(--nb-black)] transition-all"
-                    >
-                      Profile
-                    </button>
-                  </PopoverContent>
-                </Popover>
-
-                {/* MOBILE TOGGLE — yellow bg */}
-                <div className="flex md:hidden">
-                  <Disclosure.Button className="p-1.5 bg-[var(--nb-yellow)] border-2 border-[var(--nb-black)] rounded-lg shadow-[2px_2px_0px_var(--nb-black)] active:shadow-none transition-all">
-                    {open ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
-                  </Disclosure.Button>
-                </div>
-
+              {/* MOBILE ACTIONS */}
+              <div className="flex md:hidden items-center gap-2">
+                <Disclosure.Button className="p-1.5 bg-[var(--nb-yellow)] border-2 border-[var(--nb-black)] rounded-lg shadow-[2px_2px_0px_var(--nb-black)] active:shadow-none transition-all">
+                  {open ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
+                </Disclosure.Button>
               </div>
             </div>
 
@@ -254,6 +222,52 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
                     {item.name}
                   </button>
                 ))}
+
+                {/* Mobile Feedback */}
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <button className="block w-full text-left px-5 py-4 rounded-xl text-sm font-black border-2 border-[var(--nb-black)] bg-[var(--nb-white)] hover:bg-[var(--nb-teal)] shadow-[3px_3px_0px_var(--nb-black)] transition-all active:scale-95">
+                      Feedback
+                    </button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent className="bg-[var(--nb-bg)] border-[4px] border-[var(--nb-black)] shadow-[10px_10px_0px_var(--nb-black)] rounded-2xl max-w-[90vw]">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className="font-black text-2xl uppercase flex items-center">
+                        <FontAwesomeIcon icon={faMessage} className="mr-3" />
+                        Feedback
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="pt-4 text-left">
+                        <Form {...form}>
+                          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                            <FormField control={form.control} name="email" render={({ field }) => (
+                              <FormItem><FormControl>
+                                <Input placeholder="Email" {...field} className="border-2 border-[var(--nb-black)] rounded-xl p-6 font-bold" />
+                              </FormControl></FormItem>
+                            )} />
+                            <FormField control={form.control} name="content" render={({ field }) => (
+                              <FormItem><FormControl>
+                                <Textarea placeholder="How can we improve?" {...field} rows={4} className="border-2 border-[var(--nb-black)] rounded-xl p-4 font-bold" />
+                              </FormControl></FormItem>
+                            )} />
+                            <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4">
+                              <AlertDialogCancel asChild>
+                                <Button variant="outline" className="border-2 border-[var(--nb-black)] font-black uppercase rounded-xl">
+                                  Cancel
+                                </Button>
+                              </AlertDialogCancel>
+                              <Button
+                                type="submit"
+                                className="bg-[var(--nb-black)] text-[var(--nb-white)] border-2 border-[var(--nb-black)] shadow-[3px_3px_0px_var(--nb-black)] font-black uppercase rounded-xl px-8 hover:bg-[var(--nb-teal)] hover:text-[var(--nb-black)] transition-all"
+                              >
+                                Send it!
+                              </Button>
+                            </div>
+                          </form>
+                        </Form>
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </Disclosure.Panel>
           </>
