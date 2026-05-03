@@ -292,7 +292,7 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
                   <AdjustmentsHorizontalIcon className="w-6 h-6" />
                 </div>
               </div>
-              <div className="swatch-scroll max-h-[400px] overflow-y-auto pr-3 space-y-6">
+              <div className="h-[520px] overflow-y-auto pr-4 space-y-6">
                 {Object.keys(warna).map((category) => {
                   if (!category.toLowerCase().includes(searchTerm.toLowerCase())) return null;
                   return (

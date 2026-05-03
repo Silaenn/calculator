@@ -374,8 +374,8 @@ h6 {
 /* Circle yellow pojok kanan bawah — tetap warm */
 .main-deco-2 {
   position: absolute;
-  bottom: -80px;
-  right: -80px;
+  bottom: -90px;
+  right: -90px;
   width: 320px;
   height: 320px;
   background: var(--nb-yellow);
@@ -525,50 +525,6 @@ h6 {
   letter-spacing: 1.2px;
   margin-bottom: 16px;
   color: var(--nb-black);
-}
-
-.swatch-scroll {
-  max-height: 360px;
-  overflow-y: auto;
-}
-
-.swatch-group {
-  margin-bottom: 24px;
-}
-
-.swatch-item {
-  height: 54px;
-  display: flex;
-  align-items: flex-end;
-  padding: 4px 8px;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.18s ease;
-  cursor: pointer;
-}
-
-.swatch-item:hover {
-  transform: scale(1.02);
-  z-index: 1;
-}
-
-.swatch-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  background-color: rgba(0, 0, 0, 0.65);
-  color: #fff;
-  padding: 2px 6px;
-  border-radius: 4px;
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  pointer-events: none;
-}
-
-.swatch-item:hover .swatch-label {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* Apply button — teal (confirm action) */

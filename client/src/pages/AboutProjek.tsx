@@ -38,7 +38,7 @@ const AboutProjek = () => {
         <div className="max-w-4xl mx-auto relative z-10 w-full animate__animated animate__fadeInUp py-20">
 
           {/* Header */}
-          <div className="mb-12 text-center">
+          <div className="mb-10 text-center">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tighter mb-4 text-[var(--nb-black)] drop-shadow-[4px_4px_0px_rgba(0,0,0,0.15)]">
               About Project
             </h1>
