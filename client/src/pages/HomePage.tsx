@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { warna } from "../data/index.ts";
-import { body, math, smk, sound } from "@/assets/images/index.ts";
+import { math, smk, sound } from "@/assets/images/index.ts";
 import { evaluate } from "mathjs";
 import { TrashIcon, BackspaceIcon, BeakerIcon, AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -271,11 +271,11 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
             </p>
           </div>
 
-          <div className="containerL flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap gap-8 justify-center items-center md:items-start max-w-7xl mx-auto">
+          <div className="containerL flex flex-row flex-wrap xl:flex-nowrap gap-6 md:gap-8 xl:gap-12 justify-center items-stretch max-w-7xl mx-auto w-full px-4">
 
             {/* ── Panel kiri: Pilih Warna ── */}
             <div
-              className={`panel warna w-full max-w-md bg-white p-6 border-[3px] border-black rounded-2xl shadow-[8px_8px_0px_#000] reveal-left ${warnaVisible ? "revealed" : ""}`}
+              className={`panel warna w-full md:w-[calc(50%-1rem)] xl:w-auto max-w-[360px] sm:max-w-[500px] md:max-w-[380px] lg:max-w-[420px] xl:flex-1 xl:max-w-md bg-white p-6 border-[3px] border-black rounded-2xl shadow-[6px_6px_0px_#000] sm:shadow-[8px_8px_0px_#000] reveal-left min-w-0 order-2 xl:order-1 mx-auto xl:mx-0 flex flex-col ${warnaVisible ? "revealed" : ""}`}
               ref={warnaRef}
             >
               <h5 className="font-black uppercase tracking-widest mb-6 flex items-center gap-2">
@@ -324,11 +324,11 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
             </div>
 
             {/* ── Kalkulator ── */}
-            <div className="flex-1 flex justify-center w-full">
+            <div className="w-full xl:flex-[1.5] flex justify-center min-w-0 order-1 xl:order-2 mx-auto xl:mx-0">
               <fieldset
                 id="container"
                 ref={calcRef}
-                className={`reveal-up w-full max-w-[360px] sm:max-w-[500px] p-6 sm:p-10 border-[4px] border-black rounded-[3rem] shadow-[16px_16px_0px_#000] transition-all duration-300 ${calcVisible ? "revealed" : ""}`}
+                className={`reveal-up w-full max-w-[360px] sm:max-w-[500px] p-6 sm:p-10 border-[4px] border-black rounded-[2rem] sm:rounded-[3rem] shadow-[10px_10px_0px_#000] sm:shadow-[16px_16px_0px_#000] transition-all duration-300 ${calcVisible ? "revealed" : ""}`}
                 style={{ backgroundColor: isColorApplied ? calculatorColor.badan : "var(--nb-yellow)" }}
               >
                 <form name="calculator" onSubmit={(e) => e.preventDefault()}>
@@ -349,7 +349,7 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
                       {prevExpression}
                     </div>
                     <input
-                      className={`display ${isPopping ? "display-pop" : ""} w-full h-24 bg-white border-[4px] border-black rounded-[1.5rem] pt-6 px-6 text-right text-4xl font-black shadow-[inset_4px_4px_0px_rgba(0,0,0,0.1)] focus:outline-none`}
+                      className={`display ${isPopping ? "display-pop" : ""} w-full h-20 sm:h-24 bg-white border-[4px] border-black rounded-[1.2rem] sm:rounded-[1.5rem] pt-4 sm:pt-6 px-6 text-right text-3xl sm:text-4xl font-black shadow-[inset_4px_4px_0px_rgba(0,0,0,0.1)] focus:outline-none`}
                       type="text"
                       value={displayValue}
                       readOnly
@@ -391,12 +391,9 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
                     )}
 
                     {btnValues.flat().map((btn, i) => {
-                      const isSpecial = ["C", "DEL"].includes(btn as string);
-                      const isOperator = ["÷", "×", "-", "+", "=", "%", ".", "+/-"].includes(btn as string);
-                      
                       return (
                         <button
-                          className={`${getButtonClassName(btn)} !w-full !h-14 sm:!h-16 flex items-center justify-center rounded-2xl border-[3px] border-black font-black text-xl sm:text-2xl shadow-[4px_4px_0px_#000] hover:-translate-y-[2px] hover:-translate-x-[2px] hover:shadow-[6px_6px_0px_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all`}
+                          className={`${getButtonClassName(btn)} !w-full !h-14 sm:!h-16 flex items-center justify-center rounded-2xl border-[3px] border-black font-black text-lg sm:text-2xl shadow-[4px_4px_0px_#000] hover:-translate-y-[2px] hover:-translate-x-[2px] hover:shadow-[6px_6px_0px_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all`}
                           type="button"
                           key={i}
                           onClick={() => handleButtonClick(btn)}
@@ -419,14 +416,14 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
 
             {/* ── Panel kanan: Panduan Warna ── */}
             <div
-              className={`panel petunjuk w-full max-w-md bg-white p-8 border-[3px] border-black rounded-2xl shadow-[8px_8px_0px_#000] reveal-right ${petunjukVisible ? "revealed" : ""}`}
+              className={`panel petunjuk w-full md:w-[calc(50%-1rem)] xl:w-auto max-w-[360px] sm:max-w-[500px] md:max-w-[380px] lg:max-w-[420px] xl:flex-1 xl:max-w-md bg-white p-6 sm:p-8 border-[3px] border-black rounded-2xl shadow-[6px_6px_0px_#000] sm:shadow-[8px_8px_0px_#000] reveal-right min-w-0 order-3 mx-auto xl:mx-0 flex flex-col ${petunjukVisible ? "revealed" : ""}`}
               ref={petunjukRef}
             >
               <h5 className="font-black uppercase tracking-widest mb-8 flex items-center gap-2">
                 <FontAwesomeIcon icon={faCircleInfo} className="text-xl" /> Color Guide
               </h5>
 
-              <div className="space-y-6 mb-10">
+              <div className="space-y-6 mb-10 flex-1">
                 {/* Background Guide */}
                 <div className="flex items-center gap-4 group">
                   <div 
