@@ -6,14 +6,6 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import calculator from "../assets/images/calculator.png";
-import profile from "../assets/images/profile.gif";
-import feedbackIcon from "../assets/images/mes.jpg";
-
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 
 import {
   AlertDialog,
@@ -56,7 +48,6 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
   const location = useLocation();
 
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -105,7 +96,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
           flex flex-col items-center justify-center relative
           ${isScrolled
             /* Scrolled: floating pill — shadow pakai yellow (brand) */
-            ? "w-full md:w-3/5 rounded-2xl md:rounded-full border-[3px] shadow-[4px_4px_0px_var(--nb-yellow)] h-auto min-h-[56px]"
+            ? "w-full md:w-[95%] lg:w-4/5 rounded-2xl md:rounded-full border-[3px] shadow-[4px_4px_0px_var(--nb-yellow)] h-auto min-h-[56px]"
             /* Normal: full-width flat bar */
             : "w-full rounded-none border-b-[3px] shadow-none h-auto min-h-[64px]"
           }
@@ -155,7 +146,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
                         Feedback
                       </button>
                     </AlertDialogTrigger>
-                    <AlertDialogContent className="bg-[var(--nb-bg)] border-[4px] border-[var(--nb-black)] shadow-[10px_10px_0px_var(--nb-black)] rounded-2xl max-w-[90vw] md:max-w-lg">
+                    <AlertDialogContent className="bg-[var(--nb-bg)] border-[4px] border-[var(--nb-black)] shadow-[10px_10px_0px_var(--nb-black)] rounded-2xl w-[95vw] max-w-[95vw] md:max-w-lg">
                       <AlertDialogHeader>
                         <AlertDialogTitle className="font-black text-2xl uppercase flex items-center">
                           <FontAwesomeIcon icon={faMessage} className="mr-3" />
