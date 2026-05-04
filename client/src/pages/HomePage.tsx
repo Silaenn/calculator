@@ -324,7 +324,20 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
             </div>
 
             {/* ── Kalkulator ── */}
-            <div className="w-full xl:flex-[1.5] flex justify-center min-w-0 order-1 xl:order-2 mx-auto xl:mx-0">
+            <div className="w-full xl:flex-[1.5] flex justify-center min-w-0 order-1 xl:order-2 mx-auto xl:mx-0 relative">
+              <div className="math-doodle-left hidden md:block xl:hidden" aria-hidden="true">
+                <span className="doodle dk1">π</span>
+                <span className="doodle dk2">√</span>
+                <span className="doodle dk3">3.14</span>
+              </div>
+
+              {/* Math doodles kanan — tablet only */}
+              <div className="math-doodle-right hidden md:block xl:hidden" aria-hidden="true">
+                <span className="doodle dk4">∑</span>
+                <span className="doodle dk5">f(x)</span>
+                <span className="doodle dk6">∞</span>
+              </div>
+
               <fieldset
                 id="container"
                 ref={calcRef}

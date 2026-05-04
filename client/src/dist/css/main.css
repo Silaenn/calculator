@@ -1138,3 +1138,192 @@ h6 {
 .animate__animated.animate__fadeInRight {
   --animate-duration: 0.8s;
 }
+
+/* ════════════════════════════════════════
+   MATH DOODLES — Tablet only (md–xl)
+════════════════════════════════════════ */
+.math-doodle-left,
+.math-doodle-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.math-doodle-left {
+  left: -20px;
+}
+
+.math-doodle-right {
+  right: -20px;
+}
+
+.doodle {
+  position: absolute;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  border: 2.5px solid var(--nb-black);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 3px 0px var(--nb-black);
+  white-space: nowrap;
+}
+
+/* ── Kiri ── */
+
+/* π — merah, atas */
+.dk1 {
+  top: 10%;
+  left: 10px;
+  width: 58px;
+  height: 50px;
+  font-size: 28px;
+  background-color: var(--nb-red);
+  color: var(--nb-white);
+  transform: rotate(-8deg);
+  animation: doodle-float-dk1 3.2s ease-in-out infinite;
+}
+
+/* √ — violet, tengah */
+.dk2 {
+  top: 42%;
+  left: 28px;
+  width: 54px;
+  height: 48px;
+  font-size: 26px;
+  background-color: var(--nb-violet);
+  color: var(--nb-white);
+  transform: rotate(6deg);
+  animation: doodle-float-dk2 3.6s ease-in-out infinite 0.4s;
+}
+
+/* 3.14 — putih, bawah */
+.dk3 {
+  top: 74%;
+  left: 5px;
+  width: 72px;
+  height: 34px;
+  font-size: 14px;
+  background-color: var(--nb-white);
+  color: var(--nb-black);
+  transform: rotate(-5deg);
+  animation: doodle-float-dk3 3s ease-in-out infinite 0.8s;
+}
+
+/* ── Kanan ── */
+
+/* ∑ — teal, atas */
+.dk4 {
+  top: 8%;
+  right: 10px;
+  width: 56px;
+  height: 50px;
+  font-size: 26px;
+  background-color: var(--nb-teal);
+  color: var(--nb-black);
+  transform: rotate(9deg);
+  animation: doodle-float-dk4 3.4s ease-in-out infinite 0.2s;
+}
+
+/* f(x) — kuning, tengah */
+.dk5 {
+  top: 44%;
+  right: 5px;
+  width: 64px;
+  height: 40px;
+  font-size: 16px;
+  background-color: var(--nb-yellow);
+  color: var(--nb-black);
+  transform: rotate(-7deg);
+  animation: doodle-float-dk5 3.8s ease-in-out infinite 0.6s;
+}
+
+/* ∞ — merah, bawah */
+.dk6 {
+  top: 76%;
+  right: 8px;
+  width: 58px;
+  height: 44px;
+  font-size: 22px;
+  background-color: var(--nb-red);
+  color: var(--nb-white);
+  transform: rotate(5deg);
+  animation: doodle-float-dk6 3.2s ease-in-out infinite 1s;
+}
+
+/* Tiap doodle punya keyframes sendiri supaya rotasi tidak reset */
+@keyframes doodle-float-dk1 {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(-8deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(-8deg);
+  }
+}
+
+@keyframes doodle-float-dk2 {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(6deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(6deg);
+  }
+}
+
+@keyframes doodle-float-dk3 {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(-5deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(-5deg);
+  }
+}
+
+@keyframes doodle-float-dk4 {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(9deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(9deg);
+  }
+}
+
+@keyframes doodle-float-dk5 {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(-7deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(-7deg);
+  }
+}
+
+@keyframes doodle-float-dk6 {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(5deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(5deg);
+  }
+}
