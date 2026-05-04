@@ -38,7 +38,7 @@ const AboutProjek = () => {
         <div className="absolute top-[2%] sm:top-[3%] right-[6%] text-4xl sm:text-5xl md:text-7xl font-black opacity-30 animate-bounce z-10 text-[var(--nb-black)]">×</div>
 
         {/* - — pojok kiri bawah */}
-        <div className="absolute lg:bottom-[3%] md:bottom-[1%] bottom-[.5%] left-[5%] text-4xl sm:text-6xl md:text-8xl font-black opacity-20 animate-pulse z-10 text-[var(--nb-black)]">-</div>
+        <div className="absolute lg:bottom-[25%] md:bottom-[1%] bottom-[.5%] left-[5%] text-4xl sm:text-6xl md:text-8xl font-black opacity-20 animate-pulse z-10 text-[var(--nb-black)]">-</div>
 
         {/* ÷ — pojok kanan bawah */}
         <div className="absolute lg:bottom-[20%] md:bottom-[3%] bottom-[1%] right-[4%] text-4xl sm:text-5xl md:text-6xl font-black opacity-30 z-10 text-[var(--nb-black)]">÷</div>
