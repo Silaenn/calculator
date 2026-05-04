@@ -25,17 +25,25 @@ const AboutProjek = () => {
           }}
         />
 
-        {/* Angled overlays — yellow (primary brand) & violet (special) */}
-        <div className="absolute -top-10 -left-10 w-40 h-40 sm:w-64 sm:h-64 bg-[var(--nb-yellow)] border-[8px] border-[var(--nb-black)] rotate-12 opacity-75 z-0" />
-        <div className="absolute bottom-0 right-0 w-48 h-20 sm:w-80 sm:h-32 bg-[var(--nb-violet)] border-[8px] border-[var(--nb-black)] -rotate-6 opacity-70 z-0" />
+        {/* Kotak kuning — lebih kecil & lebih tersembunyi di mobile */}
+        <div className="absolute -top-16 -left-16 w-28 h-28 sm:w-44 sm:h-44 md:w-64 md:h-64 bg-[var(--nb-yellow)] border-[8px] border-[var(--nb-black)] rotate-12 opacity-75 z-0" />
 
-        {/* Floating math operators — readable di atas teal */}
-        <div className="absolute top-[10%] left-[10%] sm:left-[20%] text-4xl sm:text-6xl font-black opacity-25 animate-pulse rotate-12 z-0 text-[var(--nb-black)]">+</div>
-        <div className="absolute top-[20%] right-[10%] sm:right-[15%] text-5xl sm:text-7xl font-black opacity-25 animate-bounce z-0 text-[var(--nb-black)]">×</div>
-        <div className="absolute bottom-[20%] left-[10%] sm:left-[15%] text-6xl sm:text-8xl font-black opacity-15 animate-pulse delay-700 z-0 text-[var(--nb-black)]">-</div>
-        <div className="absolute bottom-[15%] right-[5%] sm:right-[10%] text-4xl sm:text-6xl font-black opacity-25 z-0 text-[var(--nb-black)]">÷</div>
+        {/* Kotak violet — oke, tapi kecilkan sedikit di mobile */}
+        <div className="absolute bottom-0 right-0 w-36 h-16 sm:w-60 sm:h-24 md:w-80 md:h-32 bg-[var(--nb-violet)] border-[8px] border-[var(--nb-black)] -rotate-6 opacity-70 z-0" />
 
-        <div className="max-w-4xl mx-auto relative z-10 w-full animate__animated animate__fadeInUp py-20">
+        {/* + — pojok kiri atas, di atas heading bukan di belakang card */}
+        <div className="absolute top-[5%] sm:top-[3%] left-[5%] text-4xl sm:text-5xl md:text-6xl font-black opacity-30 animate-pulse rotate-12 z-10 text-[var(--nb-black)]">+</div>
+
+        {/* × — pojok kanan atas */}
+        <div className="absolute top-[2%] sm:top-[3%] right-[6%] text-4xl sm:text-5xl md:text-7xl font-black opacity-30 animate-bounce z-10 text-[var(--nb-black)]">×</div>
+
+        {/* - — pojok kiri bawah */}
+        <div className="absolute lg:bottom-[3%] md:bottom-[1%] bottom-[.5%] left-[5%] text-4xl sm:text-6xl md:text-8xl font-black opacity-20 animate-pulse z-10 text-[var(--nb-black)]">-</div>
+
+        {/* ÷ — pojok kanan bawah */}
+        <div className="absolute lg:bottom-[20%] md:bottom-[3%] bottom-[1%] right-[4%] text-4xl sm:text-5xl md:text-6xl font-black opacity-30 z-10 text-[var(--nb-black)]">÷</div>
+
+        <div className="max-w-4xl mx-auto relative z-10 w-full animate__animated animate__fadeInUp py-12 md:py-20">
 
           {/* Header */}
           <div className="mb-10 text-center">
@@ -47,7 +55,7 @@ const AboutProjek = () => {
           </div>
 
           {/* Main Card */}
-          <div className="bg-[#FAF9F6] p-6 sm:p-10 md:p-12 border-[4px] border-[var(--nb-black)] rounded-3xl shadow-[10px_10px_0px_var(--nb-black)] flex flex-col lg:flex-row gap-10 hover:translate-y-[-5px] transition-transform duration-300">
+          <div className="bg-[#FAF9F6] p-6 sm:p-10 md:p-12 border-[4px] border-[var(--nb-black)] rounded-3xl shadow-[10px_10px_0px_var(--nb-black)] flex flex-col md:flex-row gap-10 hover:translate-y-[-5px] transition-transform duration-300">
             <div className="flex-1 space-y-6">
               {/* Title underline — yellow (primary brand) */}
               <h3 className="font-['Space_Mono'] text-xl md:text-2xl font-black uppercase underline underline-offset-4 decoration-[var(--nb-yellow)] decoration-4">
