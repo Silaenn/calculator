@@ -70,15 +70,22 @@ const MyProfile = () => {
       />
 
       {/* Floating math symbols — white, lebih readable di violet */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[20%] left-[8%] -rotate-6 text-4xl sm:text-5xl opacity-50 font-mono text-white animate-pulse">
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none hidden lg:block">
+        {/* Kiri atas - diluar container */}
+        <div className="absolute top-[10%] left-[2%] sm:left-[5%] -rotate-6 text-3xl sm:text-5xl opacity-60 font-mono text-white animate-pulse">
           E=mc²
         </div>
-        <div className="absolute top-[50%] right-[10%] text-5xl sm:text-6xl opacity-50 font-mono text-white animate-bounce">
+        {/* Kanan tengah - diluar container */}
+        <div className="absolute top-[40%] right-[2%] sm:right-[5%] text-4xl sm:text-6xl opacity-60 font-mono text-white animate-bounce">
           Σ
         </div>
-        <div className="absolute bottom-[10%] left-[15%] rotate-12 text-3xl sm:text-4xl opacity-50 font-mono text-white animate-pulse delay-700">
+        {/* Kiri bawah - diluar container */}
+        <div className="absolute bottom-[20%] left-[2%] sm:left-[5%] rotate-12 text-2xl sm:text-4xl opacity-60 font-mono text-white animate-pulse delay-700">
           √x
+        </div>
+        {/* Kanan bawah */}
+        <div className="absolute bottom-[10%] right-[3%] text-4xl opacity-40 font-mono text-white -rotate-12">
+          ∫
         </div>
       </div>
 
@@ -107,15 +114,15 @@ const MyProfile = () => {
         </div>
 
         {/* ── Content Layout ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
           {/* Profile Image & Feedback button */}
-          <div className="bg-[#FAF9F6] p-6 border-[4px] border-[var(--nb-black)] rounded-3xl shadow-[8px_8px_0px_var(--nb-black)] space-y-6">
-            <div className="relative group">
+          <div className="bg-[#FAF9F6] p-6 border-[4px] border-[var(--nb-black)] rounded-3xl shadow-[8px_8px_0px_var(--nb-black)] space-y-6 flex flex-col">
+            <div className="relative group flex-1">
               <img
                 src={deo}
                 alt="Deo"
-                className="w-full h-72 sm:h-80 object-cover border-[4px] border-[var(--nb-black)] rounded-2xl shadow-[4px_4px_0px_var(--nb-black)] group-hover:rotate-2 transition-all duration-300"
+                className="w-full h-auto aspect-[4/5] object-cover border-[4px] border-[var(--nb-black)] rounded-2xl shadow-[4px_4px_0px_var(--nb-black)] group-hover:rotate-2 transition-all duration-300"
               />
             </div>
 
@@ -169,7 +176,7 @@ const MyProfile = () => {
           </div>
 
           {/* Tech Stack Cards */}
-          <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-4 sm:gap-6">
+          <div className="md:col-span-1 lg:col-span-2 grid grid-cols-2 gap-4 sm:gap-6">
             {[html, css, js, react].map((img, i) => (
               <div
                 key={i}
