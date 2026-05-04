@@ -272,11 +272,11 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
             </p>
           </div>
 
-          <div className="containerL flex flex-row flex-wrap xl:flex-nowrap gap-6 md:gap-8 xl:gap-12 justify-center items-stretch max-w-7xl mx-auto w-full px-4">
+          <div className="containerL flex flex-row flex-wrap xl:flex-nowrap gap-6 md:gap-8 xl:gap-12 justify-center items-start md:items-stretch xl:items-stretch max-w-7xl mx-auto w-full px-4">
 
             {/* ── Panel kiri: Pilih Warna ── */}
             <div
-              className={`panel warna w-full md:w-[calc(50%-1rem)] xl:w-auto max-w-[360px] sm:max-w-[500px] md:max-w-[380px] lg:max-w-[420px] xl:flex-1 xl:max-w-md bg-white p-6 border-[3px] border-black rounded-2xl shadow-[6px_6px_0px_#000] sm:shadow-[8px_8px_0px_#000] reveal-left min-w-0 order-2 xl:order-1 mx-auto xl:mx-0 flex flex-col ${warnaVisible ? "revealed" : ""}`}
+              className={`panel warna w-full md:w-[calc(50%-1rem)] xl:w-auto max-w-[360px] sm:max-w-[500px] md:max-w-none lg:max-w-[420px] xl:flex-1 xl:max-w-md bg-white p-6 border-[3px] border-black rounded-2xl shadow-[6px_6px_0px_#000] sm:shadow-[8px_8px_0px_#000] reveal-left min-w-0 order-2 xl:order-1 mx-auto xl:mx-0 flex flex-col ${warnaVisible ? "revealed" : ""}`}
               ref={warnaRef}
             >
               <h5 className="font-black uppercase tracking-widest mb-6 flex items-center gap-2">
@@ -293,7 +293,7 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
                   <AdjustmentsHorizontalIcon className="w-6 h-6" />
                 </div>
               </div>
-              <div className="h-[520px] overflow-y-auto pr-4 space-y-6">
+              <div className="h-[320px] sm:h-[420px] md:h-[520px] overflow-y-auto pr-4 space-y-6">
                 {Object.keys(warna).map((category) => {
                   if (!category.toLowerCase().includes(searchTerm.toLowerCase())) return null;
                   return (
