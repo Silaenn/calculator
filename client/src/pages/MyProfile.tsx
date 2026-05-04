@@ -1,49 +1,7 @@
-import { useState } from "react";
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { html, css, js, react, deo } from "@/assets/images/index.ts";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import toast from "react-hot-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-
-const formSchema = z.object({
-  email: z.string().email().min(2).max(50),
-  content: z
-    .string()
-    .min(1, "Bio must be at least 1 character.")
-    .max(160, "Bio must not be longer than 160 characters."),
-});
+import FeedbackDialog from "@/components/FeedbackDialog";
 
 const MyProfile = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: { email: "", content: "" },
-  });
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/messages`, values);
-      setIsOpen(false);
-      toast.success("Pesan Berhasil Terkirim", { icon: "✅" });
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Gagal mengirim pesan.");
-    }
-  }
-
   return (
     <section
       className="min-h-screen font-['Space_Grotesk'] pb-20 relative overflow-hidden animate__animated animate__fadeIn"
@@ -126,53 +84,13 @@ const MyProfile = () => {
               />
             </div>
 
-            <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-              <AlertDialogTrigger asChild>
-                {/* Feedback button — red (action/energetic), hover ke yellow */}
-                <Button className="w-full h-14 bg-[var(--nb-red)] text-[var(--nb-white)] border-[3px] border-[var(--nb-black)] shadow-[4px_4px_0px_var(--nb-black)] font-black uppercase hover:bg-[var(--nb-yellow)] hover:text-[var(--nb-black)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
-                  Feedback Me
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent className="bg-[#FAF9F6] border-[4px] border-[var(--nb-black)] rounded-2xl shadow-[10px_10px_0px_var(--nb-black)] max-w-[90vw] md:max-w-lg">
-                <AlertDialogHeader>
-                  <AlertDialogTitle className="font-black text-2xl uppercase text-[var(--nb-black)]">
-                    Kirim Masukan
-                  </AlertDialogTitle>
-                  <AlertDialogDescription className="pt-4 text-left">
-                    <Form {...form}>
-                      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                        <FormField control={form.control} name="email" render={({ field }) => (
-                          <FormItem><FormControl>
-                            <Input placeholder="Email" {...field} className="border-2 border-[var(--nb-black)] rounded-xl p-6 font-bold" />
-                          </FormControl></FormItem>
-                        )} />
-                        <FormField control={form.control} name="content" render={({ field }) => (
-                          <FormItem><FormControl>
-                            <Textarea placeholder="Saran Anda" {...field} className="border-2 border-[var(--nb-black)] rounded-xl p-4 font-bold" />
-                          </FormControl></FormItem>
-                        )} />
-                        <div className="flex flex-col sm:flex-row gap-2 justify-end pt-4">
-                          <Button
-                            variant="outline"
-                            onClick={() => setIsOpen(false)}
-                            className="border-2 border-[var(--nb-black)] font-black uppercase rounded-xl"
-                          >
-                            Batal
-                          </Button>
-                          {/* Submit — black bg, teal hover (confirm) */}
-                          <Button
-                            type="submit"
-                            className="bg-[var(--nb-black)] text-[var(--nb-white)] border-2 border-[var(--nb-black)] shadow-[3px_3px_0px_var(--nb-black)] font-black uppercase rounded-xl px-8 hover:bg-[var(--nb-teal)] hover:text-[var(--nb-black)] transition-all"
-                          >
-                            Kirim
-                          </Button>
-                        </div>
-                      </form>
-                    </Form>
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-              </AlertDialogContent>
-            </AlertDialog>
+            <FeedbackDialog
+              triggerLabel="Feedback Me"
+              triggerClassName="w-full h-14 bg-[var(--nb-red)] text-[var(--nb-white)] border-[3px] border-[var(--nb-black)] shadow-[4px_4px_0px_var(--nb-black)] font-black uppercase hover:bg-[var(--nb-yellow)] hover:text-[var(--nb-black)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+              title="Kirim Masukan"
+              submitLabel="Kirim"
+              submittingLabel="Mengirim..."
+            />
           </div>
 
           {/* Tech Stack Cards */}

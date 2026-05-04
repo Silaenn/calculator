@@ -1,39 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import calculator from "../assets/images/calculator.png";
-
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-  AlertDialogCancel,
-} from "@/components/ui/alert-dialog";
-
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import toast from "react-hot-toast";
-
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "./ui/button";
-
-const formSchema = z.object({
-  email: z.string().email().min(2).max(50),
-  content: z
-    .string()
-    .min(1, { message: "Pesan tidak boleh kosong." })
-    .max(160, { message: "Pesan tidak boleh lebih dari 160 karakter." }),
-});
+import FeedbackDialog from "@/components/FeedbackDialog";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -47,7 +17,6 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -65,23 +34,6 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
     { name: "About Project", href: "/aboutProjek", current: location.pathname === "/aboutProjek" },
     { name: "My Profile",    href: "/myProfile",   current: location.pathname === "/myProfile" },
   ];
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: { email: "", content: "" },
-  });
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/messages`, values);
-      form.reset();
-      setIsFeedbackOpen(false);
-      toast.success("Pesan Berhasil Terkirim", { duration: 4000, position: "bottom-right" });
-    } catch (error) {
-      console.error(error);
-      toast.error("Pesan Gagal Terkirim", { position: "bottom-right" });
-    }
-  }
 
   return (
     <div
@@ -140,51 +92,10 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
                   ))}
 
                   {/* FEEDBACK action directly in menu */}
-                  <AlertDialog open={isFeedbackOpen} onOpenChange={setIsFeedbackOpen}>
-                    <AlertDialogTrigger asChild>
-                      <button className="rounded-lg px-4 py-1.5 text-xs font-black border-2 border-transparent transition-all hover:bg-[var(--nb-teal)] hover:text-[var(--nb-black)] active:scale-95">
-                        Feedback
-                      </button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent className="bg-[var(--nb-bg)] border-[4px] border-[var(--nb-black)] shadow-[10px_10px_0px_var(--nb-black)] rounded-2xl w-[95vw] max-w-[95vw] md:max-w-lg">
-                      <AlertDialogHeader>
-                        <AlertDialogTitle className="font-black text-2xl uppercase flex items-center">
-                          <FontAwesomeIcon icon={faMessage} className="mr-3" />
-                          Feedback
-                        </AlertDialogTitle>
-                        <AlertDialogDescription className="pt-4 text-left">
-                          <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                              <FormField control={form.control} name="email" render={({ field }) => (
-                                <FormItem><FormControl>
-                                  <Input placeholder="Email" {...field} className="border-2 border-[var(--nb-black)] rounded-xl p-6 font-bold" />
-                                </FormControl></FormItem>
-                              )} />
-                              <FormField control={form.control} name="content" render={({ field }) => (
-                                <FormItem><FormControl>
-                                  <Textarea placeholder="How can we improve?" {...field} rows={4} className="border-2 border-[var(--nb-black)] rounded-xl p-4 font-bold" />
-                                </FormControl></FormItem>
-                              )} />
-                              <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4">
-                                <AlertDialogCancel asChild>
-                                  <Button variant="outline" className="border-2 border-[var(--nb-black)] font-black uppercase rounded-xl">
-                                    Cancel
-                                  </Button>
-                                </AlertDialogCancel>
-                                {/* Submit — black bg, teal hover */}
-                                <Button
-                                  type="submit"
-                                  className="bg-[var(--nb-black)] text-[var(--nb-white)] border-2 border-[var(--nb-black)] shadow-[3px_3px_0px_var(--nb-black)] font-black uppercase rounded-xl px-8 hover:bg-[var(--nb-teal)] hover:text-[var(--nb-black)] transition-all"
-                                >
-                                  Send it!
-                                </Button>
-                              </div>
-                            </form>
-                          </Form>
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                  <FeedbackDialog
+                    triggerLabel="Feedback"
+                    triggerClassName="rounded-lg px-4 py-1.5 text-xs font-black border-2 border-transparent transition-all hover:bg-[var(--nb-teal)] hover:text-[var(--nb-black)] active:scale-95"
+                  />
                 </div>
               </div>
 
@@ -215,50 +126,10 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
                 ))}
 
                 {/* Mobile Feedback */}
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <button className="block w-full text-left px-5 py-4 rounded-xl text-sm font-black border-2 border-[var(--nb-black)] bg-[var(--nb-white)] hover:bg-[var(--nb-teal)] shadow-[3px_3px_0px_var(--nb-black)] transition-all active:scale-95">
-                      Feedback
-                    </button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent className="bg-[var(--nb-bg)] border-[4px] border-[var(--nb-black)] shadow-[10px_10px_0px_var(--nb-black)] rounded-2xl max-w-[90vw]">
-                    <AlertDialogHeader>
-                      <AlertDialogTitle className="font-black text-2xl uppercase flex items-center">
-                        <FontAwesomeIcon icon={faMessage} className="mr-3" />
-                        Feedback
-                      </AlertDialogTitle>
-                      <AlertDialogDescription className="pt-4 text-left">
-                        <Form {...form}>
-                          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                            <FormField control={form.control} name="email" render={({ field }) => (
-                              <FormItem><FormControl>
-                                <Input placeholder="Email" {...field} className="border-2 border-[var(--nb-black)] rounded-xl p-6 font-bold" />
-                              </FormControl></FormItem>
-                            )} />
-                            <FormField control={form.control} name="content" render={({ field }) => (
-                              <FormItem><FormControl>
-                                <Textarea placeholder="How can we improve?" {...field} rows={4} className="border-2 border-[var(--nb-black)] rounded-xl p-4 font-bold" />
-                              </FormControl></FormItem>
-                            )} />
-                            <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4">
-                              <AlertDialogCancel asChild>
-                                <Button variant="outline" className="border-2 border-[var(--nb-black)] font-black uppercase rounded-xl">
-                                  Cancel
-                                </Button>
-                              </AlertDialogCancel>
-                              <Button
-                                type="submit"
-                                className="bg-[var(--nb-black)] text-[var(--nb-white)] border-2 border-[var(--nb-black)] shadow-[3px_3px_0px_var(--nb-black)] font-black uppercase rounded-xl px-8 hover:bg-[var(--nb-teal)] hover:text-[var(--nb-black)] transition-all"
-                              >
-                                Send it!
-                              </Button>
-                            </div>
-                          </form>
-                        </Form>
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                  </AlertDialogContent>
-                </AlertDialog>
+                <FeedbackDialog
+                  triggerLabel="Feedback"
+                  triggerClassName="block w-full text-left px-5 py-4 rounded-xl text-sm font-black border-2 border-[var(--nb-black)] bg-[var(--nb-white)] hover:bg-[var(--nb-teal)] shadow-[3px_3px_0px_var(--nb-black)] transition-all active:scale-95"
+                />
               </div>
             </Disclosure.Panel>
           </>
