@@ -55,8 +55,8 @@ const AboutProjek = () => {
           </div>
 
           {/* Main Card */}
-          <div className="bg-[#FAF9F6] p-6 sm:p-10 md:p-12 border-[4px] border-[var(--nb-black)] rounded-3xl shadow-[10px_10px_0px_var(--nb-black)] flex flex-col md:flex-row gap-10 hover:translate-y-[-5px] transition-transform duration-300">
-            <div className="flex-1 space-y-6">
+          <div className="bg-[#FAF9F6] p-6 sm:p-8 md:p-10 lg:p-12 border-[4px] border-[var(--nb-black)] rounded-3xl shadow-[10px_10px_0px_var(--nb-black)] flex flex-col lg:flex-row items-center gap-8 lg:gap-12 hover:translate-y-[-5px] transition-transform duration-300">
+            <div className="flex-1 space-y-4 md:space-y-6 text-center lg:text-left">
               {/* Title underline — yellow (primary brand) */}
               <h3 className="font-['Space_Mono'] text-xl md:text-2xl font-black uppercase underline underline-offset-4 decoration-[var(--nb-yellow)] decoration-4">
                 CalGenius FX-1
@@ -74,8 +74,8 @@ const AboutProjek = () => {
               </div>
             </div>
 
-            <div className="lg:w-2/5 flex-shrink-0 relative group">
-              <img
+            <div className="w-full md:max-w-md lg:w-[40%] flex-shrink-0 relative group">
+``              <img
                 src={orng}
                 className="w-full h-auto border-[4px] border-[var(--nb-black)] rounded-2xl shadow-[8px_8px_0px_var(--nb-black)] group-hover:rotate-3 group-hover:scale-[1.02] transition-all duration-300"
                 alt="About Project"
