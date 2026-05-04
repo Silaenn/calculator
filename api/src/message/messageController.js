@@ -39,25 +39,25 @@ async function sendEmail(messageData) {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "deokeldisilaen@gmail.com",
-      pass: "ttmv rhgf iujy nsvo",
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
 
   const mailOptions = {
     from: messageData.email,
-    to: "deokeldisilaen@gmail.com",
-    subject: "Subject Email Anda",
+    to: process.env.EMAIL_USER,
+    subject: "Feedback dari " + messageData.email,
     text: messageData.content,
   };
 
-  await transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.error(error);
-    } else {
-      console.log("Email terkirim: " + info.response);
-    }
-  });
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email terkirim: " + info.response);
+  } catch (error) {
+    console.error("Gagal kirim email:", error);
+    throw error;
+  }
 }
 
 module.exports = router;

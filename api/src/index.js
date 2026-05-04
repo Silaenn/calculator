@@ -6,7 +6,7 @@ const app = express();
 
 dotenv.config();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 2000;
 
 app.use(express.json());
 app.use(cors());
@@ -19,6 +19,10 @@ const messageController = require("./message/messageController");
 
 app.use("/messages", messageController);
 
-app.listen(PORT, () => {
-  console.log("Express API running in port: " + PORT);
-});
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log("Express API running in port: " + PORT);
+  });
+}
+
+module.exports = app;
