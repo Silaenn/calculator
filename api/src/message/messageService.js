@@ -8,8 +8,8 @@ const getAllMessage = async () => {
   return message;
 };
 
-const createMessage = async (newMessagetData) => {
-  const message = await insertMessage(newMessagetData);
+const createMessage = async (messageData) => {
+  const message = await insertMessage(messageData);
 
   return message;
 };

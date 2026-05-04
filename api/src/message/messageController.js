@@ -18,6 +18,10 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   const newMessage = req.body;
 
+  if (!newMessage.email || !newMessage.content) {
+    return res.status(400).send({ message: "Email and content are required" });
+  }
+
   try {
     // Send email
     await sendEmail(newMessage);
@@ -30,12 +34,21 @@ router.post("/", async (req, res) => {
       message: "create message success",
     });
   } catch (error) {
-    res.status(400).send(error.message);
+    console.error("Error creating message:", error);
+    res.status(500).send({
+      message: "Internal Server Error",
+      error: error.message,
+    });
   }
 });
 
 // Function to send email
 async function sendEmail(messageData) {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    console.error("EMAIL_USER or EMAIL_PASS not set in environment variables");
+    throw new Error("Email configuration is missing");
+  }
+
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -45,7 +58,8 @@ async function sendEmail(messageData) {
   });
 
   const mailOptions = {
-    from: messageData.email,
+    from: process.env.EMAIL_USER,
+    replyTo: messageData.email,
     to: process.env.EMAIL_USER,
     subject: "Feedback dari " + messageData.email,
     text: messageData.content,
@@ -56,7 +70,7 @@ async function sendEmail(messageData) {
     console.log("Email terkirim: " + info.response);
   } catch (error) {
     console.error("Gagal kirim email:", error);
-    throw error;
+    throw new Error("Failed to send email: " + error.message);
   }
 }
 
