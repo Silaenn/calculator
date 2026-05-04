@@ -145,7 +145,6 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
   const handleButtonClick = (btn: string | number) => {
     const symMap: Record<string, string> = { "π":"π","√":"√","x²":"²","x³":"³" };
     
-    // Clear previous expression if starting a new calculation after an "="
     if (prevExpression.includes("=")) {
       setPrevExpression("");
     }
@@ -199,32 +198,34 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
         {/* ══════════════════════════════
             HERO SECTION
         ══════════════════════════════ */}
-        <div className="hero-section min-h-[90vh] py-20 px-6 sm:px-12 relative flex flex-col justify-center overflow-hidden">
-          {/* Decorative elements — warna sesuai sistem */}
-          <div className="hero-bubble hidden lg:flex">CALC!</div>
-          <div className="hero-zap hidden lg:block">✦ NEW!</div>
-          <div className="hero-star hidden lg:block">★</div>
+        <div className="hero-section min-h-[100svh] py-16 px-4 sm:px-8 relative flex flex-col justify-center overflow-hidden">
 
-          <div className="hero-inner flex flex-col-reverse lg:flex-row items-center justify-between gap-12 max-w-7xl mx-auto w-full">
-            <div className="hero-content md:text-center lg:text-left z-10 flex-1">
+          {/* Decorative elements — selalu tampil di semua ukuran layar */}
+          <div className="hero-bubble">CALC!</div>
+          <div className="hero-zap">✦ NEW!</div>
+          <div className="hero-star">★</div>
+
+          <div className="hero-inner flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 max-w-7xl mx-auto w-full">
+
+            {/* ── Hero Content ── */}
+            <div className="hero-content z-10 flex-1 ">
               {/* Badge */}
-              <div className="hero-badge animate__animated animate__fadeInDown inline-flex items-center gap-2 px-4 py-2 mb-6">
-                <img src={smk} style={{ borderRadius: "50%", width: 24, height: 24, objectFit: "cover" }} alt="SMK" />
-                <span className="font-black text-xs sm:text-sm tracking-widest">SMK PGRI PEKANBARU</span>
+              <div className="hero-badge animate__animated animate__fadeInDown inline-flex items-center gap-2 px-4 py-2 mb-5">
+                <img src={smk} style={{ borderRadius: "50%", width: 22, height: 22, objectFit: "cover" }} alt="SMK" />
+                <span className="font-black text-[10px] sm:text-xs tracking-widest">SMK PGRI PEKANBARU</span>
               </div>
 
               {/* Title */}
-              <h1 className="hero-title animate__animated animate__fadeInLeft text-4xl sm:text-6xl md:text-7xl font-black mb-6 leading-[1.1] uppercase tracking-tighter">
+              <h1 className="hero-title animate__animated animate__fadeInLeft mb-3 uppercase tracking-tighter leading-[1.05]">
                 Welcome to<br />
-                {/* hero-title-accent = white + black shadow di atas yellow bg */}
                 <span className="hero-title-accent">Calgenius</span>
               </h1>
 
-              <p className="hero-sub animate__animated animate__fadeInLeft text-base sm:text-xl font-bold mb-10 max-w-xl mx-auto lg:mx-0">
+              <p className="hero-sub animate__animated animate__fadeInLeft mb-8 max-w-md">
                 by <strong>Deo Silaen</strong> — Kalkulator interaktif serba bisa dengan kustomisasi warna favoritmu!
               </p>
 
-              {/* CTA — black bg, yellow shadow (brand) */}
+              {/* CTA */}
               <button
                 className="hero-cta animate__animated animate__fadeInUp"
                 onClick={() => scrollDown(1100)}
@@ -233,15 +234,16 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
               </button>
             </div>
 
-            <div className="hero-img-wrap animate__animated animate__fadeInRight w-full max-w-[300px] sm:max-w-[450px] lg:max-w-[500px] relative">
-              {/* Glow blob — teal, bukan pink */}
+            {/* ── Hero Image — selalu tampil, ukuran fluid ── */}
+            <div className="hero-img-wrap animate__animated animate__fadeInRight relative flex-shrink-0">
               <div className="absolute inset-0 bg-[var(--nb-teal)] rounded-full blur-[80px] opacity-25 animate-pulse"></div>
               <img
                 src={math}
                 alt="Kalkulator ilustrasi"
-                className="hero-img w-full h-auto relative z-10 drop-shadow-[20px_20px_0px_rgba(0,0,0,0.1)]"
+                className="hero-img w-full h-auto relative z-10"
               />
             </div>
+
           </div>
         </div>
 
@@ -258,7 +260,6 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
 
           {/* Section heading */}
           <div className={`main-heading-wrap reveal-fade mb-20 text-center ${mainVisible ? "revealed" : ""}`}>
-            {/* Tag — violet (special) */}
             <div className="main-section-tag inline-block px-4 py-1 mb-4">
               ⚡ Kalkulator Interaktif
             </div>
@@ -307,7 +308,6 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
                               <div className="flex-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_#000]" style={{ backgroundColor: angka }} title="Digits" />
                               <div className="flex-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_#000]" style={{ backgroundColor: operator }} title="Operators" />
                             </div>
-                            {/* Apply button — teal via btn-ganti class */}
                             <Button
                               className="btn-ganti w-full font-black uppercase text-xs rounded-lg h-10 shadow-[3px_3px_0px_#000] active:shadow-none active:translate-y-[2px]"
                               onClick={() => { initializeNextColor(category, id); applyNewColor(); }}
@@ -424,7 +424,6 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
               </h5>
 
               <div className="space-y-6 mb-10 flex-1">
-                {/* Background Guide */}
                 <div className="flex items-center gap-4 group">
                   <div 
                     className="w-16 h-16 rounded-xl border-[3px] border-black shadow-[4px_4px_0px_#000] flex-shrink-0 transition-transform group-hover:rotate-3"
@@ -436,7 +435,6 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
                   </div>
                 </div>
 
-                {/* Digits Guide */}
                 <div className="flex items-center gap-4 group">
                   <div 
                     className="w-16 h-16 rounded-xl border-[3px] border-black shadow-[4px_4px_0px_#000] flex-shrink-0 transition-transform group-hover:-rotate-3"
@@ -448,7 +446,6 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
                   </div>
                 </div>
 
-                {/* Operators Guide */}
                 <div className="flex items-center gap-4 group">
                   <div 
                     className="w-16 h-16 rounded-xl border-[3px] border-black shadow-[4px_4px_0px_#000] flex-shrink-0 transition-transform group-hover:rotate-3"
