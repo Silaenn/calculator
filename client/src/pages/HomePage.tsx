@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { warna } from "../data/index.ts";
@@ -38,7 +38,7 @@ function useScrollReveal(ref: React.RefObject<HTMLElement>, threshold = 0.12) {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [ref, threshold]);
   return visible;
 }
 
@@ -84,13 +84,13 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
   const initializeNextColor = (category: string, id: string) =>
     setNextColor(warna[category][id] as calculator);
 
-  const applyNewColor = () => {
+  const applyNewColor = useCallback(() => {
     setIsColorApplied(true);
     setCalculatorColor(nextColor);
     localStorage.setItem("calculatorColor", JSON.stringify(nextColor));
-  };
+  }, [nextColor]);
 
-  useEffect(() => { if (nextColor.badan) applyNewColor(); }, [nextColor]);
+  useEffect(() => { if (nextColor.badan) applyNewColor(); }, [nextColor, applyNewColor]);
 
   useEffect(() => {
     const stored = localStorage.getItem("calculatorColor");
@@ -186,26 +186,40 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
 
   return (
     <>
-      {/* Spacer navbar */}
-      <div
-        className={`transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] bg-[var(--nb-yellow)] ${
-          isNavbarScrolled ? "h-24 md:h-20" : "h-16"
-        }`}
-      />
-
       <div className="main overflow-x-hidden">
 
         {/* ══════════════════════════════
             HERO SECTION
         ══════════════════════════════ */}
-        <div className="hero-section min-h-[100svh] py-16 px-4 sm:px-8 relative flex flex-col justify-center overflow-hidden">
+        <div className="hero-section min-h-[100svh] relative flex flex-col overflow-hidden">
+          {/* Spacer navbar */}
+          <div
+            className={`transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] bg-transparent shrink-0 ${
+              isNavbarScrolled ? "h-24 md:h-20" : "h-16"
+            }`}
+          />
+
+          {/* Halftone dots — absolute inset-0 supaya kena ke spacer juga */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.09] z-0"
+            style={{
+              backgroundImage: "radial-gradient(circle, var(--nb-black) 1.8px, transparent 1.8px)",
+              backgroundSize: "24px 24px"
+            }}
+          />
+
+          {/* Teal blob pojok kanan bawah */}
+          <div
+            className="absolute -bottom-20 -right-20 w-[460px] h-[460px] bg-[var(--nb-teal)] border-[4px] border-[var(--nb-black)] rounded-full opacity-[0.18] pointer-events-none z-0"
+          />
 
           {/* Decorative elements — selalu tampil di semua ukuran layar */}
           <div className="hero-bubble">CALC!</div>
           <div className="hero-zap">✦ NEW!</div>
           <div className="hero-star">★</div>
 
-          <div className="hero-inner flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 max-w-7xl mx-auto w-full">
+          <div className="flex-1 flex flex-col justify-center py-16 px-4 sm:px-8 relative z-10">
+            <div className="hero-inner flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 max-w-7xl mx-auto w-full">
 
             {/* ── Hero Content ── */}
             <div className="hero-content z-10 flex-1 ">
@@ -243,9 +257,9 @@ const HomePage: React.FC<HomePageProps> = ({ isNavbarScrolled = false }) => {
                 className="hero-img w-full h-auto relative z-10"
               />
             </div>
-
           </div>
         </div>
+      </div>
 
         {/* ══════════════════════════════
             MAIN CONTENT SECTION
