@@ -2,29 +2,23 @@ import orng from "@/assets/images/orng.png";
 
 const AboutProjek = () => {
   return (
-    <>
+    <div
+      className="min-h-screen bg-[var(--nb-teal)] relative overflow-hidden font-['Space_Grotesk'] text-[var(--nb-black)] flex flex-col"
+    >
       {/* Spacer — teal (bg halaman ini adalah teal) */}
-      <div className="h-16 bg-[var(--nb-teal)]" />
+      <div className="h-16 bg-[var(--nb-teal)] shrink-0" />
 
-      {/* ══════════════════════════════
-          About Page — Teal Background
-          Teal = confirm/success tone,
-          cocok untuk halaman "tentang projek"
-          yang sifatnya informatif & positif.
-      ══════════════════════════════ */}
+      {/* Grid background */}
       <div
-        className="min-h-screen bg-[var(--nb-teal)] relative overflow-hidden p-6 md:p-12 font-['Space_Grotesk'] text-[var(--nb-black)] flex flex-col items-center justify-center"
-      >
-        {/* Grid background */}
-        <div
-          className="absolute inset-0 z-0 opacity-[0.1]"
-          style={{
-            backgroundImage:
-              "linear-gradient(var(--nb-black) 2px, transparent 2px), linear-gradient(90deg, var(--nb-black) 2px, transparent 2px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
+        className="absolute inset-0 z-0 opacity-[0.1]"
+        style={{
+          backgroundImage:
+            "linear-gradient(var(--nb-black) 2px, transparent 2px), linear-gradient(90deg, var(--nb-black) 2px, transparent 2px)",
+          backgroundSize: "40px 40px",
+        }}
+      />
 
+      <div className="flex-1 flex flex-col items-center justify-center p-6 md:p-12 relative z-10">
         {/* Kotak kuning — lebih kecil & lebih tersembunyi di mobile */}
         <div className="absolute -top-16 -left-16 w-28 h-28 sm:w-44 sm:h-44 md:w-64 md:h-64 bg-[var(--nb-yellow)] border-[8px] border-[var(--nb-black)] rotate-12 opacity-75 z-0" />
 
@@ -89,7 +83,7 @@ const AboutProjek = () => {
 
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
