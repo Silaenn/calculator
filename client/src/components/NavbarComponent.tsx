@@ -115,8 +115,8 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
             </div>
 
             {/* Mobile Menu Panel */}
-            <Disclosure.Panel className="md:hidden w-full px-4 pb-4 animate__animated animate__fadeIn">
-              <div className="flex flex-col gap-2 border-t-2 border-[var(--nb-black)] pt-4">
+            <Disclosure.Panel className="absolute top-full left-0 w-full bg-[var(--nb-bg)] border-b-4 border-[var(--nb-black)] md:hidden animate__animated animate__fadeIn">
+              <div className="flex flex-col gap-2 p-4 w-full">
                 {navigation.map((item) => (
                   <button
                     key={item.name}
@@ -128,7 +128,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
                       item.current
                         ? "bg-[var(--nb-black)] text-[var(--nb-white)] shadow-none translate-x-[2px] translate-y-[2px]"
                         : "bg-[var(--nb-white)] hover:bg-[var(--nb-yellow)] hover:text-[var(--nb-black)]",
-                      "block w-full text-left px-5 py-4 rounded-xl text-sm font-black border-2 border-[var(--nb-black)] shadow-[3px_3px_0px_var(--nb-black)] transition-all active:scale-95"
+                      "w-full text-left px-5 py-4 rounded-xl text-sm font-black border-2 border-[var(--nb-black)] shadow-[3px_3px_0px_var(--nb-black)] transition-all active:scale-95"
                     )}
                   >
                     {item.name}
@@ -137,7 +137,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
 
                 <FeedbackDialog
                   triggerLabel="Feedback"
-                  triggerClassName="block w-full text-left px-5 py-4 rounded-xl text-sm font-black border-2 border-[var(--nb-black)] bg-[var(--nb-white)] hover:bg-[var(--nb-teal)] shadow-[3px_3px_0px_var(--nb-black)] transition-all active:scale-95"
+                  triggerClassName="w-full text-left px-5 py-4 rounded-xl text-sm font-black border-2 border-[var(--nb-black)] bg-[var(--nb-white)] hover:bg-[var(--nb-teal)] shadow-[3px_3px_0px_var(--nb-black)] transition-all active:scale-95"
                 />
               </div>
             </Disclosure.Panel>
