@@ -2,7 +2,7 @@
 
 **CalGenius** adalah aplikasi kalkulator interaktif dengan desain **Neobrutalism** yang dikembangkan menggunakan React dan TypeScript. Proyek ini dibuat sebagai bagian dari Uji Kompetensi Keahlian (UKK) 2026 di SMKS PGRI Pekanbaru.
 
-<img width="1920" height="964" alt="Calculator" src="https://github.com/user-attachments/assets/02d31093-dd47-4017-a084-b498999005c1" />
+<img width="1920" height="964" alt="Calculator(1)" src="https://github.com/user-attachments/assets/03be5647-60cf-4e74-9d3d-faa1eac12ef6" />
 <br>
 
 ## ✨ Fitur Utama
