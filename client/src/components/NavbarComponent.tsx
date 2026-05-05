@@ -54,14 +54,24 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
           }
         `}
       >
-        {({ open }) => (
+        {({ open, close }) => (
           <>
+            {/* Backdrop Overlay */}
+            {open && (
+              <div
+                className="fixed inset-0 bg-black/50 z-[-1] md:hidden backdrop-blur-sm"
+                onClick={() => close()}
+              />
+            )}
+            
             <div className="w-full max-w-7xl px-4 h-14 md:h-16 flex items-center justify-between">
-
               {/* LEFT: Logo — yellow bg, black border */}
               <div
                 className="flex items-center gap-2 cursor-pointer shrink-0"
-                onClick={() => navigate("/")}
+                onClick={() => {
+                  navigate("/");
+                  close();
+                }}
               >
                 <div className="bg-[var(--nb-yellow)] p-1 border-2 border-[var(--nb-black)] rounded-lg shadow-[2px_2px_0px_var(--nb-black)]">
                   <img className="h-6 w-6" src={calculator} alt="Logo" />
@@ -80,9 +90,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
                       onClick={() => navigate(item.href)}
                       className={classNames(
                         item.current
-                          /* Active: black bg, white text — jelas & bold */
                           ? "bg-[var(--nb-black)] text-[var(--nb-white)]"
-                          /* Hover: yellow (primary brand) */
                           : "hover:bg-[var(--nb-yellow)] hover:text-[var(--nb-black)]",
                         "rounded-lg px-4 py-1.5 text-xs font-black border-2 border-transparent transition-all active:scale-95"
                       )}
@@ -91,7 +99,6 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
                     </button>
                   ))}
 
-                  {/* FEEDBACK action directly in menu */}
                   <FeedbackDialog
                     triggerLabel="Feedback"
                     triggerClassName="rounded-lg px-4 py-1.5 text-xs font-black border-2 border-transparent transition-all hover:bg-[var(--nb-teal)] hover:text-[var(--nb-black)] active:scale-95"
@@ -113,7 +120,10 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
                 {navigation.map((item) => (
                   <button
                     key={item.name}
-                    onClick={() => navigate(item.href)}
+                    onClick={() => {
+                      navigate(item.href);
+                      close();
+                    }}
                     className={classNames(
                       item.current
                         ? "bg-[var(--nb-black)] text-[var(--nb-white)] shadow-none translate-x-[2px] translate-y-[2px]"
@@ -125,7 +135,6 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
                   </button>
                 ))}
 
-                {/* Mobile Feedback */}
                 <FeedbackDialog
                   triggerLabel="Feedback"
                   triggerClassName="block w-full text-left px-5 py-4 rounded-xl text-sm font-black border-2 border-[var(--nb-black)] bg-[var(--nb-white)] hover:bg-[var(--nb-teal)] shadow-[3px_3px_0px_var(--nb-black)] transition-all active:scale-95"

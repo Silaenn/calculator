@@ -8,7 +8,7 @@ export type CalculatorTheme = {
 };
 
 export const useTheme = () => {
-  const [calculatorColor, setCalculatorColor] = useState<CalculatorTheme>({ badan: "", angka: "", operator: "" });
+  const [calculatorColor, setCalculatorColor] = useState<CalculatorTheme>({ badan: "#FFDB00", angka: "#F5F5F5", operator: "#FD716E" });
   const [isColorApplied, setIsColorApplied] = useState(false);
 
   useEffect(() => {
