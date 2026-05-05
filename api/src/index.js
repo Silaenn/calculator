@@ -1,27 +1,46 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const cors = require("cors");
+const config = require("./config");
+const { ZodError } = require("zod");
 
 const app = express();
-
-dotenv.config();
-
-const PORT = process.env.PORT || 2000;
 
 app.use(express.json());
 app.use(cors());
 
+// Routes
 app.get("/api", (req, res) => {
-  res.send("Selamat datang di API akuh");
+  res.json({ message: "Selamat datang di API Calgenius" });
 });
 
 const messageController = require("./message/messageController");
-
 app.use("/messages", messageController);
 
-if (process.env.NODE_ENV !== "production") {
-  app.listen(PORT, () => {
-    console.log("Express API running in port: " + PORT);
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error(`[Error] ${err.message}`);
+
+  // Handle Zod Validation Errors
+  if (err instanceof ZodError) {
+    return res.status(400).json({
+      success: false,
+      message: "Validation Error",
+      errors: err.errors.map(e => ({ path: e.path, message: e.message }))
+    });
+  }
+
+  // Handle other errors
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || "Internal Server Error",
+    // Only show stack trace in development
+    stack: config.nodeEnv === "development" ? err.stack : undefined
+  });
+});
+
+if (config.nodeEnv !== "production") {
+  app.listen(config.port, () => {
+    console.log(`🚀 Server running on http://localhost:${config.port}`);
   });
 }
 

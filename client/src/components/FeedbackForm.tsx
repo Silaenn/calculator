@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import api from "@/lib/api";
 import toast from "react-hot-toast";
 import { Button } from "./ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
@@ -13,7 +13,7 @@ const formSchema = z.object({
   content: z
     .string()
     .min(1, { message: "Pesan tidak boleh kosong." })
-    .max(160, { message: "Pesan tidak boleh lebih dari 160 karakter." }),
+    .max(500, { message: "Pesan tidak boleh lebih dari 500 karakter." }),
 });
 
 interface FeedbackFormProps {
@@ -38,7 +38,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/messages`, values);
+      await api.post("/messages", values);
       form.reset();
       toast.success("Pesan Berhasil Terkirim", { 
         duration: 4000, 
@@ -46,9 +46,12 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
         icon: "✅" 
       });
       onSuccess?.();
-    } catch (error) {
-      console.error(error);
-      toast.error("Pesan Gagal Terkirim", { position: "bottom-right" });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message || "Pesan Gagal Terkirim", { position: "bottom-right" });
+      } else {
+        toast.error("Pesan Gagal Terkirim", { position: "bottom-right" });
+      }
     }
   }
 

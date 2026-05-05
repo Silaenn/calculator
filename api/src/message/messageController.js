@@ -1,77 +1,37 @@
 const express = require("express");
-const nodemailer = require("nodemailer");
 const { getAllMessage, createMessage } = require("./messageService");
+const { createMessageSchema } = require("./message.schema");
 
 const router = express.Router();
 
-// Handle GET request to fetch all messages
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const messages = await getAllMessage();
-    res.send(messages);
+    res.json({
+      success: true,
+      data: messages
+    });
   } catch (error) {
-    res.status(500).send("Internal Server Error");
+    next(error);
   }
 });
 
-// Handle POST request to create a new message and send email
-router.post("/", async (req, res) => {
-  const newMessage = req.body;
-
-  if (!newMessage.email || !newMessage.content) {
-    return res.status(400).send({ message: "Email and content are required" });
-  }
-
+router.post("/", async (req, res, next) => {
   try {
-    // Send email
-    await sendEmail(newMessage);
+    // 1. Validation
+    const validatedData = createMessageSchema.parse(req.body);
 
-    // Create message in the database
-    const message = await createMessage(newMessage);
+    // 2. Call Service
+    const message = await createMessage(validatedData);
 
-    res.status(201).send({
+    res.status(201).json({
+      success: true,
+      message: "Message created and email sent successfully",
       data: message,
-      message: "create message success",
     });
   } catch (error) {
-    console.error("Error creating message:", error);
-    res.status(500).send({
-      message: "Internal Server Error",
-      error: error.message,
-    });
+    next(error);
   }
 });
-
-// Function to send email
-async function sendEmail(messageData) {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.error("EMAIL_USER or EMAIL_PASS not set in environment variables");
-    throw new Error("Email configuration is missing");
-  }
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    replyTo: messageData.email,
-    to: process.env.EMAIL_USER,
-    subject: "Feedback dari " + messageData.email,
-    text: messageData.content,
-  };
-
-  try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email terkirim: " + info.response);
-  } catch (error) {
-    console.error("Gagal kirim email:", error);
-    throw new Error("Failed to send email: " + error.message);
-  }
-}
 
 module.exports = router;

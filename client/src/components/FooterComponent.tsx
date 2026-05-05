@@ -1,129 +1,83 @@
-import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faWhatsapp, faInstagram, faFacebook, faGithub, faTelegram,
 } from "@fortawesome/free-brands-svg-icons";
 import {
-  faEnvelope, faLocationDot, faHouse, faFileLines, faUser,
+  faEnvelope, faLocationDot, faHouse
 } from "@fortawesome/free-solid-svg-icons";
 
 const FooterComponent = () => {
   return (
-    <footer className="footer">
-      <Container>
-        <Row className="d-flex justify-content-between">
-
-          {/* ── Col 1: Brand & Kontak ── */}
-          <Col lg="4" className="mb-5 mb-lg-0">
-            {/* Brand — yellow text, yellow underline (primary) */}
-            <div className="footer-brand">CalGenius ✦</div>
-            <p className="footer-desc">
-              Kalkulator web serba bisa dengan tampilan yang bisa kamu kustomisasi sendiri.
-              Hitung, warnai, dan ekspresikan gaya kamu!
-            </p>
-            <div className="footer-contact">
-              <a href="https://api.whatsapp.com/send?phone=628989311672" target="_blank" rel="noopener noreferrer">
-                <FontAwesomeIcon icon={faWhatsapp} className="mr-2" />
-                +62 898-9311-672
-              </a>
-              <br />
-              <a href="mailto:deokeldisilaen@gmail.com">
-                <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
-                deokeldisilaen@gmail.com
-              </a>
-            </div>
-          </Col>
-
-          {/* ── Col 2: Menu ── */}
-          <Col lg="2" className="mb-5 mb-lg-0">
-            {/* Title — yellow via .footer-menu-title */}
-            <div className="footer-menu-title">Menu</div>
-            <Link to="/" className="footer-menu-link">
-              <FontAwesomeIcon icon={faHouse} className="mr-2" /> Home
-            </Link>
-            <Link to="/aboutProjek" className="footer-menu-link">
-              <FontAwesomeIcon icon={faFileLines} className="mr-2" /> About Projek
-            </Link>
-            <Link to="/myProfile" className="footer-menu-link">
-              <FontAwesomeIcon icon={faUser} className="mr-2" /> My Profile
-            </Link>
-          </Col>
-
-          {/* ── Col 3: Sosial Media ── */}
-          <Col lg="4">
-            <div className="footer-menu-title">SMKS PGRI Pekanbaru</div>
-            {/* Social hover — teal via .footer-social-link:hover */}
-            <a
-              href="https://www.instagram.com/smk_pgri_pekanbaru?igsh=MXFsZGN3bTVrZTdqbw=="
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-social-link"
-            >
-              <FontAwesomeIcon icon={faInstagram} className="mr-2" />
-              @Smk_pgri_pekanbaru
-            </a>
-
-            <div className="footer-menu-title mt-4">My Media Sosial</div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
-              <a
-                href="https://www.facebook.com/deo.silaen?mibextid=ZbWKwL"
-                target="_blank" rel="noopener noreferrer"
-                className="footer-social-link"
-              >
-                <FontAwesomeIcon icon={faFacebook} className="mr-2" /> @Deo_Silaen
-              </a>
-              <a
-                href="https://www.instagram.com/deoosilaen?igsh=MXE0Yjdob2ozbm1hYw=="
-                target="_blank" rel="noopener noreferrer"
-                className="footer-social-link"
-              >
-                <FontAwesomeIcon icon={faInstagram} className="mr-2" /> @deoosilaen
-              </a>
-              <a
-                href="https://github.com/Silaenn"
-                target="_blank" rel="noopener noreferrer"
-                className="footer-social-link"
-              >
-                <FontAwesomeIcon icon={faGithub} className="mr-2" /> Deo_Silaen
-              </a>
-              <a
-                href="https://t.me/deoosilaen22"
-                target="_blank" rel="noopener noreferrer"
-                className="footer-social-link"
-              >
-                <FontAwesomeIcon icon={faTelegram} className="mr-2" /> @deoosilaen22
-              </a>
-            </div>
-          </Col>
-        </Row>
-
-        {/* ── Maps ── */}
-        <Row className="mt-5">
-          <Col>
-            <div className="footer-menu-title">
-              <FontAwesomeIcon icon={faLocationDot} className="mr-2" />
-              My Address
-            </div>
-            <div className="footer-map-wrap">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249.356787876166!2d101.47549098493971!3d0.4249068496446592!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a858d8579427%3A0xfd261ac7e0a67939!2sPembiayaan%20MULTIGuna%20IG%20%40irmanroberto!5e0!3m2!1sid!2sid!4v1706428718317!5m2!1sid!2sid"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Maps"
-              />
-            </div>
-          </Col>
-        </Row>
-
-        {/* ── Bottom bar ── */}
-        <div className="footer-bottom">
-          <p>
-            &copy; {new Date().getFullYear()} by{" "}
-            <strong>DeoSilaen</strong> — All Rights Reserved
+    <footer className="bg-[#1A1A1A] text-white border-t-[4px] border-[#FFD93D] py-12 px-4 md:px-6 relative overflow-hidden">
+      {/* Footer Decoration */}
+      <div className="absolute top-0 left-0 w-full h-[5px] bg-[repeating-linear-gradient(90deg,var(--nb-yellow),var(--nb-yellow)_40px,var(--nb-red)_40px,var(--nb-red)_80px,var(--nb-teal)_80px,var(--nb-teal)_120px,var(--nb-violet)_120px,var(--nb-violet)_160px)] opacity-85" />
+      
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-10 md:gap-12">
+        {/* Brand & Socials */}
+        <div className="w-full md:w-1/3">
+          <div className="font-['Space_Mono'] text-2xl md:text-3xl font-bold text-[#FFD93D] mb-4 border-b-2 border-[#FFD93D] pb-2 inline-block">
+            CalGenius ✦
+          </div>
+          <p className="text-sm leading-7 text-gray-400 mb-6 max-w-sm">
+            Kalkulator interaktif dengan desain Neobrutalism yang modern dan fungsional. 
+            Created by Deo Silaen.
           </p>
+          <div className="flex flex-wrap gap-2">
+            {[
+              { icon: faGithub, name: "Github" },
+              { icon: faInstagram, name: "Instagram" },
+              { icon: faWhatsapp, name: "WhatsApp" },
+              { icon: faTelegram, name: "Telegram" },
+              { icon: faFacebook, name: "Facebook" },
+            ].map((social) => (
+              <a key={social.name} href="#" className="flex items-center gap-2 px-3 py-2 border border-gray-700 rounded-lg text-xs font-semibold hover:bg-[#4ECDC4] hover:text-black transition-all">
+                <FontAwesomeIcon icon={social.icon} /> {social.name}
+              </a>
+            ))}
+          </div>
         </div>
-      </Container>
+
+        {/* Menu */}
+        <div className="w-full md:w-1/4">
+          <div className="text-[#FFD93D] text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-3">
+            <FontAwesomeIcon icon={faHouse} /> Menu
+            <div className="flex-1 h-[2px] bg-[#FFD93D] opacity-30" />
+          </div>
+          <nav className="flex flex-col gap-1">
+            <Link to="/" className="py-2 px-3 text-sm text-gray-300 hover:bg-[#FFD93D] hover:text-black rounded transition-all">Home</Link>
+            <Link to="/aboutProjek" className="py-2 px-3 text-sm text-gray-300 hover:bg-[#FFD93D] hover:text-black rounded transition-all">About Project</Link>
+            <Link to="/myProfile" className="py-2 px-3 text-sm text-gray-300 hover:bg-[#FFD93D] hover:text-black rounded transition-all">My Profile</Link>
+          </nav>
+        </div>
+
+        {/* Contact */}
+        <div className="w-full md:w-1/3">
+          <div className="text-[#FFD93D] text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-3">
+            <FontAwesomeIcon icon={faEnvelope} /> Contact
+            <div className="flex-1 h-[2px] bg-[#FFD93D] opacity-30" />
+          </div>
+          <a href="mailto:deoosilaen@gmail.com" className="flex items-center gap-3 text-sm text-gray-300 mb-3 hover:text-[#FFD93D] transition-colors">
+            <FontAwesomeIcon icon={faEnvelope} /> deoosilaen@gmail.com
+          </a>
+          <div className="flex items-center gap-3 text-sm text-gray-300 mb-6">
+            <FontAwesomeIcon icon={faLocationDot} /> Pekanbaru, Riau, ID
+          </div>
+          <div className="border-2 border-gray-700 rounded-lg overflow-hidden h-[150px]">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249.35679113837958!2d101.47550803798866!3d0.4248057647107435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a858d8579427%3A0xfd261ac7e0a67939!2sPembiayaan%20MULTIGuna!5e0!3m2!1sid!2sid!4v1777974714387!5m2!1sid!2sid"
+              className="w-full h-full border-none"
+              allowFullScreen={true} 
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom */}
+      <div className="max-w-7xl mx-auto mt-10 pt-6 border-t border-gray-800 text-center text-gray-500 text-[10px] md:text-xs">
+        <p>&copy; 2026 <strong className="text-[#FFD93D]">CALGENIUS BY DEO SILAEN</strong>. ALL RIGHTS RESERVED.</p>
+      </div>
     </footer>
   );
 };
