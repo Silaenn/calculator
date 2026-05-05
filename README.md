@@ -1,43 +1,69 @@
-# CalGenius - Scientific Calculator
+# 🧮 CalGenius - Interactive Neobrutalism Calculator
 
-**CalGenius** adalah sebuah kalkulator ilmiah berbasis web yang dirancang untuk memberikan pengalaman menghitung yang nyaman, modern, dan personal! Dengan desain interaktif, pengguna dapat mengubah warna kalkulator sesuai preferensi untuk membuat pengalaman menghitung lebih menyenangkan.
+**CalGenius** adalah aplikasi kalkulator interaktif dengan desain **Neobrutalism** yang dikembangkan menggunakan React dan TypeScript. Proyek ini dibuat sebagai bagian dari Uji Kompetensi Keahlian (UKK) 2026 di SMKS PGRI Pekanbaru.
+
+![CalGenius Hero Section](src/assets/images/math.png)
+
+## ✨ Fitur Utama
+
+- **🎨 Kustomisasi Tema:** Sesuaikan warna badan, angka, dan operator kalkulator sesuai keinginanmu dengan berbagai pilihan palet warna (Pastel, Cold, Sky, dll).
+- **🔬 Mode Scientific:** Beralih antara mode kalkulator standar dan scientific untuk perhitungan yang lebih kompleks seperti akar kuadrat, pangkat, dan pi.
+- **📱 Responsif:** Desain modern yang dioptimalkan untuk berbagai perangkat (Mobile, Tablet, Desktop).
+- **🚀 Animasi Halus:** Menggunakan Framer Motion dan Animate.css untuk pengalaman pengguna yang lebih interaktif.
+- **💬 Sistem Feedback:** Pengguna dapat mengirimkan masukan langsung melalui aplikasi.
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React 18, TypeScript, Vite
+- **Styling:** Tailwind CSS (Neobrutalism Style), Vanilla CSS
+- **Components:** Radix UI, Headless UI, Heroicons
+- **Math Logic:** Math.js
+- **Icons:** FontAwesome, Heroicons
+
+## 🚀 Instalasi & Penggunaan
+
+1. **Clone repositori:**
+
+   ```bash
+   git clone https://github.com/username/calculator.git
+   ```
+
+2. **Masuk ke direktori proyek:**
+
+   ```bash
+   cd calculator/client
+   ```
+
+3. **Install dependensi:**
+
+   ```bash
+   npm install
+   ```
+
+4. **Jalankan aplikasi:**
+   ```bash
+   npm run dev
+   ```
+
+## 📂 Struktur Folder
+
+```text
+src/
+├── assets/          # Gambar, ikon, dan suara
+├── components/      # Komponen UI (Navbar, Footer, Dialog, dll)
+├── data/            # Data konfigurasi warna/tema
+├── lib/             # Utilitas (shadcn/ui utils)
+├── pages/           # Halaman utama (Home, About, Profile)
+└── App.tsx          # Konfigurasi routing
+```
+
+## 👨‍💻 Author
+
+Dibuat dengan ❤️ oleh **Deo Keldi Silaen**
+
+- **Sekolah:** SMKS PGRI Pekanbaru
+- **Project:** UKK 2023
 
 ---
 
-## 🎨 Fitur Utama
-
-- **Kalkulator Ilmiah**: Mendukung operasi aritmatika dasar dan beberapa fungsi ilmiah.
-- **Ubah Warna Kalkulator**: Pilih tema warna favorit Anda (Default, Pastel, Gold, Sky, Rainbow, Coffee) untuk penyesuaian pribadi.
-- **Desain Modern**: Antarmuka ramah pengguna dengan fokus pada pengalaman estetika.
-- **Responsive**: Dapat diakses dengan nyaman di berbagai perangkat, baik desktop maupun mobile.
-
----
-
-## 🚀 Demo
-
-Anda dapat mengakses proyek ini secara langsung di: [CalGenius](https://calculatordeo.vercel.app/)
-
----
-
-## 📦 Teknologi yang Digunakan
-
-- **Frontend**: HTML, CSS, JavaScript
-- **Framework**: React.js
-- **Library CSS**: Tailwind CSS
-- **Deployment**: Vercel
-
----
-
-## 📖 Cara Menggunakan
-
-1. Buka website atau jalankan proyek ini secara lokal.
-2. Klik tombol **Lihat Kalkulator** untuk memulai.
-3. Pilih warna favorit Anda di bagian **Tentukan Warna Favoritmu**.
-4. Mulai menghitung menggunakan tombol-tombol pada kalkulator.
-
----
-
-
-
-
-![image](https://github.com/user-attachments/assets/37e389c7-8762-4bef-8c96-85fd3a853c80)
+© 2023 CalGenius. All rights reserved.
