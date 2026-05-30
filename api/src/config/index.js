@@ -4,8 +4,8 @@ const config = {
   port: process.env.PORT || 2000,
   nodeEnv: process.env.NODE_ENV || "development",
   email: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: process.env.SMTP_USER || process.env.EMAIL_USER,
+    pass: process.env.SMTP_PASS || process.env.EMAIL_PASS,
   },
 };
 
