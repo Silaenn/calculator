@@ -33,8 +33,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     success: false,
     message: err.message || "Internal Server Error",
-    // Help debugging on Vercel by showing error message
-    error: err.message,
+    // Only show stack trace in development
     stack: config.nodeEnv === "development" ? err.stack : undefined
   });
 });
