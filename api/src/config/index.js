@@ -7,7 +7,6 @@ const config = {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-  databaseUrl: process.env.DATABASE_URL,
 };
 
 // Validate that critical config exists

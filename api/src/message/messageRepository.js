@@ -1,20 +1,27 @@
-const prisma = require("../db");
+const { client, ensureDb } = require("../db");
 
 const findMessages = async () => {
-  const message = await prisma.user.findMany();
-
-  return message;
+  await ensureDb();
+  const result = await client.execute(
+    "SELECT id, email, content FROM messages ORDER BY id DESC"
+  );
+  return result.rows;
 };
 
 const insertMessage = async (messageData) => {
-  const message = await prisma.user.create({
-    data: {
-      email: messageData.email,
-      content: messageData.content,
-    },
+  await ensureDb();
+  const inserted = await client.execute({
+    sql: "INSERT INTO messages (email, content) VALUES (?, ?)",
+    args: [messageData.email, messageData.content],
   });
 
-  return message;
+  const id = Number(inserted.lastInsertRowid);
+  const result = await client.execute({
+    sql: "SELECT id, email, content FROM messages WHERE id = ?",
+    args: [id],
+  });
+
+  return result.rows[0];
 };
 
 module.exports = {
