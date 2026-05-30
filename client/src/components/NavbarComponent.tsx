@@ -43,16 +43,19 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
     >
       <Disclosure
         as="nav"
-        className={`transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-          bg-[var(--nb-bg)] border-[var(--nb-black)]
-          flex flex-col items-center justify-center relative
-          ${isScrolled
-            /* Scrolled: floating pill — shadow pakai yellow (brand) */
-            ? "w-full md:w-[95%] lg:w-4/5 rounded-2xl md:rounded-full border-[3px] shadow-[4px_4px_0px_var(--nb-yellow)] h-auto min-h-[56px]"
-            /* Normal: full-width flat bar */
-            : "w-full rounded-none border-b-[3px] shadow-none h-auto min-h-[64px]"
-          }
-        `}
+        className={({ open }) => classNames(
+          "transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]",
+          "bg-[var(--nb-bg)] border-[var(--nb-black)]",
+          "flex flex-col items-center justify-center relative",
+          isScrolled
+            ? "w-full md:w-[95%] lg:w-4/5 border-[3px] shadow-[4px_4px_0px_var(--nb-yellow)] h-auto min-h-[56px]"
+            : "w-full rounded-none border-b-[3px] shadow-none h-auto min-h-[64px]",
+          isScrolled
+            ? (open 
+                ? "rounded-t-2xl md:rounded-t-[2rem] rounded-b-none" 
+                : "rounded-2xl md:rounded-full")
+            : ""
+        )}
       >
         {({ open, close }) => (
           <>
@@ -64,7 +67,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
               />
             )}
             
-            <div className="w-full max-w-7xl px-4 h-14 md:h-16 flex items-center justify-between">
+            <div className="w-full max-w-7xl px-4 h-14 md:h-16 flex items-center justify-between z-10">
               {/* LEFT: Logo — yellow bg, black border */}
               <div
                 className="flex items-center gap-2 cursor-pointer shrink-0"
@@ -115,7 +118,16 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
             </div>
 
             {/* Mobile Menu Panel */}
-            <Disclosure.Panel className="absolute top-full left-0 w-full bg-[var(--nb-bg)] border-b-4 border-[var(--nb-black)] md:hidden animate__animated animate__fadeIn">
+            <Disclosure.Panel 
+              className={classNames(
+                "absolute top-[calc(100%-3px)] left-[-3px] w-[calc(100%+6px)]",
+                "bg-[var(--nb-bg)] border-[var(--nb-black)] md:hidden",
+                "animate__animated animate__fadeIn z-[0]",
+                isScrolled 
+                  ? "rounded-b-2xl border-x-[3px] border-b-[3px] shadow-[4px_4px_0px_var(--nb-yellow)]" 
+                  : "border-b-4 border-t-0"
+              )}
+            >
               <div className="flex flex-col gap-2 p-4 w-full">
                 {navigation.map((item) => (
                   <button
