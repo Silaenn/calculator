@@ -46,28 +46,26 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
         className={({ open }) => classNames(
           "transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]",
           "bg-[var(--nb-bg)] border-[var(--nb-black)]",
-          "flex flex-col items-center justify-center relative",
+          "flex flex-col items-center justify-center relative overflow-hidden",
           isScrolled
-            ? "w-full md:w-[95%] lg:w-4/5 border-[3px] shadow-[4px_4px_0px_var(--nb-yellow)] h-auto min-h-[56px]"
-            : "w-full rounded-none border-b-[3px] shadow-none h-auto min-h-[64px]",
+            ? "w-full md:w-[95%] lg:w-4/5 border-[3px] shadow-[4px_4px_0px_var(--nb-yellow)]"
+            : "w-full rounded-none border-b-[3px] shadow-none",
           isScrolled
-            ? (open 
-                ? "rounded-t-2xl md:rounded-t-[2rem] rounded-b-none" 
-                : "rounded-2xl md:rounded-full")
-            : ""
+            ? (open ? "rounded-2xl" : "rounded-2xl md:rounded-full")
+            : "rounded-none"
         )}
       >
         {({ open, close }) => (
           <>
-            {/* Backdrop Overlay */}
+            {/* Backdrop Overlay - Tetap fixed untuk menutup seluruh layar */}
             {open && (
               <div
-                className="fixed inset-0 bg-black/50 z-[-1] md:hidden backdrop-blur-sm"
+                className="fixed inset-0 bg-black/50 z-[-1] md:hidden backdrop-blur-sm transition-opacity duration-500"
                 onClick={() => close()}
               />
             )}
             
-            <div className="w-full max-w-7xl px-4 h-14 md:h-16 flex items-center justify-between z-10">
+            <div className="w-full max-w-7xl px-4 h-14 md:h-16 flex items-center justify-between shrink-0">
               {/* LEFT: Logo — yellow bg, black border */}
               <div
                 className="flex items-center gap-2 cursor-pointer shrink-0"
@@ -117,42 +115,40 @@ const NavbarComponent: React.FC<NavbarProps> = ({ onScrollChange }) => {
               </div>
             </div>
 
-            {/* Mobile Menu Panel */}
-            <Disclosure.Panel 
+            {/* Mobile Menu Panel Expansion Wrapper */}
+            <div 
               className={classNames(
-                "absolute top-[calc(100%-3px)] left-[-3px] w-[calc(100%+6px)]",
-                "bg-[var(--nb-bg)] border-[var(--nb-black)] md:hidden",
-                "animate__animated animate__fadeIn z-[0]",
-                isScrolled 
-                  ? "rounded-b-2xl border-x-[3px] border-b-[3px] shadow-[4px_4px_0px_var(--nb-yellow)]" 
-                  : "border-b-4 border-t-0"
+                "grid transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] w-full md:hidden",
+                open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
               )}
             >
-              <div className="flex flex-col gap-2 p-4 w-full">
-                {navigation.map((item) => (
-                  <button
-                    key={item.name}
-                    onClick={() => {
-                      navigate(item.href);
-                      close();
-                    }}
-                    className={classNames(
-                      item.current
-                        ? "bg-[var(--nb-black)] text-[var(--nb-white)] shadow-none translate-x-[2px] translate-y-[2px]"
-                        : "bg-[var(--nb-white)] hover:bg-[var(--nb-yellow)] hover:text-[var(--nb-black)]",
-                      "w-full text-left px-5 py-4 rounded-xl text-sm font-black border-2 border-[var(--nb-black)] shadow-[3px_3px_0px_var(--nb-black)] transition-all active:scale-95"
-                    )}
-                  >
-                    {item.name}
-                  </button>
-                ))}
+              <Disclosure.Panel static className="overflow-hidden w-full border-t-2 border-[var(--nb-black)] bg-[var(--nb-bg)]">
+                <div className="flex flex-col gap-2 p-4 w-full">
+                  {navigation.map((item) => (
+                    <button
+                      key={item.name}
+                      onClick={() => {
+                        navigate(item.href);
+                        close();
+                      }}
+                      className={classNames(
+                        item.current
+                          ? "bg-[var(--nb-black)] text-[var(--nb-white)] shadow-none translate-x-[2px] translate-y-[2px]"
+                          : "bg-[var(--nb-white)] hover:bg-[var(--nb-yellow)] hover:text-[var(--nb-black)]",
+                        "w-full text-left px-5 py-4 rounded-xl text-sm font-black border-2 border-[var(--nb-black)] shadow-[3px_3px_0px_var(--nb-black)] transition-all active:scale-95"
+                      )}
+                    >
+                      {item.name}
+                    </button>
+                  ))}
 
-                <FeedbackDialog
-                  triggerLabel="Feedback"
-                  triggerClassName="w-full text-left px-5 py-4 rounded-xl text-sm font-black border-2 border-[var(--nb-black)] bg-[var(--nb-white)] hover:bg-[var(--nb-teal)] shadow-[3px_3px_0px_var(--nb-black)] transition-all active:scale-95"
-                />
-              </div>
-            </Disclosure.Panel>
+                  <FeedbackDialog
+                    triggerLabel="Feedback"
+                    triggerClassName="w-full text-left px-5 py-4 rounded-xl text-sm font-black border-2 border-[var(--nb-black)] bg-[var(--nb-white)] hover:bg-[var(--nb-teal)] shadow-[3px_3px_0px_var(--nb-black)] transition-all active:scale-95"
+                  />
+                </div>
+              </Disclosure.Panel>
+            </div>
           </>
         )}
       </Disclosure>
