@@ -15,13 +15,13 @@ const insertMessage = async (messageData) => {
     args: [messageData.email, messageData.content],
   });
 
-  const id = Number(inserted.lastInsertRowid);
-  const result = await client.execute({
-    sql: "SELECT id, email, content FROM messages WHERE id = ?",
-    args: [id],
-  });
+  // Turso returns lastInsertRowid as a BigInt, we convert it to Number or String
+  const id = inserted.lastInsertRowid ? inserted.lastInsertRowid.toString() : Date.now().toString();
 
-  return result.rows[0];
+  return {
+    id,
+    ...messageData
+  };
 };
 
 module.exports = {

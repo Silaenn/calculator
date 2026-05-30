@@ -13,7 +13,7 @@ const client = createClient({ url, authToken });
 
 const initPromise = client.execute(`
   CREATE TABLE IF NOT EXISTS messages (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY,
     email TEXT NOT NULL,
     content TEXT NOT NULL
   )
